@@ -18,7 +18,7 @@
     path = "./cj_res"
     version = "1.0.0"
   [dependencies.wheelpicker]
-      path = "../../../../wheelpicker/src/main/cangjie"
+    path = "../../../../wheelpicker/src/main/cangjie"
 
 [package]
   cjc-version = "0.48.2"

@@ -5,10 +5,6 @@ package wheelpicker
 
 import ohos.state_manage.*
 import ohos.state_macro_manage.*
-import std.math.*
-import std.sync.*
-import std.sync.Timer
-import std.time.Duration
 
 @Component
 public class WheelYearPicker {
@@ -22,7 +18,7 @@ public class WheelYearPicker {
     private var dividerIndex: Int64 = 0
 
     @Builder
-    func ScrollIndex(textColor: Color) {
+    func scrollIndex(textColor: Color) {
         Column() {
             if (!this.model.isCyslic) {
                 ForEach(this.YearsArray,
@@ -97,7 +93,7 @@ public class WheelYearPicker {
                                     this.model.mItemHeight).padding(this.model.mSpace)
                             })
                        // }
-                        this.ScrollIndex(this.model.mItemTextColor)
+                        this.scrollIndex(this.model.mItemTextColor)
                         //if (!this.model.isCyslic) {
                             ForEach(Array(this.model.mHalfItemCount, item: 0),
                                 itemGeneratorFunc: {
@@ -158,7 +154,7 @@ public class WheelYearPicker {
                             }
                         }
                         if(let Some(mOnItemSelectedListener) <- this.model.mOnItemSelectedListener) {
-                            mOnItemSelectedListener.onItemSelected(this.model, this.model.mSelectedItemPosition, this.YearsArray[this.model.mSelectedItemPosition].year)
+                            mOnItemSelectedListener.onItemSelected(this.model.mSelectedItemPosition, this.YearsArray[this.model.mSelectedItemPosition].year)
                         }
                         this.model.setOnItemSelectedListener
                     }
@@ -197,7 +193,7 @@ public class WheelYearPicker {
                 Column() {
                     Scroll(this.scroller1) {
                         Column() {
-                            this.ScrollIndex(this.model.mSelectedItemTextColor)
+                            this.scrollIndex(this.model.mSelectedItemTextColor)
                         }
                     }.height(this.model.mItemHeight).enabled(false).backgroundColor(this.model.mCurtainColor).scrollBar(
                         BarState.Off)

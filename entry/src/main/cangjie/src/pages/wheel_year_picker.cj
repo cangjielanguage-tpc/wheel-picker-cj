@@ -50,8 +50,8 @@ class MyWheelYearPicker {
     }
 }
 
-class MyOnItemSelectedListener <: OnItemSelectedListener {
-     public func onItemSelected(picker: WheelYearPickerModel, position: Int64, data: Int64): Unit {
-         PromptAction.showToast(message: "选中索引：${position}，选中年份：${data}")
+public class MyOnItemSelectedListener <: OnItemSelectedListener {
+     public func onItemSelected(position: Int64, data: Int64): Unit {
+         PromptAction.showToast(message: "选中索引：${position}，选中值：${data}")
      }
 }
