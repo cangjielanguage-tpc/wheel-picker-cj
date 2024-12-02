@@ -10,7 +10,12 @@ internal import std.collection.ArrayList
 internal import ohos.hilog.*
 
 internal import std.convert.*
-import std.math.trunc
+internal import std.math.trunc
+
+internal import std.math.*
+internal import std.sync.*
+internal import std.sync.Timer
+internal import std.time.Duration
 
 extend Float64 {
     operator func %(x: Float64): Float64 {

@@ -12,5 +12,5 @@ public interface OnItemSelectedListener {
          * @param data     当前选中的数据
          * @param position 当前选中的数据在数据列表中的位置
          */
-        public func onItemSelected(picker: WheelYearPickerModel, position: Int64, data: Int64): Unit
+        public func onItemSelected(position: Int64, data: Int64): Unit
 }
