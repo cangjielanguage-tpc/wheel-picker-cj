@@ -49,8 +49,15 @@ class ChinaYearRange {
     var endYear: Int64
 
     init(startYear: Int64, endYear: Int64) {
-        this.startYear = startYear
-        this.endYear = endYear
+        if(startYear >= endYear) {
+            this.startYear = 1972
+            this.endYear = 2022
+            Hilog.error(0,"WheelPicker4cj","Please enter the correct time range")
+        } else {
+            this.startYear = startYear
+            this.endYear = endYear
+        }
+
     }
 }
 
