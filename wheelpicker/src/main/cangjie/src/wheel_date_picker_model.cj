@@ -24,7 +24,7 @@ public class WheelDatePickerModel {
     @Publish var mFontFamily: String = ""
     @Publish var isCyslic: Bool = false
     var hasIndicator: Bool = true
-    var hasAtmospheric: Bool = true
+    var hasAtmospheric: Bool = false
     var hasCurtain: Bool = true
     @Publish var mFirstSelectYearPosition: Int64 = 0
     @Publish var mFirstSelectMonthPosition: Int64 = 0
@@ -41,28 +41,8 @@ public class WheelDatePickerModel {
     @Publish var solarLatestMonthIndex: Int64 = 0
     @Publish var solarLatestDayIndex: Int64 = 0
     @Publish var mDate: String = ""
-    //颜色渐变
-    @Publish var mlinearGradientColor: Array<(Color, Float64)> = [(Color.WHITE, 0.0)]
-    @Publish var mlinearGradientColorDirection: GradientDirection = GradientDirection.Top
-    @Publish var mlinearGradientColorAngle: Float64 = 0.0
-    @Publish var mlinearGradientColorRepeating: Bool = false
+    var atmosphericColor: Array<(Color, Float64)> = []
 
-    public func setLinearGradientColor(mlinearGradientColor: Array<(Color, Float64)>): WheelDatePickerModel {
-        this.mlinearGradientColor = mlinearGradientColor
-        return this
-    }
-    public func setLinearGradientDirection(mlinearGradientColorDirection: GradientDirection): WheelDatePickerModel {
-        this.mlinearGradientColorDirection = mlinearGradientColorDirection
-        return this
-    }
-    public func setLinearGradientAngle(mlinearGradientColorAngle: Float64): WheelDatePickerModel {
-        this.mlinearGradientColorAngle = mlinearGradientColorAngle
-        return this
-    }
-    public func setLinearGradientRepeating(mlinearGradientColorRepeating: Bool): WheelDatePickerModel {
-        this.mlinearGradientColorRepeating = mlinearGradientColorRepeating
-        return this
-    }
     public func setData(mData: Array<String>): WheelDatePickerModel {
         throw Exception("You can not invoke public func setData in WheelDatePicker")
     }
@@ -145,6 +125,11 @@ public class WheelDatePickerModel {
 
     public func setAtmospheric(hasAtmospheric: Bool): WheelDatePickerModel {
         this.hasAtmospheric = hasAtmospheric
+        return this
+    }
+
+    public func setAtmosphericColor(atmosphericColor: Array<(Color, Float64)>): WheelDatePickerModel {
+        this.atmosphericColor = atmosphericColor
         return this
     }
 

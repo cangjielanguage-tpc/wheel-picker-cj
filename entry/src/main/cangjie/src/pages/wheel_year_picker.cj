@@ -21,7 +21,6 @@ class MyWheelYearPicker {
 
     protected override func aboutToAppear() {
        this.showWheelYearPicker = this.showWheelYearPicker
-        .setAtmospheric(true)
         .setItemTextSize(15.0)
         .setTextHeight(20.0)
         .setItemAlign(HorizontalAlign.Center)
@@ -32,7 +31,6 @@ class MyWheelYearPicker {
         .setScrollBgColor(Color.WHITE) // 设置滚动组件的颜色
         .setYearRangeStart(1972)   // 设置开始年份
         .setYearRangeEnd(2025)     // 设置结束年份
-        .setAtmospheric(true)
         .setOnItemSelectedListener(MyOnItemSelectedListener())
         //.setCyclic(true)
     }
