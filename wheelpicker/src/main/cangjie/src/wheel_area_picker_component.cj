@@ -81,7 +81,7 @@ public class WheelAreaPicker {
 
     protected override func aboutToAppear() {
         this.model.updateVisibleItemCount()
-        this.scrollerProvinceIndex = Int64(this.model.mFirstSelectPosition)
+        this.scrollerProvinceIndex = (this.model.mFirstSelectPosition)
     }
 
     func build() {
