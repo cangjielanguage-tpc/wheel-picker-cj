@@ -172,12 +172,12 @@ public class WheelDatePickerModel {
         return this
     }
 
-    public func setYearStart(yearStart: Int64) {
+    public func setYearStart(yearStart: Int64): WheelDatePickerModel {
         this.yearRangeStart = yearStart
         return this
     }
 
-    public func setYearEnd(yearEnd: Int64) {
+    public func setYearEnd(yearEnd: Int64): WheelDatePickerModel {
         this.yearRangeEnd = yearEnd
         return this
     }

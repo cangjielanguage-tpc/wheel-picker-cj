@@ -24,8 +24,7 @@ public class WheelAreaPickerModel {
     var hasIndicator: Bool = true
     var hasAtmospheric: Bool = true
     var hasCurtain: Bool = true
-    var mFirstSelectPosition: Float64 = 0.0
-    private var mSelectedItemPosition: Float64 = 0.0
+    var mFirstSelectPosition: Int64 = 0
     var mAlign: HorizontalAlign = HorizontalAlign.Center
     var mHideArea = false
     var mProvinceName: String = ""
@@ -35,8 +34,9 @@ public class WheelAreaPickerModel {
 
     public init() {}
 
-    public func hideArea(): Unit {
+    public func hideArea(): WheelAreaPickerModel {
         this.mHideArea = true
+        return this
     }
 
     public func setData(mData: Array<String>): WheelAreaPickerModel {
@@ -60,17 +60,13 @@ public class WheelAreaPickerModel {
         return this.mAreaName
     }
 
-    public func setSelectedItemPosition(FirstSelectPosition: Float64): WheelAreaPickerModel {
+    public func setSelectedItemPosition(FirstSelectPosition: Int64): WheelAreaPickerModel {
         this.mFirstSelectPosition = FirstSelectPosition
         return this
     }
 
-    public func getSelectedItemPosition(): Float64 {
+    public func getSelectedItemPosition(): Int64 {
         return this.mFirstSelectPosition
-    }
-
-    public func getCurrentItemPosition(): Float64 {
-        return this.mSelectedItemPosition
     }
 
     public func setTextHeight(mTextHeight: Float64): WheelAreaPickerModel {
@@ -216,7 +212,7 @@ public class WheelAreaPickerModel {
 
     public func scrollInit(scroller: Scroller): Unit {
         if (!this.computeEnd) {
-            scroller.scrollTo(xOffset: 0.0, yOffset: this.mItemHeight * this.mFirstSelectPosition, duration: 1.0,
+            scroller.scrollTo(xOffset: 0.0, yOffset: this.mItemHeight * Float64(this.mFirstSelectPosition), duration: 1.0,
                 curve: Curve.Ease)
             this.computeEnd = true
         }

@@ -1,0 +1,11 @@
+﻿[
+    {
+        "Name": "WheelPicker",
+        "License": "Apache-2.0 License",
+        "License File": " LICENSE ",
+        "Version Number": "v1.1.3",
+        "Owner" : "xiafeng@huawei.com"
+        "Upstream URL": "https://github.com/AigeStudio/WheelPicker",
+        "Description": "WheelPicker提供各类型选择滚轮器"
+    }
+]
