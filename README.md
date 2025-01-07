@@ -1,5 +1,5 @@
 <div align="center">
-<h1>wheelPicker4cj</h1>
+<h1>wheel-picker-cj</h1>
 </div>
 
 <p align="center">
@@ -12,7 +12,7 @@
 
 ## 介绍
 
-wheelPicker4cj 可以实现滚轮选择，可以设置多种 UI 效果，实现的选择器有：时间选择器、地区选择器的三级联动、年、月、日选择器、自定义选择器。
+wheel-picker-cj 可以实现滚轮选择，可以设置多种 UI 效果，实现的选择器有：时间选择器、地区选择器的三级联动、年、月、日选择器、自定义选择器。
 
 <p align="left">
 <img src="./doc/assets/all.gif"  width="30%">
@@ -59,7 +59,7 @@ wheelPicker4cj 可以实现滚轮选择，可以设置多种 UI 效果，实现�
 │          │      ├─wheel_year_picker_model            # 年选择器数据配置构建类
 │          └─resources
 ├─hvigor     # 构建工具目录
-├─README.md  # wheelPicker4cj 介绍及使用说明
+├─README.md  # wheel-picker-cj 介绍及使用说明
 ```
 ## 接口说明
 
@@ -93,19 +93,19 @@ wheelPicker4cj 可以实现滚轮选择，可以设置多种 UI 效果，实现�
        ```cangjie
        import wheelpicker.*
        ```
-2. 把 wheelPicker4cj 作为三方库依赖引入
-    1. 目标工程把 wheelPicker4cj 依赖库作为 git submodule 引入
+2. 把 wheel-picker-cj 作为三方库依赖引入
+    1. 目标工程把 wheel-picker-cj 依赖库作为 git submodule 引入
 
     ```
     > cd $工程根目录
     > mkdir third-party
     > cd third-party
-    > git submodule add "https://gitcode.com/Cangjie-TPC/wheelPicker4cj.git"
+    > git submodule add "https://gitcode.com/Cangjie-TPC/wheel-picker-cj.git"
     ```
     2. 修改自身应用 entry/src/main/cangjie 下的 cjpm.toml 文件，添加依赖
     ```toml
     [dependencies]
-        wheelpicker = {path = "../../../../third-party/wheelPicker4cj/wheelpicker/src/main/cangjie", version = "1.0.0"}
+        wheelpicker = {path = "../../../../third-party/wheel-picker-cj/wheelpicker/src/main/cangjie", version = "1.0.0"}
      ```
     3. 在项目中使用 wheelpicker 组件
        ```cangjie
