@@ -21,7 +21,6 @@ class MyWheelMonthPicker {
 
     protected override func aboutToAppear() {
        this.showWheelMonthPicker = this.showWheelMonthPicker
-        .setAtmospheric(true)
         .setItemTextSize(15.0)
         .setTextHeight(30.0)
         .setVisibleItemCount(9)
@@ -31,9 +30,8 @@ class MyWheelMonthPicker {
         .setItemTextColor(Color.GRAY) // 设置数据的颜色
         .setSelectedItemTextColor(Color.BLACK) //设置选中的数据颜色
         .setScrollBgColor(Color.WHITE) // 设置滚动组件的颜色
-        .setAtmospheric(true)
         .setOnItemSelectedListener(MyOnItemSelectedListener())
-        .setCyclic(true)
+        .setCyclic(false)
     }
 
     func build() {

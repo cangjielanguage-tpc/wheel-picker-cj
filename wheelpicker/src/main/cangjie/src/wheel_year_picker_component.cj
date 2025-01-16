@@ -200,12 +200,14 @@ public class WheelYearPicker {
                 }
 
                 if (this.model.hasAtmospheric) {
-                    Flex(FlexParams(direction: FlexDirection.Column)).width(30.percent).height(this.model.mWheelHeight).
-                        linearGradient(
+                    Flex(FlexParams())
+                    .width(30.percent)
+                    .height(this.model.mWheelHeight)
+                    .linearGradient(
                         angle: 0.0,
                         direction: GradientDirection.Top,
-                        colors: [(Color(0xffE5DEEB), 0.0), (Color(0x00E5DEEB), 0.5), (Color(0xffE5DEEB), 1.0)]
-                    ).zIndex(-1)
+                        colors: this.model.atmosphericColor
+                    )
                 }
             }
         }

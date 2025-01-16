@@ -21,7 +21,6 @@ class MyWheelDayPicker {
 
     protected override func aboutToAppear() {
        this.showWheelDayPicker = this.showWheelDayPicker
-        .setAtmospheric(true)
         .setItemTextSize(15.0)
         .setTextHeight(30.0)
         .setVisibleItemCount(9)
@@ -31,7 +30,6 @@ class MyWheelDayPicker {
         .setItemTextColor(Color.GRAY) // 设置数据的颜色
         .setSelectedItemTextColor(Color.BLACK) //设置选中的数据颜色
         .setScrollBgColor(Color.WHITE) // 设置滚动组件的颜色
-        .setAtmospheric(true)
         .setOnItemSelectedListener(MyOnItemSelectedListener())
         .setCyclic(false)
         .setYearAndMonth(2024, 2)

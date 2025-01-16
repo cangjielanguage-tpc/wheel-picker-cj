@@ -271,12 +271,6 @@ public class WheelDatePicker {
                         }
                     }
                 }.height(this.model.mWheelHeight).backgroundColor(this.model.scrollBgColor).scrollBar(BarState.Off)
-                .linearGradient(
-                    angle: this.model.mlinearGradientColorAngle,
-                    direction: this.model.mlinearGradientColorDirection,
-                    colors: this.model.mlinearGradientColor,
-                    repeating: this.model.mlinearGradientColorRepeating
-                    )
                 .onScroll({
                     offset =>
                     let mOffset: Float64 = this.scrollerYear.currentOffset().yOffset
@@ -383,6 +377,18 @@ public class WheelDatePicker {
                         }
                     }.height(this.model.mItemHeight).enabled(false).backgroundColor(this.model.mCurtainColor).scrollBar(BarState.Off)
                 }
+
+                if (this.model.hasAtmospheric) {
+                    Flex(FlexParams())
+                    .width(30.percent)
+                    .height(this.model.mWheelHeight)
+                    .linearGradient(
+                        angle: 0.0,
+                        direction: GradientDirection.Top,
+                        colors: this.model.atmosphericColor
+                    )
+                }
+
             }
 
             //--------------------------------month--------------------------------------
@@ -399,12 +405,6 @@ public class WheelDatePicker {
                         }
                     }
                 }.height(this.model.mWheelHeight).backgroundColor(this.model.scrollBgColor).scrollBar(BarState.Off)
-                .linearGradient(
-                    angle: this.model.mlinearGradientColorAngle,
-                    direction: this.model.mlinearGradientColorDirection,
-                    colors: this.model.mlinearGradientColor,
-                    repeating: this.model.mlinearGradientColorRepeating
-                    )
                 .onScroll({
                     offset =>
                     let mOffset: Float64 = this.scrollerMonth.currentOffset().yOffset
@@ -512,6 +512,17 @@ public class WheelDatePicker {
                     }.height(this.model.mItemHeight).enabled(false).backgroundColor(this.model.mCurtainColor).scrollBar(
                         BarState.Off)
                 }
+
+                if (this.model.hasAtmospheric) {
+                    Flex(FlexParams())
+                    .width(30.percent)
+                    .height(this.model.mWheelHeight)
+                    .linearGradient(
+                        angle: 0.0,
+                        direction: GradientDirection.Top,
+                        colors: this.model.atmosphericColor
+                    )
+                }
             }
 
             //------------------------------------------------------day-------------------------------------------------------
@@ -528,12 +539,6 @@ public class WheelDatePicker {
                         }
                     }
                 }.height(this.model.mWheelHeight).backgroundColor(this.model.scrollBgColor).scrollBar(BarState.Off)
-                .linearGradient(
-                    angle: this.model.mlinearGradientColorAngle,
-                    direction: this.model.mlinearGradientColorDirection,
-                    colors: this.model.mlinearGradientColor,
-                    repeating: this.model.mlinearGradientColorRepeating
-                    )
                 .onScroll({
                     offset =>
                     let mOffset: Float64 = this.scrollerDay.currentOffset().yOffset
@@ -633,6 +638,17 @@ public class WheelDatePicker {
                             this.scrollDayIndex(this.model.mSelectedItemTextColor)
                         }
                     }.height(this.model.mItemHeight).enabled(false).backgroundColor(this.model.mCurtainColor).scrollBar(BarState.Off)
+                }
+
+                if (this.model.hasAtmospheric) {
+                    Flex(FlexParams())
+                    .width(30.percent)
+                    .height(this.model.mWheelHeight)
+                    .linearGradient(
+                        angle: 0.0,
+                        direction: GradientDirection.Top,
+                        colors: this.model.atmosphericColor
+                    )
                 }
             }
         }

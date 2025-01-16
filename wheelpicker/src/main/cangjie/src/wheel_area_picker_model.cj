@@ -3,40 +3,70 @@
  */
 package wheelpicker
 
+import ohos.state_manage.*
+import ohos.state_macro_manage.*
+
+@Observed
 public class WheelAreaPickerModel {
-    private var computeEnd: Bool = false
-    private var mTextHeight: Float64 = 30.0
+    var computeEnd: Bool = false
+    @Publish
+    var mTextHeight: Float64 = 30.0
+    @Publish
     var mSpace: Float64 = 8.0
-    var mItemHeight: Float64 = this.mTextHeight + 2.0 * this.mSpace
+    @Publish
+    var mItemHeight: Float64 = 0.0
+    @Publish
     var mVisibleItem: Int64 = 9
-    var mWheelHeight: Float64 = this.mItemHeight * Float64(this.mVisibleItem)
-    private var mCenterY: Float64 = this.mWheelHeight / 2.0
+    @Publish
+    var mWheelHeight: Float64 = 0.0
+    @Publish
     var mItemTextSize: Int64 = 16
+    @Publish
     var mItemTextColor: Color = Color(0x536D8A)
-    private var mTextMaxHeight: Int64 = 30
-    //var mSelectedItemTextColor: Color = Color(0xFAFAaa)
+    @Publish
+    var mTextMaxHeight: Int64 = 30
+    @Publish
     var mSelectedItemTextColor: Color = Color(0x00ff0000)
+    @Publish
     var mIndicatorSize: Int64 = 2
+    @Publish
     var mIndicatorColor: Color = Color.RED
+    @Publish
     var mCurtainColor: Color = Color.WHITE
-    var mHalfItemCount: Int64 = 4
+    @Publish
+    var mHalfItemCount: Int64 = 0
+    @Publish
     var mFontFamily: String = ""
+    @Publish
     var hasIndicator: Bool = true
-    var hasAtmospheric: Bool = true
+    @Publish
+    var hasAtmospheric: Bool = false
+    @Publish
     var hasCurtain: Bool = true
+    @Publish
     var mFirstSelectPosition: Int64 = 0
+    @Publish
     var mAlign: HorizontalAlign = HorizontalAlign.Center
+    @Publish
     var mHideArea = false
+    @Publish
     var mProvinceName: String = ""
+    @Publish
     var mCityName: String = ""
+    @Publish
     var mAreaName: String = ""
+    @Publish
     var scrollBgColor: Color = Color.WHITE
 
-    public init() {}
+    @Publish var solarLatestProvinceIndex: Int64 = 0
+    @Publish var solarLatestCityAndAreaIndex: Int64 = 0
+    @Publish var solarLatestAreaIndex: Int64 = 0
+    @Publish var atmosphericColor: Array<(Color, Float64)> = []
 
-    public func hideArea(): WheelAreaPickerModel {
+    var mOnAreaSelectedListener: ?OnAreaSelectedListener = None
+
+    public func hideArea(): Unit {
         this.mHideArea = true
-        return this
     }
 
     public func setData(mData: Array<String>): WheelAreaPickerModel {
@@ -150,6 +180,20 @@ public class WheelAreaPickerModel {
         return this
     }
 
+    public func setAtmospheric(hasAtmospheric: Bool): WheelAreaPickerModel {
+        this.hasAtmospheric = hasAtmospheric
+        return this
+    }
+
+    public func setAtmosphericColor(atmosphericColor: Array<(Color, Float64)>): WheelAreaPickerModel {
+        this.atmosphericColor = atmosphericColor
+        return this
+    }
+
+    public func hasAtmosphericShow(): Bool {
+        return this.hasAtmospheric
+    }
+
     public func getIndicatorColor(): Color {
         return this.mIndicatorColor
     }
@@ -170,15 +214,6 @@ public class WheelAreaPickerModel {
 
     public func getCurtainColor(): Color {
         return this.mCurtainColor
-    }
-
-    public func setAtmospheric(hasAtmospheric: Bool): WheelAreaPickerModel {
-        this.hasAtmospheric = hasAtmospheric
-        return this
-    }
-
-    public func hasAtmosphericShow(): Bool {
-        return this.hasAtmospheric
     }
 
     public func setItemAlign(align: HorizontalAlign): WheelAreaPickerModel {
@@ -206,15 +241,13 @@ public class WheelAreaPickerModel {
         if (this.mVisibleItem % 2 == 0) {
             this.mVisibleItem += 1
         }
+        this.mItemHeight = this.mTextHeight + 2.0 * this.mSpace
+        this.mHalfItemCount = (this.mVisibleItem - 1) / 2
         this.mWheelHeight = Float64(this.mVisibleItem) * this.mItemHeight
-        this.mCenterY = this.mWheelHeight / 2.0
     }
 
-    public func scrollInit(scroller: Scroller): Unit {
-        if (!this.computeEnd) {
-            scroller.scrollTo(xOffset: 0.0, yOffset: this.mItemHeight * Float64(this.mFirstSelectPosition), duration: 1.0,
-                curve: Curve.Ease)
-            this.computeEnd = true
-        }
+    public func setOnAreaSelectedListener(listener: ?OnAreaSelectedListener): WheelAreaPickerModel {
+        this.mOnAreaSelectedListener = listener;
+        return this
     }
 }

@@ -23,9 +23,9 @@ public class WheelDayPickerModel {
     var mCurtainColor: Color = Color.WHITE
     var mHalfItemCount: Int64 = (this.mVisibleItem - 1) / 2
     var mFontFamily: String = ""
-    var isCyslic: Bool = true
+    var isCyslic: Bool = false
     var hasIndicator: Bool = true
-    var hasAtmospheric: Bool = true
+    var hasAtmospheric: Bool = false
     var hasCurtain: Bool = true
     var mSelectedItemPosition: Int64 = 0
     var mAlign: HorizontalAlign = HorizontalAlign.Center
@@ -35,6 +35,7 @@ public class WheelDayPickerModel {
     var mData: Array<Int64>
     var scrollBgColor: Color = Color.WHITE
     var mOnItemSelectedListener: ?OnItemSelectedListener = None
+    var atmosphericColor: Array<(Color, Float64)> = []
 
     public init() {
         let res: Int64 = monthDays(2024, 1)
@@ -174,6 +175,11 @@ public class WheelDayPickerModel {
 
     public func setAtmospheric(hasAtmospheric: Bool): WheelDayPickerModel {
         this.hasAtmospheric = hasAtmospheric
+        return this
+    }
+
+    public func setAtmosphericColor(atmosphericColor: Array<(Color, Float64)>): WheelDayPickerModel {
+        this.atmosphericColor = atmosphericColor
         return this
     }
 

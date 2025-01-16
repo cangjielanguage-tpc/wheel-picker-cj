@@ -25,9 +25,9 @@ public class WheelMonthPickerModel {
     var mCurtainColor: Color = Color.WHITE
     var mHalfItemCount: Int64 = (this.mVisibleItem - 1) / 2
     var mFontFamily: String = ""
-    var isCyslic: Bool = true
+    var isCyslic: Bool = false
     var hasIndicator: Bool = true
-    var hasAtmospheric: Bool = true
+    var hasAtmospheric: Bool = false
     var hasCurtain: Bool = true
     var mFirstSelectPosition: Int64 = 0
     var mSelectedItemPosition: Int64 = 0
@@ -38,6 +38,7 @@ public class WheelMonthPickerModel {
     var scroller1: Scroller = Scroller()
     var scrollBgColor: Color = Color.WHITE
     var mOnItemSelectedListener: ?OnItemSelectedListener = None
+    var atmosphericColor: Array<(Color, Float64)> = []
 
     public init() {}
 
@@ -182,6 +183,11 @@ public class WheelMonthPickerModel {
 
     public func setAtmospheric(hasAtmospheric: Bool): WheelMonthPickerModel {
         this.hasAtmospheric = hasAtmospheric
+        return this
+    }
+
+    public func setAtmosphericColor(atmosphericColor: Array<(Color, Float64)>): WheelMonthPickerModel {
+        this.atmosphericColor = atmosphericColor
         return this
     }
 

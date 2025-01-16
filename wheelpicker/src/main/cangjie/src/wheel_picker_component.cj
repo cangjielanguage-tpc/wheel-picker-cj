@@ -113,12 +113,6 @@ public class WheelPicker {
                 .height(this.model.mWheelHeight)
                 .backgroundColor(this.model.scrollBgColor)
                 .scrollBar(BarState.Off)
-                .linearGradient(
-                    angle: this.model.mlinearGradientColorAngle,
-                    direction: this.model.mlinearGradientColorDirection,
-                    colors: this.model.mlinearGradientColor,
-                    repeating: this.model.mlinearGradientColorRepeating
-                 )
                 .onTouch({ event =>
                     match (event.eventType) {
                     	case TouchType.Up => this.scrollSwitch = true
@@ -237,6 +231,17 @@ public class WheelPicker {
                     .enabled(false)
                     .backgroundColor(this.model.mCurtainColor)
                     .scrollBar(BarState.Off)
+                }
+
+                if (this.model.hasAtmospheric) {
+                    Flex(FlexParams())
+                    .width(30.percent)
+                    .height(this.model.mWheelHeight)
+                    .linearGradient(
+                        angle: 0.0,
+                        direction: GradientDirection.Top,
+                        colors: this.model.atmosphericColor
+                    )
                 }
 
             }

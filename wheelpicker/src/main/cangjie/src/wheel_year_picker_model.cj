@@ -40,7 +40,7 @@ public class WheelYearPickerModel {
 
     var hasIndicator: Bool = true
 
-    var hasAtmospheric: Bool = true
+    var hasAtmospheric: Bool = false
 
     var hasCurtain: Bool = true
 
@@ -59,6 +59,8 @@ public class WheelYearPickerModel {
     var scrollBgColor: Color = Color.WHITE
 
     var mOnItemSelectedListener: ?OnItemSelectedListener = None
+
+    var atmosphericColor: Array<(Color, Float64)> = []
 
     public init(){}
 
@@ -193,6 +195,11 @@ public class WheelYearPickerModel {
 
     public func setAtmospheric(hasAtmospheric: Bool): WheelYearPickerModel {
         this.hasAtmospheric = hasAtmospheric
+        return this
+    }
+
+    public func setAtmosphericColor(atmosphericColor: Array<(Color, Float64)>): WheelYearPickerModel {
+        this.atmosphericColor = atmosphericColor
         return this
     }
 

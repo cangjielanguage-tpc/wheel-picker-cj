@@ -39,7 +39,8 @@ public class WheelPickerModel {
     @Publish
     var isCyslic: Bool = false
     var hasIndicator: Bool = true
-    var hasAtmospheric: Bool = true
+    var hasAtmospheric: Bool = false
+    var atmosphericColor: Array<(Color, Float64)> = []
     var hasCurtain: Bool = true
     @Publish
     var mFirstSelectPosition: Int64 = 0
@@ -59,36 +60,10 @@ public class WheelPickerModel {
     @Publish
     var scroller1: Scroller = Scroller()
 
-    //颜色渐变
-    @Publish
-    var mlinearGradientColor: Array<(Color, Float64)> = [(Color.WHITE, 0.0)]
-    @Publish
-    var mlinearGradientColorDirection: GradientDirection = GradientDirection.Top
-    @Publish
-    var mlinearGradientColorAngle: Float64 = 0.0
-    @Publish
-    var mlinearGradientColorRepeating: Bool = false
-
     @Publish
     var mSelectDataShow: (text: String) -> Unit = {text: String =>}
 
     //--------------------------set---------------------------------
-    public func setLinearGradientColor(mlinearGradientColor: Array<(Color, Float64)>): WheelPickerModel {
-        this.mlinearGradientColor = mlinearGradientColor
-        return this
-    }
-    public func setLinearGradientDirection(mlinearGradientColorDirection: GradientDirection): WheelPickerModel {
-        this.mlinearGradientColorDirection = mlinearGradientColorDirection
-        return this
-    }
-    public func setLinearGradientAngle(mlinearGradientColorAngle: Float64): WheelPickerModel {
-        this.mlinearGradientColorAngle = mlinearGradientColorAngle
-        return this
-    }
-    public func setLinearGradientRepeating(mlinearGradientColorRepeating: Bool): WheelPickerModel {
-        this.mlinearGradientColorRepeating = mlinearGradientColorRepeating
-        return this
-    }
 
     public func setScrollBgColor(scrollBgColor: Color): WheelPickerModel {
         this.scrollBgColor = scrollBgColor
@@ -179,6 +154,20 @@ public class WheelPickerModel {
     public func setFontFamily(fontFamily: String): WheelPickerModel {
         this.mFontFamily = fontFamily
         return this
+    }
+
+    public func setAtmospheric(hasAtmospheric: Bool): WheelPickerModel {
+        this.hasAtmospheric = hasAtmospheric
+        return this
+    }
+
+    public func setAtmosphericColor(atmosphericColor: Array<(Color, Float64)>): WheelPickerModel {
+        this.atmosphericColor = atmosphericColor
+        return this
+    }
+
+    public func hasAtmosphericShow(): Bool {
+        return this.hasAtmospheric
     }
 
     //---------------------------------------get---------------------------------
