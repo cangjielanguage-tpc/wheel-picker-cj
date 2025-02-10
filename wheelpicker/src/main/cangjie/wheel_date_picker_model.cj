@@ -158,12 +158,22 @@ public class WheelDatePickerModel {
     }
 
     public func setYearStart(yearStart: Int64): WheelDatePickerModel {
+        if(yearStart > this.yearRangeEnd) {
+            this.yearRangeStart = this.yearRangeEnd - 1
+        } else {
+            this.yearRangeStart = yearStart
+        }
         this.yearRangeStart = yearStart
         return this
     }
 
     public func setYearEnd(yearEnd: Int64): WheelDatePickerModel {
-        this.yearRangeEnd = yearEnd
+        if(yearEnd <= this.yearRangeStart) {
+            this.yearRangeEnd = this.yearRangeStart + 1
+        } else {
+            this.yearRangeEnd = yearEnd + 1
+        }
+
         return this
     }
 

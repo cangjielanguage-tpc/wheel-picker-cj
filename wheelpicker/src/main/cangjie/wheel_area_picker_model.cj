@@ -91,7 +91,12 @@ public class WheelAreaPickerModel {
     }
 
     public func setSelectedItemPosition(FirstSelectPosition: Int64): WheelAreaPickerModel {
-        this.mFirstSelectPosition = FirstSelectPosition
+        if(FirstSelectPosition < 0) {
+            this.mFirstSelectPosition = 0
+        } else {
+            this.mFirstSelectPosition = FirstSelectPosition
+        }
+
         return this
     }
 
@@ -140,7 +145,12 @@ public class WheelAreaPickerModel {
     }
 
     public func setItemTextSize(size: Int64): WheelAreaPickerModel {
-        this.mItemTextSize = size
+        let maxSize = (Int64(this.mTextHeight) * 2) / 3
+        if(Float64(size) >= this.mTextHeight) {
+            this.mItemTextSize = maxSize
+        } else {
+            this.mItemTextSize = size
+        }
         return this
     }
 

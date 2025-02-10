@@ -74,7 +74,7 @@ public class WheelAreaPickerModel {
     public func setItemTextColor(color: Color): WheelAreaPickerModel
 
     /**
-     * 设置文本数据的大小，默认 16
+     * 设置文本数据的大小，默认 16,最大为 (setTextHeight * 2) / 3
      * 
      * 参数 size - 文本数据的大小
      * 返回 WheelAreaPickerModel - 地区选择器数据对象
@@ -493,7 +493,7 @@ public class WheelDatePickerModel {
     public func setFontFamily(fontFamily: String): WheelDatePickerModel
 
     /**
-     * 设置年选择项开始年份
+     * 设置年选择项开始年份,开始年份应该 <= 结束年份
      * 
      * 参数 yearStart - 年选择项开始年份
      * 返回 WheelDatePickerModel - 日期选择器数据对象
@@ -501,7 +501,7 @@ public class WheelDatePickerModel {
     public func setYearStart(yearStart: Int64): WheelDatePickerModel
 
     /**
-     * 设置年选择项结束年份
+     * 设置年选择项结束年份,若结束年份 <= 开始年份，则只显示开始年份
      * 
      * 参数 yearEnd - 年选择项结束年份
      * 返回 WheelDatePickerModel - 日期选择器数据对象
@@ -1978,7 +1978,7 @@ public class WheelDayPickerModel {
     public init()
 
     /**
-     * 设置年和月
+     * 设置年和月，年份 <= 0，默认 1949；月份 <= 0 默认 1
      * 
      * 参数 year - 年份
      * 参数 month - 月份
@@ -2242,7 +2242,7 @@ public class WheelDayPickerModel {
     public func getFontFamily(): String
 
     /**
-     * 设置选项的初始位置，默认 0
+     * 设置选项的初始位置，默认 0,若 < 0 ,默认 为 0
      * 
      * 参数 SelectPosition - 选项的初始位置
      * 返回 WheelAreaPickerModel - 日选择器数据对象

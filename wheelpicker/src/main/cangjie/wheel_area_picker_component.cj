@@ -244,7 +244,7 @@ public class WheelAreaPicker {
                                         .padding(this.model.mSpace)
                                 }
                             )
-                        }.alignItems(this.model.mAlign)
+                        }.width(100.percent).alignItems(this.model.mAlign)
                     }.height(this.model.mItemHeight)
                     .enabled(false)
                     .backgroundColor(this.model.scrollBgColor)
@@ -386,7 +386,7 @@ public class WheelAreaPicker {
                                     }
                                 }
                             )
-                        }.alignItems(this.model.mAlign)
+                        }.width(100.percent).alignItems(this.model.mAlign)
                     }.height(this.model.mItemHeight)
                     .enabled(false)
                     .backgroundColor(this.model.scrollBgColor)
@@ -533,7 +533,7 @@ public class WheelAreaPicker {
                                         }
                                     }
                                 )
-                            }.alignItems(this.model.mAlign)
+                            }.width(100.percent).alignItems(this.model.mAlign)
                         }.height(this.model.mItemHeight)
                         .enabled(false)
                         .backgroundColor(this.model.scrollBgColor)
