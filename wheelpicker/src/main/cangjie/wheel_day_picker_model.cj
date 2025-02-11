@@ -36,9 +36,11 @@ public class WheelDayPickerModel {
     var scrollBgColor: Color = Color.WHITE
     var mOnItemSelectedListener: ?OnItemSelectedListener = None
     var atmosphericColor: Array<(Color, Float64)> = []
+    var year: Int64 = 1049
+    var month: Int64 = 1
 
     public init() {
-        let res: Int64 = monthDays(2024, 1)
+        let res: Int64 = monthDays(this.year, this.month)
         this.mData = Array<Int64>(res, { item => item + 1})
     }
 
@@ -47,7 +49,13 @@ public class WheelDayPickerModel {
     }
 
     public func setYearAndMonth(year: Int64, month: Int64): WheelDayPickerModel {
-        let res: Int64 = monthDays(year, month)
+        if(year <= 0) {
+            this.year = 1949
+        }
+        if(month <= 0) {
+            this.month = 1
+        }
+        let res: Int64 = monthDays(this.year, this.month)
         this.mData = Array<Int64>(res, { item => item + 1})
         return this
     }
