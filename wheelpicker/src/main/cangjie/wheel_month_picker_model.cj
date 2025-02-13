@@ -79,7 +79,12 @@ public class WheelMonthPickerModel {
     }
 
     public func setVisibleItemCount(count: Int64): WheelMonthPickerModel {
-        this.mVisibleItem = count
+        if(count > 6) {
+            this.mVisibleItem = 6
+        } else {
+            this.mVisibleItem = count
+        }
+
         return this
     }
 

@@ -91,7 +91,13 @@ public class WheelYearPickerModel {
     }
 
     public func setVisibleItemCount(count: Int64): WheelYearPickerModel {
-        this.mVisibleItem = count
+        let size: Int64 = (this.yearRangeEnd - this.yearRangeStart) / 2
+        if(count > size) {
+            this.mVisibleItem = size
+        } else {
+            this.mVisibleItem = count
+        }
+
         return this
     }
 

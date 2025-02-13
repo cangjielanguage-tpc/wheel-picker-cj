@@ -24,10 +24,13 @@ public class WheelDatePicker {
     var yearChangeIndex: Int64 = 0
     @State
     var monthChangeIndex: Int64 = 0
+    @State
+    var dayChangeIndex: Int64 = 0
 
-    private var lastYearPosition: Float64 = 0.0
-    private var lastMonthPosition: Float64 = 0.0
-    private var lastDayPosition: Float64 = 0.0
+    @State var lastYearPosition: Float64 = 0.0
+    @State var lastMonthPosition: Float64 = 0.0
+    @State var lastDayPosition: Float64 = 0.0
+
     var scrollerYear: Scroller = Scroller()
     var scrollerMonth: Scroller = Scroller()
     var scrollerDay: Scroller = Scroller()
@@ -180,6 +183,11 @@ public class WheelDatePicker {
 
     protected override func aboutToAppear() {
         this.YearsArray = initializeSolarCalendar(this.model.yearRangeStart, this.model.yearRangeEnd)
+        this.yearChangeIndex = this.model.mFirstSelectYearPosition
+        this.monthChangeIndex = this.model.mFirstSelectMonthPosition
+        this.dayChangeIndex = this.model.mFirstSelectDayPosition
+
+        this.model.updateVisibleItemCount()
 
         Timer.once(
             Duration.millisecond * 100,
@@ -256,6 +264,17 @@ public class WheelDatePicker {
         return
     }
 
+    protected override func aboutToDisappear() {
+        if (this.model.isCyslic) {
+            this.yearChange = (this.model.solarLatestYearIndex) % this.YearsArray.size
+            this.dayChange = (this.model.solarLatestDayIndex + this.model.mHalfItemCount) % this.YearsArray[this.yearChange].monthAndDay[(this.model.solarLatestMonthIndex)%12].days.size
+
+            this.model.mDate = "${this.YearsArray[this.yearChange].year}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[(this.model.solarLatestMonthIndex)%12].month}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[(this.model.solarLatestMonthIndex + this.model.mHalfItemCount)%12].days[this.dayChange]}"
+        } else {
+            this.model.mDate = "${this.YearsArray[this.model.solarLatestYearIndex].year}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].month}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days[this.model.solarLatestDayIndex]}"
+        }
+    }
+
     func build() {
         Row() {
             //--------------------------------Year--------------------------------------
@@ -315,7 +334,12 @@ public class WheelDatePicker {
                             curve: Curve.Linear
                         )
                     }
+                    let lastDaySize: Int64 = this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days.size
 
+                    if(this.model.solarLatestMonthIndex == 1 && (Float64(lastDaySize) * (this.model.mTextHeight + 2.0 * this.model.mSpace)) == this.lastDayPosition) {
+                        this.model.solarLatestDayIndex = lastDaySize - 1
+                    }
+                        
                     if (this.model.isCyslic) {
                         this.yearChange = (this.model.solarLatestYearIndex + this.model.mHalfItemCount) % this.YearsArray.size
                         this.monthChange = (this.model.solarLatestMonthIndex + this.model.mHalfItemCount)%12
@@ -324,9 +348,10 @@ public class WheelDatePicker {
                         this.yearChangeIndex = this.yearChange
                         this.monthChangeIndex = this.monthChange
                      } else {
-                        this.model.mDate = "${this.YearsArray[this.model.solarLatestYearIndex].year}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].month}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days[this.model.solarLatestDayIndex]}"
                         this.yearChangeIndex = this.model.solarLatestYearIndex
                         this.monthChangeIndex = this.model.solarLatestMonthIndex
+                        this.model.mDate = "${this.YearsArray[this.model.solarLatestYearIndex].year}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].month}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days[this.model.solarLatestDayIndex]}"
+
                     }
 
                 })
@@ -463,14 +488,15 @@ public class WheelDatePicker {
                         this.monthChangeIndex = this.monthChange
                    } else {
                         // 处理 所选月份的天数小于之前INDEX
-                        let dayLength: Int64 = this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[(this.model.solarLatestMonthIndex + this.model.mHalfItemCount)%12].days.size - 1
+                        let dayLength: Int64 = this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[(this.model.solarLatestMonthIndex)].days.size - 1
                         if (this.model.solarLatestDayIndex > dayLength) {
-                            this.model.solarLatestDayIndex = dayLength;
+                            this.model.solarLatestDayIndex = dayLength
                         }
                         this.yearChangeIndex = this.model.solarLatestYearIndex
                         this.monthChangeIndex = this.model.solarLatestMonthIndex
                         this.model.mDate = "${this.YearsArray[this.model.solarLatestYearIndex].year}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].month}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days[this.model.solarLatestDayIndex]}"
                    }
+
 
                 })
                 .onScrollEdge({

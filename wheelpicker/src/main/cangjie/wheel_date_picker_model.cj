@@ -56,8 +56,10 @@ public class WheelDatePickerModel {
         if(mTextHeight > 30.0) {
             this.mTextHeight = 30.0
             Hilog.error(0,"WheelPicker4cj","The maximum text height is 30")
+        } else {
+            this.mTextHeight = mTextHeight
         }
-        this.mTextHeight = mTextHeight
+
         return this
     }
 
@@ -65,8 +67,15 @@ public class WheelDatePickerModel {
         if(count < 7) {
             this.mVisibleItem = 7
             Hilog.error(0, "WheelPicker4cj","The minimum count is 7")
+            return this
         }
-        this.mVisibleItem = count
+        let size: Int64 = (this.yearRangeEnd - this.yearRangeStart) / 2
+        if(count > size) {
+            this.mVisibleItem = size
+        } else {
+            this.mVisibleItem = count
+        }
+
         return this
     }
 
@@ -95,7 +104,11 @@ public class WheelDatePickerModel {
     }
 
     public func setItemSpace(space: Float64): WheelDatePickerModel {
-        this.mSpace = space
+        if(space > this.mTextHeight) {
+            this.mSpace = this.mTextHeight
+        } else {
+            this.mSpace = space
+        }
         return this
     }
 
@@ -178,18 +191,39 @@ public class WheelDatePickerModel {
     }
 
     public func setSelectedYear(mFirstSelectYearPosition: Int64): WheelDatePickerModel {
-        this.mFirstSelectYearPosition = mFirstSelectYearPosition
+        if(mFirstSelectYearPosition < 0) {
+            this.mFirstSelectYearPosition = 0
+        } else if(mFirstSelectYearPosition > (this.yearRangeEnd - this.yearRangeStart)) {
+            this.mFirstSelectYearPosition = (this.yearRangeEnd - this.yearRangeStart)
+        } else {
+            this.mFirstSelectYearPosition = mFirstSelectYearPosition
+        }
+
         return this
     }
 
     public func setSelectedMonth(mFirstSelectMonthPosition: Int64): WheelDatePickerModel {
-        this.mFirstSelectMonthPosition = mFirstSelectMonthPosition
+        if(mFirstSelectMonthPosition < 0) {
+            this.mFirstSelectMonthPosition = 0
+        } else if(mFirstSelectMonthPosition >= 11) {
+            this.mFirstSelectMonthPosition = 11
+        } else {
+            this.mFirstSelectMonthPosition = mFirstSelectMonthPosition
+        }
         return this
     }
 
     public func setSelectedDay(mFirstSelectDayPosition: Int64): WheelDatePickerModel {
-        this.mFirstSelectDayPosition = mFirstSelectDayPosition
-
+        let yearRange: Array<Int64> = Array<Int64>((this.yearRangeEnd - yearRangeStart), {i => yearRangeStart + i})
+        let monthRange: Array<Int64> = Array<Int64>(12, {i => 1 + i})
+        let day: Int64 = monthDays(yearRange[this.mFirstSelectYearPosition], monthRange[this.mFirstSelectMonthPosition])
+        if(mFirstSelectDayPosition < 0) {
+            this.mFirstSelectDayPosition = 0
+        } else if(mFirstSelectDayPosition >= day) {
+            this.mFirstSelectDayPosition = day - 1
+        } else {
+            this.mFirstSelectDayPosition = mFirstSelectDayPosition
+        }
         return this
     }
     public func getSelectedItemTextColor(): Color {
