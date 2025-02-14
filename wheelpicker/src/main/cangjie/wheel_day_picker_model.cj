@@ -88,7 +88,13 @@ public class WheelDayPickerModel {
     }
 
     public func setVisibleItemCount(count: Int64): WheelDayPickerModel {
-        this.mVisibleItem = count
+        let size: Int64 = monthDays(this.year, this.month) / 2
+        if(count > size) {
+            this.mVisibleItem = size
+        } else {
+            this.mVisibleItem = count
+        }
+
         return this
     }
 
@@ -268,7 +274,7 @@ public class WheelDayPickerModel {
     }
 }
 
-func monthDays(year: Int64, month: Int64): Int64 {
+public func monthDays(year: Int64, month: Int64): Int64 {
     match (month) {
         case 1 | 3 | 5 | 7 | 8 | 10 | 12 => return 31
         case 2 => if (year % 4 == 0) { //闰年

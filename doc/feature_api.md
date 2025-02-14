@@ -50,7 +50,7 @@ public class WheelAreaPickerModel {
     public func setTextHeight(mTextHeight: Float64): WheelAreaPickerModel
 
     /**
-     * 设置滚动选择器可见个数，默认 9
+     * 设置滚动选择器可见个数，默认 9,若设置的个数 > 总数据 / 2 ,count 默认为 总数据 /2
      * 
      * 参数 count - 滚动选择器可见个数
      * 返回 WheelAreaPickerModel - 地区选择器数据对象
@@ -381,7 +381,7 @@ public class WheelDatePickerModel {
     public func setTextHeight(mTextHeight: Float64): WheelDatePickerModel
 
     /**
-     * 设置滚动选择器可见个数，默认 9
+     * 设置滚动选择器可见个数，默认 9，若设置的个数 > 总数据 / 2 ,count 默认为 总数据 /2
      * 
      * 参数 count - 滚动选择器可见个数
      * 返回 WheelDatePickerModel - 日期选择器数据对象
@@ -421,7 +421,7 @@ public class WheelDatePickerModel {
     public func setItemTextSize(size: Int64): WheelDatePickerModel
     
     /**
-     * 设置列表数据上下间隔，默认 8.0
+     * 设置列表数据上下间隔，默认 8.0, 最大值不超过文本数据高度 
      * 
      * 参数 space - 列表数据上下间隔
      * 返回 WheelDatePickerModel - 日期选择器数据对象
@@ -511,7 +511,7 @@ public class WheelDatePickerModel {
     /**
      * 设置年选择项开始位置索引
      * 
-     * 参数 yearEnd - 年选择项开始位置索引
+     * 参数 yearEnd - 年选择项开始位置索引，若开始位置 < 0,默认 0
      * 返回 WheelDatePickerModel - 日期选择器数据对象
      */
     public func setSelectedYear(mFirstSelectYearPosition: Int64): WheelDatePickerModel
@@ -519,7 +519,7 @@ public class WheelDatePickerModel {
     /**
      * 设置月选择项开始位置索引
      * 
-     * 参数 yearEnd - 月选择项结束位置
+     * 参数 yearEnd - 月选择项开始位置，若开始位置 < 0,默认 0
      * 返回 WheelDatePickerModel - 日期选择器数据对象
      */
     public func setSelectedMonth(mFirstSelectMonthPosition: Int64): WheelDatePickerModel
@@ -527,7 +527,7 @@ public class WheelDatePickerModel {
     /**
      * 设置日选择项开始位置索引
      * 
-     * 参数 yearEnd - 日选择项开始位置索引
+     * 参数 yearEnd - 日选择项开始位置索引，若开始位置 < 0,默认 0
      * 返回 WheelDatePickerModel - 日期选择器数据对象
      */
     public func setSelectedDay(mFirstSelectDayPosition: Int64): WheelDatePickerModel
@@ -863,7 +863,7 @@ public class WheelPickerModel {
     public func setTextHeight(mTextHeight: Float64): WheelPickerModel
 
     /**
-     * 设置滚动选择器可见个数，默认 9
+     * 设置滚动选择器可见个数，默认 9，若设置的个数 > 总数据 / 2 ,count 默认为 总数据 /2
      * 
      * 参数 count - 滚动选择器可见个数
      * 返回 WheelDatePickerModel - 自定义选择器数据对象
@@ -1299,7 +1299,7 @@ public class WheelYearPickerModel {
     public func getTextHeight(mTextHeight: Float64): Float64
 
     /**
-     * 设置滚动选择器可见个数，默认 9
+     * 设置滚动选择器可见个数，默认 9，若设置的个数 > 总数据 / 2 ,count 默认为 总数据 /2
      * 
      * 参数 count - 滚动选择器可见个数
      * 返回 WheelAreaPickerModel - 年选择器数据对象
@@ -1675,7 +1675,7 @@ public class WheelMonthPickerModel {
     public func getTextHeight(mTextHeight: Float64): Float64 
 
     /**
-     * 设置滚动选择器可见个数，默认 9
+     * 设置滚动选择器可见个数，默认 9，若设置的个数 > 总数据 / 2 ,count 默认为 总数据 /2
      * 
      * 参数 count - 滚动选择器可见个数
      * 返回 WheelAreaPickerModel - 月选择器数据对象
@@ -2032,7 +2032,7 @@ public class WheelDayPickerModel {
     public func getTextHeight(mTextHeight: Float64): Float64 
 
     /**
-     * 设置滚动选择器可见个数，默认 9
+     * 设置滚动选择器可见个数，默认 9，若设置的个数 > 总数据 / 2 ,count 默认为 总数据 /2
      * 
      * 参数 count - 滚动选择器可见个数
      * 返回 WheelAreaPickerModel - 日选择器数据对象

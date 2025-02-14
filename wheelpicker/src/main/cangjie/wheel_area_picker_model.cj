@@ -64,6 +64,7 @@ public class WheelAreaPickerModel {
     @Publish var atmosphericColor: Array<(Color, Float64)> = []
 
     var mOnAreaSelectedListener: ?OnAreaSelectedListener = None
+    private var provinceArrayModel: ArrayList<Province> = initializeProvinceOnStartup()
 
     public func hideArea(): Unit {
         this.mHideArea = true
@@ -114,7 +115,13 @@ public class WheelAreaPickerModel {
     }
 
     public func setVisibleItemCount(count: Int64): WheelAreaPickerModel {
-        this.mVisibleItem = count
+        let size: Int64 = provinceArrayModel.size / 2
+        if(count > size) {
+            this.mVisibleItem = size
+        } else {
+            this.mVisibleItem = count
+        }
+
         return this
     }
 

@@ -99,7 +99,13 @@ public class WheelPickerModel {
             this.mVisibleItem = 7
             Hilog.error(0, "WheelPicker4cj", "The minimum count is 7")
         }
-        this.mVisibleItem = count
+        let size: Int64 = this.mData.size / 2
+        if(count > size) {
+            this.mVisibleItem = size
+        } else {
+            this.mVisibleItem = count
+        }
+
         return this
     }
 
