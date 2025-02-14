@@ -352,8 +352,9 @@ public class WheelAreaPicker {
                 )
                 .onScrollEdge(
                     {
-                    edge => this.scrollerProvinceIndex = Int64(this.scrollerCity.currentOffset().yOffset / this.model.
-                            mItemHeight)
+                    edge =>
+                        this.scrollerCityIndex = Int64(this.scrollerCity.currentOffset().yOffset / this.model.mItemHeight)
+                        this.AreaArrayState = this.provinceArray[this.scrollerProvinceIndex].cityAndArea[this.scrollerCityIndex].area
                 })
 
                 if (this.model.hasIndicator) {
