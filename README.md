@@ -89,6 +89,13 @@ wheel-picker-cj 可以实现滚轮选择，可以设置多种 UI 效果，实现
        [dependencies]
            wheelpicker = {path = "../../../../wheelpicker/src/main/cangjie", version = "1.0.0"}
        ```
+       或
+        ```toml
+       [dependencies]
+            [dependencies.wheelpicker]
+               path = "../../../../wheelpicker/src/main/cangjie"
+               version = "1.0.0"
+       ```
     5. 在项目中使用 import wheelpicker.* 引用 wheelpicker 项目
        ```cangjie
        import wheelpicker.*
@@ -107,6 +114,13 @@ wheel-picker-cj 可以实现滚轮选择，可以设置多种 UI 效果，实现
     [dependencies]
         wheelpicker = {path = "../../../../third-party/wheel-picker-cj/wheelpicker/src/main/cangjie", version = "1.0.0"}
      ```
+   或
+    ```toml
+   [dependencies]
+        [dependencies.wheelpicker]
+           path = "../../../../third-party/wheel-picker-cj/wheelpicker/src/main/cangjie"
+           version = "1.0.0"
+   ```
     3. 在项目中使用 wheelpicker 组件
        ```cangjie
        import wheelpicker.*
@@ -352,8 +366,8 @@ class MyWheelPicker {
 
 在下述版本验证通过：
 
-    DevEco Studio 5.0.2 Release(5.0.7.200) 
-    Cangjie Support Plugin 5.0.7.100
+    DevEco Studio 5.0.9.300
+    Cangjie Support Plugin 5.0.9.100
 
 1. 由于 `cangjieUI` 标准库未提供通用属性 `hitTestBehavior`,所以设置空气感效果后滚动选择器滚动效果失效；
 
