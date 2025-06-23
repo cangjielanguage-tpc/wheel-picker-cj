@@ -5,7 +5,7 @@
 <p align="center">
 <img alt="" src="https://img.shields.io/badge/release-v0.0.1-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/build-pass-brightgreen" style="display: inline-block;" />
-<img alt="" src="https://img.shields.io/badge/cjc-v0.53.18-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjc-v0.53.20-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/cjcov-NA-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/project-open-brightgreen" style="display: inline-block;" />
 </p>
@@ -366,8 +366,8 @@ class MyWheelPicker {
 
 在下述版本验证通过：
 
-    DevEco Studio 5.0.9.300
-    Cangjie Support Plugin 5.0.9.100
+    DevEco Studio 5.0.13.200
+    Cangjie Support Plugin 5.0.13.200
 
 1. 由于 `cangjieUI` 标准库未提供通用属性 `hitTestBehavior`,所以设置空气感效果后滚动选择器滚动效果失效；
 
