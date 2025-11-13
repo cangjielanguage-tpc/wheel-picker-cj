@@ -2,6 +2,7 @@
  * Copyright (c) Huawei Technologies Co., Ltd. 2024-2024. All rights reserved.
  */
 package wheelpicker
+import ohos.state_macro_manage.Publish
 
 public class WheelYearPickerModel {
     var computeEnd: Bool = false
@@ -65,7 +66,8 @@ public class WheelYearPickerModel {
     public init(){}
 
     public func setData(mData: Array<String>): WheelYearPickerModel {
-        throw Exception("You can not invoke setData in WheelAreaPicker")
+        Hilog.info(0,"setData","setData mData:${mData.size}")
+        return this
     }
 
     public func setSelectDays(FirstSelectPosition: Int64): WheelYearPickerModel {
@@ -82,11 +84,15 @@ public class WheelYearPickerModel {
     }
 
     public func setTextHeight(mTextHeight: Float64): WheelYearPickerModel {
+        if(mTextHeight <= 0.0){
+            return this
+        }
         this.mTextHeight = mTextHeight
         return this
     }
 
     public func getTextHeight(mTextHeight: Float64): Float64 {
+        Hilog.info(0,"getTextHeight","getTextHeight mTextHeight:${mTextHeight}")
         return this.mTextHeight
     }
 
@@ -106,7 +112,7 @@ public class WheelYearPickerModel {
     }
 
     public func getItemHeight(): Float64 {
-        return this.mItemHeight
+        return this.mTextHeight + 2.0 * this.mSpace
     }
 
      public func setCyclic(isCyslic: Bool): WheelYearPickerModel {
@@ -147,6 +153,7 @@ public class WheelYearPickerModel {
 
     public func setItemSpace(space: Float64): WheelYearPickerModel {
         this.mSpace = space
+        this.mItemHeight = this.mTextHeight + 2.0 * this.mSpace
         return this
     }
 
@@ -252,6 +259,11 @@ public class WheelYearPickerModel {
         }
         if (this.mVisibleItem % 2 == 0) {
             this.mVisibleItem += 1
+            var mHalfItemCount1 = this.mVisibleItem / 2
+            this.mHalfItemCount = mHalfItemCount1
+        }else{
+            var mHalfItemCount1 = (this.mVisibleItem - 1)/2
+            this.mHalfItemCount = mHalfItemCount1
         }
         this.mWheelHeight = Float64(this.mVisibleItem) * this.mItemHeight
         this.mCenterY = this.mWheelHeight / 2.0

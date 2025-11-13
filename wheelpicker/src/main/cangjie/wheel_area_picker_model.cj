@@ -71,7 +71,8 @@ public class WheelAreaPickerModel {
     }
 
     public func setData(mData: Array<String>): WheelAreaPickerModel {
-        throw Exception("You can not invoke setData in WheelAreaPicker")
+        Hilog.info(0,"setData","setData mData:${mData.size}")
+        return this
     }
 
     public func setScrollBgColor(scrollBgColor: Color): WheelAreaPickerModel {

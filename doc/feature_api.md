@@ -12,18 +12,13 @@ wheel-picker-cj 可以实现滚轮选择，可以设置多种 UI 效果，实现
 
 ```cangjie
 public class WheelAreaPickerModel {
-
-    /**
-     * 地区选择器数据对象初始化
-     */
-    public init() 
-
+    
     /**
      * 隐藏地区选项
      * 
-     * 返回 WheelAreaPickerModel - 地区选择器数据对象
+     * 返回 Unit
      */
-    public func hideArea(): WheelAreaPickerModel
+    public func hideArea(): Unit
 
     /**
      * 设置滚动选择器背景颜色，默认 Color.WHITE
@@ -60,7 +55,7 @@ public class WheelAreaPickerModel {
     /**
      * 设置选中数据的颜色，默认 Color(0x00ff0000)
      * 
-     * 参数 setSelectedItemTextColor - 选中数据的颜色
+     * 参数 Color - 选中数据的颜色
      * 返回 WheelAreaPickerModel - 地区选择器数据对象
      */
     public func setSelectedItemTextColor(color: Color): WheelAreaPickerModel
@@ -68,7 +63,7 @@ public class WheelAreaPickerModel {
     /**
      * 设置文本数据的颜色，默认 Color(0x536D8A)
      * 
-     * 参数 setItemTextColor - 文本数据的颜色
+     * 参数 Color - 文本数据的颜色
      * 返回 WheelAreaPickerModel - 地区选择器数据对象
      */
     public func setItemTextColor(color: Color): WheelAreaPickerModel
@@ -151,7 +146,7 @@ public class WheelAreaPickerModel {
      * 参数 hasAtmospheric - true(是空气感)/false(不是空气感)
      * 返回 WheelAreaPickerModel - 地区选择器数据对象
      */
-    public func setAtmospheric(hasAtmospheric: Bool): WheelYearPickerModel
+    public func setAtmospheric(hasAtmospheric: Bool): WheelAreaPickerModel
     
     /**
      * 设置空气感渐变颜色
@@ -159,7 +154,7 @@ public class WheelAreaPickerModel {
      * 参数 atmosphericColor - 渐变颜色数组
      * 返回 WheelAreaPickerModel - 地区选择器数据对象
      */
-    public func setAtmosphericColor(atmosphericColor: Array<(Color, Float64)>): WheelYearPickerModel
+    public func setAtmosphericColor(atmosphericColor: Array<(Color, Float64)>): WheelAreaPickerModel
     
     /**
      * 是否设置了空气感
@@ -293,6 +288,14 @@ public class WheelAreaPickerModel {
      * 返回 Int64 - 选中省份的索引
      */
     public func getSelectedItemPosition(): Int64
+    
+    /**
+     * 设置地区择器监听事件
+     * 
+     * 参数 listener - 监听事件
+     * 返回 WheelAreaPickerModel - 地区选择器数据对象
+     */
+    public func setOnAreaSelectedListener(listener: ?OnAreaSelectedListener): WheelAreaPickerModel
 }
 
 ```
@@ -358,11 +361,6 @@ class MyWheelAreaPicker {
 
 ```cangjie
 public class WheelDatePickerModel {
-
-    /**
-     * 日期选择器数据对象初始化
-     */
-    public init() 
     
     /**
      * 设置滚动选择器背景颜色，默认 Color.WHITE
@@ -399,7 +397,7 @@ public class WheelDatePickerModel {
     /**
      * 设置选中数据的颜色，默认 Color(0x00ff0000)
      * 
-     * 参数 setSelectedItemTextColor - 选中数据的颜色
+     * 参数 color - 选中数据的颜色
      * 返回 WheelDatePickerModel - 日期选择器数据对象
      */
     public func setSelectedItemTextColor(color: Color): WheelDatePickerModel
@@ -407,7 +405,7 @@ public class WheelDatePickerModel {
     /**
      * 设置文本数据的颜色，默认 Color(0x536D8A)
      * 
-     * 参数 setItemTextColor - 文本数据的颜色
+     * 参数 color - 文本数据的颜色
      * 返回 WheelDatePickerModel - 日期选择器数据对象
      */
     public func setItemTextColor(color: Color): WheelDatePickerModel
@@ -511,7 +509,7 @@ public class WheelDatePickerModel {
     /**
      * 设置年选择项开始位置索引
      * 
-     * 参数 yearEnd - 年选择项开始位置索引，若开始位置 < 0,默认 0
+     * 参数 mFirstSelectYearPosition - 年选择项开始位置索引，若开始位置 < 0,默认 0
      * 返回 WheelDatePickerModel - 日期选择器数据对象
      */
     public func setSelectedYear(mFirstSelectYearPosition: Int64): WheelDatePickerModel
@@ -519,7 +517,7 @@ public class WheelDatePickerModel {
     /**
      * 设置月选择项开始位置索引
      * 
-     * 参数 yearEnd - 月选择项开始位置，若开始位置 < 0,默认 0
+     * 参数 mFirstSelectMonthPosition - 月选择项开始位置，若开始位置 < 0,默认 0
      * 返回 WheelDatePickerModel - 日期选择器数据对象
      */
     public func setSelectedMonth(mFirstSelectMonthPosition: Int64): WheelDatePickerModel
@@ -527,7 +525,7 @@ public class WheelDatePickerModel {
     /**
      * 设置日选择项开始位置索引
      * 
-     * 参数 yearEnd - 日选择项开始位置索引，若开始位置 < 0,默认 0
+     * 参数 mFirstSelectDayPosition - 日选择项开始位置索引，若开始位置 < 0,默认 0
      * 返回 WheelDatePickerModel - 日期选择器数据对象
      */
     public func setSelectedDay(mFirstSelectDayPosition: Int64): WheelDatePickerModel
@@ -538,7 +536,7 @@ public class WheelDatePickerModel {
      * 参数 hasAtmospheric - true(是空气感)/false(不是空气感)
      * 返回 WheelAreaPickerModel - 日期选择器数据对象
      */
-    public func setAtmospheric(hasAtmospheric: Bool): WheelYearPickerModel
+    public func setAtmospheric(hasAtmospheric: Bool): WheelDatePickerModel
     
     /**
      * 设置空气感渐变颜色
@@ -546,12 +544,12 @@ public class WheelDatePickerModel {
      * 参数 atmosphericColor - 渐变颜色数组
      * 返回 WheelAreaPickerModel - 日期选择器数据对象
      */
-    public func setAtmosphericColor(atmosphericColor: Array<(Color, Float64)>): WheelYearPickerModel
+    public func setAtmosphericColor(atmosphericColor: Array<(Color, Float64)>): WheelDatePickerModel
     
     /**
      * 是否设置了空气感
      *
-     * 返回 WheelAreaPickerModel - true/false
+     * 返回 Bool - true/false
      */
     public func hasAtmosphericShow(): Bool
     
@@ -579,10 +577,12 @@ public class WheelDatePickerModel {
 
     /**
      * 获取文本数据的高度。
+     *
+     * 参数 mTextHeight - 文本数据高度
      * 
      * 返回 Float64 - 文本数据的高度
      */
-    public func getTextHeight(): Float64
+    public func getTextHeight(mTextHeight: Float64): Float64
 
     /**
      * 获取文本颜色。
@@ -594,9 +594,9 @@ public class WheelDatePickerModel {
     /**
      * 获取文本字体大小。
      * 
-     * 返回 Int64 - 文本字体大小
+     * 返回 Float64 - 文本字体大小
      */
-    public func getItemTextSize(): Int64
+    public func getItemTextSize(): Float64
 
     /**
      * 获取列表数据上下间隔。
@@ -608,9 +608,9 @@ public class WheelDatePickerModel {
     /**
      * 获取指示器上下边框大小。
      * 
-     * 返回 Int64 - 指示器上下边框大小
+     * 返回 Float64 - 指示器上下边框大小
      */
-    public func getIndicatorSize(): Int64
+    public func getIndicatorSize(): Float64
 
     /**
      * 获取指示器上下边框的颜色。
@@ -636,21 +636,21 @@ public class WheelDatePickerModel {
     /**
      * 获取年文本数据的字体对齐方式。
      * 
-     * 返回 String - 年文本数据的字体对齐方式
+     * 返回 HorizontalAlign - 年文本数据的字体对齐方式
      */
     public func getItemAlignYear(): HorizontalAlign
 
     /**
      * 获取月文本数据的字体对齐方式。
      * 
-     * 返回 String - 月文本数据的字体样式
+     * 返回 HorizontalAlign - 月文本数据的字体样式
      */
     public func getItemAlignMonth(): HorizontalAlign
 
     /**
      * 获取日文本数据的字体对齐方式。
      * 
-     * 返回 String - 日文本数据的字体样式
+     * 返回 HorizontalAlign - 日文本数据的字体样式
      */
     public func getItemAlignDay(): HorizontalAlign
 
@@ -816,17 +816,12 @@ class MyWheelDatePicker {
 ```cangjie
 
 public class WheelPickerModel {
-    
-    /**
-     * 自定义选择器数据对象初始化
-     */
-    public init()
 
     /**
      * 设置滚动选择器背景颜色，默认 Color.WHITE
      * 
      * 参数 scrollBgColor - 滚动选择器背景颜色
-     * 返回 WheelDatePickerModel - 自定义选择器数据对象
+     * 返回 WheelPickerModel - 自定义选择器数据对象
      */
     public func setScrollBgColor(scrollBgColor: Color): WheelPickerModel
 
@@ -858,7 +853,7 @@ public class WheelPickerModel {
      * 设置文本数据高度，默认 30.0
      * 
      * 参数 mTextHeight - 文本数据高度
-     * 返回 WheelDatePickerModel - 自定义选择器数据对象
+     * 返回 WheelPickerModel - 自定义选择器数据对象
      */
     public func setTextHeight(mTextHeight: Float64): WheelPickerModel
 
@@ -866,7 +861,7 @@ public class WheelPickerModel {
      * 设置滚动选择器可见个数，默认 9，若设置的个数 > 总数据 / 2 ,count 默认为 总数据 /2
      * 
      * 参数 count - 滚动选择器可见个数
-     * 返回 WheelDatePickerModel - 自定义选择器数据对象
+     * 返回 WheelPickerModel - 自定义选择器数据对象
      */
     public func setVisibleItemCount(count: Int64): WheelPickerModel
 
@@ -874,23 +869,23 @@ public class WheelPickerModel {
      * 设置是否循环展示，默认 false
      * 
      * 参数 isCyslic - 是否循环展示
-     * 返回 WheelDatePickerModel - 自定义选择器数据对象
+     * 返回 WheelPickerModel - 自定义选择器数据对象
      */
     public func setCyclic(isCyslic: Bool): WheelPickerModel
 
     /**
      * 设置选中数据的颜色，默认 Color(0x00ff0000)
      * 
-     * 参数 setSelectedItemTextColor - 选中数据的颜色
-     * 返回 WheelDatePickerModel - 自定义选择器数据对象
+     * 参数 color - 选中数据的颜色
+     * 返回 WheelPickerModel - 自定义选择器数据对象
      */
     public func setSelectedItemTextColor(color: Color): WheelPickerModel
 
     /**
      * 设置文本数据的颜色，默认 Color(0x536D8A)
      * 
-     * 参数 setItemTextColor - 文本数据的颜色
-     * 返回 WheelDatePickerModel - 自定义选择器数据对象
+     * 参数 color - 文本数据的颜色
+     * 返回 WheelPickerModel - 自定义选择器数据对象
      */
     public func setItemTextColor(color: Color): WheelPickerModel
 
@@ -898,7 +893,7 @@ public class WheelPickerModel {
      * 设置文本数据的大小，默认 16
      * 
      * 参数 size - 文本数据的大小
-     * 返回 WheelDatePickerModel - 自定义选择器数据对象
+     * 返回 WheelPickerModel - 自定义选择器数据对象
      */
     public func setItemTextSize(size: Float64): WheelPickerModel
     
@@ -906,7 +901,7 @@ public class WheelPickerModel {
      * 设置列表数据上下间隔，默认 8.0
      * 
      * 参数 space - 列表数据上下间隔
-     * 返回 WheelDatePickerModel - 自定义选择器数据对象
+     * 返回 WheelPickerModel - 自定义选择器数据对象
      */
     public func setItemSpace(space: Float64): WheelPickerModel
 
@@ -914,7 +909,7 @@ public class WheelPickerModel {
      * 是否设置选中指示器，默认 true
      * 
      * 参数 hasIndicator - true:设置，flase:不设置
-     * 返回 WheelDatePickerModel - 自定义选择器数据对象
+     * 返回 WheelPickerModel - 自定义选择器数据对象
      */
     public func setIndicator(hasIndicator: Bool): WheelPickerModel
 
@@ -922,7 +917,7 @@ public class WheelPickerModel {
      * 设置选中指示器上下边框的大小，默认 2
      * 
      * 参数 size - 选中指示器上下边框的大小
-     * 返回 WheelDatePickerModel - 自定义选择器数据对象
+     * 返回 WheelPickerModel - 自定义选择器数据对象
      */
     public func setIndicatorSize(size: Float64): WheelPickerModel
 
@@ -930,7 +925,7 @@ public class WheelPickerModel {
      * 设置选中指示器上下边框的颜色，默认 Color.RED
      * 
      * 参数 color - 选中指示器上下边框的颜色
-     * 返回 WheelDatePickerModel - 自定义选择器数据对象
+     * 返回 WheelPickerModel - 自定义选择器数据对象
      */
     public func setIndicatorColor(color: Color): WheelPickerModel
 
@@ -938,7 +933,7 @@ public class WheelPickerModel {
      * 设置选中幕布颜色，默认 Color.WHITE
      * 
      * 参数 color - 选中幕布颜色
-     * 返回 WheelDatePickerModel - 自定义选择器数据对象
+     * 返回 WheelPickerModel - 自定义选择器数据对象
      */
     public func setCurtainColor(color: Color): WheelPickerModel
 
@@ -946,7 +941,7 @@ public class WheelPickerModel {
      * 设置文本数据对齐方式，默认 HorizontalAlign.Center
      * 
      * 参数 align - 文本数据对齐方式，默认居中对齐
-     * 返回 WheelAreaPickerModel - 自定义选择器数据对象
+     * 返回 WheelPickerModel - 自定义选择器数据对象
      */
     public func setItemAlign(align: HorizontalAlign): WheelPickerModel
 
@@ -954,7 +949,7 @@ public class WheelPickerModel {
      * 设置文本数据字体样式
      * 
      * 参数 fontFamily - 仓颉字体样式
-     * 返回 WheelAreaPickerModel - 自定义选择器数据对象
+     * 返回 WheelPickerModel - 自定义选择器数据对象
      */
     public func setFontFamily(fontFamily: String): WheelPickerModel
     
@@ -962,22 +957,22 @@ public class WheelPickerModel {
      * 设置滚轮选择器是否有空气感
      * 
      * 参数 hasAtmospheric - true(是空气感)/false(不是空气感)
-     * 返回 WheelAreaPickerModel - 自定义选择器数据对象
+     * 返回 WheelPickerModel - 自定义选择器数据对象
      */
-    public func setAtmospheric(hasAtmospheric: Bool): WheelYearPickerModel
+    public func setAtmospheric(hasAtmospheric: Bool): WheelPickerModel
     
     /**
      * 设置空气感渐变颜色
      * 
      * 参数 atmosphericColor - 渐变颜色数组
-     * 返回 WheelAreaPickerModel - 自定义选择器数据对象
+     * 返回 WheelPickerModel - 自定义选择器数据对象
      */
-    public func setAtmosphericColor(atmosphericColor: Array<(Color, Float64)>): WheelYearPickerModel
+    public func setAtmosphericColor(atmosphericColor: Array<(Color, Float64)>): WheelPickerModel
     
     /**
      * 是否设置了空气感
      *
-     * 返回 WheelAreaPickerModel - true/false
+     * 返回 Bool - true/false
      */
     public func hasAtmosphericShow(): Bool
     
@@ -997,6 +992,8 @@ public class WheelPickerModel {
 
     /**
      * 获取文本数据的高度。
+     *
+     * 参数 mTextHeight - 文本高度
      * 
      * 返回 Float64 - 文本数据的高度
      */
@@ -1040,7 +1037,7 @@ public class WheelPickerModel {
     /**
      * 获取文本字体大小。
      * 
-     * 返回 Int64 - 文本字体大小
+     * 返回 Float64 - 文本字体大小
      */
     public func getItemTextSize(): Float64
 
@@ -1061,7 +1058,7 @@ public class WheelPickerModel {
     /**
      * 获取指示器上下边框大小。
      * 
-     * 返回 Int64 - 指示器上下边框大小
+     * 返回 Float64 - 指示器上下边框大小
      */
     public func getIndicatorSize(): Float64
 
@@ -1097,9 +1094,9 @@ public class WheelPickerModel {
      * 设置选项的初始位置，默认 0
      * 
      * 参数 SelectPosition - 选项的初始位置
-     * 返回 WheelAreaPickerModel - 地区选择器数据对象
+     * 返回 WheelPickerModel - 选择器数据对象
      */
-    public func setSelectedItemPosition(SelectPosition: Int64)
+    public func setSelectedItemPosition(SelectPosition: Int64): WheelPickerModel
 }
 
 ```
@@ -1265,7 +1262,7 @@ public class WheelYearPickerModel {
      * 设置首次选择项的初始位置索引。
      * 
      * 参数 FirstSelectPosition - 首次选择项的初始位置索引
-     * 返回 WheelDatePickerModel - 年选择器数据对象
+     * 返回 WheelYearPickerModel - 年选择器数据对象
      */
     public func setSelectDays(FirstSelectPosition: Int64): WheelYearPickerModel
 
@@ -1287,13 +1284,14 @@ public class WheelYearPickerModel {
      * 设置文本数据高度，默认 30.0
      * 
      * 参数 mTextHeight - 文本数据高度
-     * 返回 WheelDatePickerModel - 年选择器数据对象
+     * 返回 WheelYearPickerModel - 年选择器数据对象
      */
     public func setTextHeight(mTextHeight: Float64): WheelYearPickerModel
 
     /**
      * 获取文本数据的高度。
      * 
+     * 参数 mTextHeight - 文本数据高度
      * 返回 Float64 - 文本数据的高度
      */
     public func getTextHeight(mTextHeight: Float64): Float64
@@ -1302,7 +1300,7 @@ public class WheelYearPickerModel {
      * 设置滚动选择器可见个数，默认 9，若设置的个数 > 总数据 / 2 ,count 默认为 总数据 /2
      * 
      * 参数 count - 滚动选择器可见个数
-     * 返回 WheelAreaPickerModel - 年选择器数据对象
+     * 返回 WheelYearPickerModel - 年选择器数据对象
      */
     public func setVisibleItemCount(count: Int64): WheelYearPickerModel
     
@@ -1310,7 +1308,7 @@ public class WheelYearPickerModel {
      * 设置滚轮选择器是否有空气感
      * 
      * 参数 hasAtmospheric - true(是空气感)/false(不是空气感)
-     * 返回 WheelAreaPickerModel - 年选择器数据对象
+     * 返回 WheelYearPickerModel - 年选择器数据对象
      */
     public func setAtmospheric(hasAtmospheric: Bool): WheelYearPickerModel
     
@@ -1318,14 +1316,14 @@ public class WheelYearPickerModel {
      * 设置空气感渐变颜色
      * 
      * 参数 atmosphericColor - 渐变颜色数组
-     * 返回 WheelAreaPickerModel - 年选择器数据对象
+     * 返回 WheelYearPickerModel - 年选择器数据对象
      */
     public func setAtmosphericColor(atmosphericColor: Array<(Color, Float64)>): WheelYearPickerModel
     
     /**
      * 是否设置了空气感
      *
-     * 返回 WheelAreaPickerModel - true/false
+     * 返回 Bool - true/false
      */
     public func hasAtmosphericShow(): Bool
     
@@ -1347,7 +1345,7 @@ public class WheelYearPickerModel {
      * 设置是否循环展示，默认 false
      * 
      * 参数 isCyslic - 是否循环展示
-     * 返回 WheelDatePickerModel - 年选择器数据对象
+     * 返回 WheelYearPickerModel - 年选择器数据对象
      */
     public func setCyclic(isCyslic: Bool): WheelYearPickerModel
 
@@ -1361,8 +1359,8 @@ public class WheelYearPickerModel {
     /**
      * 设置选中数据的颜色，默认 Color(0x00ff0000)
      * 
-     * 参数 setSelectedItemTextColor - 选中数据的颜色
-     * 返回 WheelDatePickerModel - 年选择器数据对象
+     * 参数 color - 选中数据的颜色
+     * 返回 WheelYearPickerModel - 年选择器数据对象
      */
     public func setSelectedItemTextColor(color: Color): WheelYearPickerModel
 
@@ -1376,8 +1374,8 @@ public class WheelYearPickerModel {
     /**
      * 设置文本数据的颜色，默认 Color(0x536D8A)
      * 
-     * 参数 setItemTextColor - 文本数据的颜色
-     * 返回 WheelAreaPickerModel - 年选择器数据对象
+     * 参数 color - 文本数据的颜色
+     * 返回 WheelYearPickerModel - 年选择器数据对象
      */
     public func setItemTextColor(color: Color): WheelYearPickerModel
 
@@ -1392,14 +1390,14 @@ public class WheelYearPickerModel {
      * 设置文本数据的大小，默认 16
      * 
      * 参数 size - 文本数据的大小
-     * 返回 WheelAreaPickerModel - 年选择器数据对象
+     * 返回 WheelYearPickerModel - 年选择器数据对象
      */
     public func setItemTextSize(size: Float64): WheelYearPickerModel
 
     /**
      * 获取文本字体大小。
      * 
-     * 返回 Int64 - 文本字体大小
+     * 返回 Float64 - 文本字体大小
      */
     public func getItemTextSize(): Float64
     
@@ -1407,7 +1405,7 @@ public class WheelYearPickerModel {
      * 设置列表数据上下间隔，默认 8.0
      * 
      * 参数 space - 列表数据上下间隔
-     * 返回 WheelDatePickerModel - 年选择器数据对象
+     * 返回 WheelYearPickerModel - 年选择器数据对象
      */
     public func setItemSpace(space: Float64): WheelYearPickerModel
 
@@ -1422,7 +1420,7 @@ public class WheelYearPickerModel {
      * 是否设置选中指示器，默认 true
      * 
      * 参数 hasIndicator - true:设置，flase:不设置
-     * 返回 WheelDatePickerModel - 年选择器数据对象
+     * 返回 WheelYearPickerModel - 年选择器数据对象
      */
     public func setIndicator(hasIndicator: Bool): WheelYearPickerModel
 
@@ -1437,14 +1435,14 @@ public class WheelYearPickerModel {
      * 设置选中指示器上下边框的大小，默认 2
      * 
      * 参数 size - 选中指示器上下边框的大小
-     * 返回 WheelAreaPickerModel - 年选择器数据对象
+     * 返回 WheelYearPickerModel - 年选择器数据对象
      */
     public func setIndicatorSize(size: Float64): WheelYearPickerModel
 
     /**
      * 获取指示器上下边框大小。
      * 
-     * 返回 Int64 - 指示器上下边框大小
+     * 返回 Float64 - 指示器上下边框大小
      */
     public func getIndicatorSize(): Float64
 
@@ -1452,7 +1450,7 @@ public class WheelYearPickerModel {
      * 设置选中指示器上下边框的颜色，默认 Color.RED
      * 
      * 参数 color - 选中指示器上下边框的颜色
-     * 返回 WheelDatePickerModel - 年选择器数据对象
+     * 返回 WheelYearPickerModel - 年选择器数据对象
      */
     public func setIndicatorColor(color: Color): WheelYearPickerModel
 
@@ -1467,7 +1465,7 @@ public class WheelYearPickerModel {
      * 设置选中幕布颜色，默认 Color.WHITE
      * 
      * 参数 color - 选中幕布颜色
-     * 返回 WheelAreaPickerModel - 年选择器数据对象
+     * 返回 WheelYearPickerModel - 年选择器数据对象
      */
     public func setCurtainColor(color: Color): WheelYearPickerModel
 
@@ -1482,7 +1480,7 @@ public class WheelYearPickerModel {
      * 设置文本数据对齐方式，默认 HorizontalAlign.Center
      * 
      * 参数 align - 文本数据对齐方式，默认居中对齐
-     * 返回 WheelAreaPickerModel - 年选择器数据对象
+     * 返回 WheelYearPickerModel - 年选择器数据对象
      */
     public func setItemAlign(align: HorizontalAlign): WheelYearPickerModel
 
@@ -1497,7 +1495,7 @@ public class WheelYearPickerModel {
      * 设置文本数据字体样式
      * 
      * 参数 fontFamily - 仓颉字体样式
-     * 返回 WheelDatePickerModel - 年选择器数据对象
+     * 返回 WheelYearPickerModel - 年选择器数据对象
      */
     public func setFontFamily(fontFamily: String): WheelYearPickerModel
 
@@ -1512,7 +1510,7 @@ public class WheelYearPickerModel {
      * 设置滚动选择器背景颜色，默认 Color.WHITE
      * 
      * 参数 scrollBgColor - 滚动选择器背景颜色
-     * 返回 WheelDatePickerModel - 年选择器数据对象
+     * 返回 WheelYearPickerModel - 年选择器数据对象
      */
     public func setScrollBgColor(scrollBgColor: Color): WheelYearPickerModel
     
@@ -1520,7 +1518,7 @@ public class WheelYearPickerModel {
      * 设置开始年份
      * 
      * 参数 yearRangeStart - 开始年份
-     * 返回 WheelDatePickerModel - 年选择器数据对象
+     * 返回 WheelYearPickerModel - 年选择器数据对象
      */
     public func setYearRangeStart(yearRangeStart: Int64): WheelYearPickerModel
 
@@ -1528,7 +1526,7 @@ public class WheelYearPickerModel {
      * 设置结束年份
      * 
      * 参数 yearRangeEnd - 结束年份
-     * 返回 WheelDatePickerModel - 年选择器数据对象
+     * 返回 WheelYearPickerModel - 年选择器数据对象
      */
     public func setYearRangeEnd(yearRangeEnd: Int64): WheelYearPickerModel
 
@@ -1536,7 +1534,7 @@ public class WheelYearPickerModel {
      * 设置年选择器监听事件
      * 
      * 参数 listener - 监听事件
-     * 返回 WheelDatePickerModel - 年选择器数据对象
+     * 返回 WheelYearPickerModel - 年选择器数据对象
      */
     public func setOnItemSelectedListener(listener: ?OnItemSelectedListener): WheelYearPickerModel
 }
@@ -1626,7 +1624,7 @@ public class WheelMonthPickerModel {
      * 设置滚动选择器背景颜色，默认 Color.WHITE
      * 
      * 参数 scrollBgColor - 滚动选择器背景颜色
-     * 返回 WheelDatePickerModel - 月选择器数据对象
+     * 返回 WheelMonthPickerModel - 月选择器数据对象
      */
     public func setScrollBgColor(scrollBgColor: Color): WheelMonthPickerModel
 
@@ -1634,7 +1632,7 @@ public class WheelMonthPickerModel {
      * 首次显示数据项索引
      * 
      * 参数 FirstSelectPosition - 首次显示数据项索引
-     * 返回 WheelPickerModel - 月选择器数据对象
+     * 返回 WheelMonthPickerModel - 月选择器数据对象
      */
     public func setFirstSelectedItemPosition(FirstSelectPosition: Int64): WheelMonthPickerModel
 
@@ -1663,7 +1661,7 @@ public class WheelMonthPickerModel {
      * 设置文本数据高度，默认 30.0
      * 
      * 参数 mTextHeight - 文本数据高度
-     * 返回 WheelDatePickerModel - 月选择器数据对象
+     * 返回 WheelMonthPickerModel - 月选择器数据对象
      */
     public func setTextHeight(mTextHeight: Float64): WheelMonthPickerModel
 
@@ -1678,7 +1676,7 @@ public class WheelMonthPickerModel {
      * 设置滚动选择器可见个数，默认 9，若设置的个数 > 总数据 / 2 ,count 默认为 总数据 /2
      * 
      * 参数 count - 滚动选择器可见个数
-     * 返回 WheelAreaPickerModel - 月选择器数据对象
+     * 返回 WheelMonthPickerModel - 月选择器数据对象
      */
     public func setVisibleItemCount(count: Int64): WheelMonthPickerModel
 
@@ -1700,7 +1698,7 @@ public class WheelMonthPickerModel {
      * 设置是否循环展示，默认 false
      * 
      * 参数 isCyslic - 是否循环展示
-     * 返回 WheelDatePickerModel - 月选择器数据对象
+     * 返回 WheelMonthPickerModel - 月选择器数据对象
      */
     public func setCyclic(isCyslic: Bool): WheelMonthPickerModel
 
@@ -1714,8 +1712,8 @@ public class WheelMonthPickerModel {
     /**
      * 设置选中数据的颜色，默认 Color(0x00ff0000)
      * 
-     * 参数 setSelectedItemTextColor - 选中数据的颜色
-     * 返回 WheelDatePickerModel - 月选择器数据对象
+     * 参数 color - 选中数据的颜色
+     * 返回 WheelMonthPickerModel - 月选择器数据对象
      */
     public func setSelectedItemTextColor(color: Color): WheelMonthPickerModel
 
@@ -1729,8 +1727,8 @@ public class WheelMonthPickerModel {
     /**
      * 设置文本数据的颜色，默认 Color(0x536D8A)
      * 
-     * 参数 setItemTextColor - 文本数据的颜色
-     * 返回 WheelAreaPickerModel - 月选择器数据对象
+     * 参数 color - 文本数据的颜色
+     * 返回 WheelMonthPickerModel - 月选择器数据对象
      */
     public func setItemTextColor(color: Color): WheelMonthPickerModel
 
@@ -1745,7 +1743,7 @@ public class WheelMonthPickerModel {
      * 设置文本数据的大小，默认 16
      * 
      * 参数 size - 文本数据的大小
-     * 返回 WheelAreaPickerModel - 月选择器数据对象
+     * 返回 WheelMonthPickerModel - 月选择器数据对象
      */
     public func setItemTextSize(size: Float64): WheelMonthPickerModel
     
@@ -1753,29 +1751,29 @@ public class WheelMonthPickerModel {
      * 设置滚轮选择器是否有空气感
      * 
      * 参数 hasAtmospheric - true(是空气感)/false(不是空气感)
-     * 返回 WheelAreaPickerModel - 月选择器数据对象
+     * 返回 WheelMonthPickerModel - 月选择器数据对象
      */
-    public func setAtmospheric(hasAtmospheric: Bool): WheelYearPickerModel
+    public func setAtmospheric(hasAtmospheric: Bool): WheelMonthPickerModel
     
     /**
      * 设置空气感渐变颜色
      * 
      * 参数 atmosphericColor - 渐变颜色数组
-     * 返回 WheelAreaPickerModel - 月选择器数据对象
+     * 返回 WheelMonthPickerModel - 月选择器数据对象
      */
-    public func setAtmosphericColor(atmosphericColor: Array<(Color, Float64)>): WheelYearPickerModel
+    public func setAtmosphericColor(atmosphericColor: Array<(Color, Float64)>): WheelMonthPickerModel
     
     /**
      * 是否设置了空气感
      *
-     * 返回 WheelAreaPickerModel - true/false
+     * 返回 Bool - true/false
      */
     public func hasAtmosphericShow(): Bool
     
     /**
      * 获取文本字体大小。
      * 
-     * 返回 Int64 - 文本字体大小
+     * 返回 Float64 - 文本字体大小
      */
     public func getItemTextSize(): Float64
     
@@ -1783,7 +1781,7 @@ public class WheelMonthPickerModel {
      * 设置列表数据上下间隔，默认 8.0
      * 
      * 参数 space - 列表数据上下间隔
-     * 返回 WheelDatePickerModel - 月选择器数据对象
+     * 返回 WheelMonthPickerModel - 月选择器数据对象
      */
     public func setItemSpace(space: Float64): WheelMonthPickerModel
 
@@ -1798,7 +1796,7 @@ public class WheelMonthPickerModel {
      * 是否设置选中指示器，默认 true
      * 
      * 参数 hasIndicator - true:设置，flase:不设置
-     * 返回 WheelDatePickerModel - 月选择器数据对象
+     * 返回 WheelMonthPickerModel - 月选择器数据对象
      */
     public func setIndicator(hasIndicator: Bool): WheelMonthPickerModel
 
@@ -1813,14 +1811,14 @@ public class WheelMonthPickerModel {
      * 设置选中指示器上下边框的大小，默认 2
      * 
      * 参数 size - 选中指示器上下边框的大小
-     * 返回 WheelAreaPickerModel - 月选择器数据对象
+     * 返回 WheelMonthPickerModel - 月选择器数据对象
      */
     public func setIndicatorSize(size: Float64): WheelMonthPickerModel
 
     /**
      * 获取指示器上下边框大小。
      * 
-     * 返回 Int64 - 指示器上下边框大小
+     * 返回 Float64 - 指示器上下边框大小
      */
     public func getIndicatorSize(): Float64 
 
@@ -1828,7 +1826,7 @@ public class WheelMonthPickerModel {
      * 设置选中指示器上下边框的颜色，默认 Color.RED
      * 
      * 参数 color - 选中指示器上下边框的颜色
-     * 返回 WheelDatePickerModel - 月选择器数据对象
+     * 返回 WheelMonthPickerModel - 月选择器数据对象
      */
     public func setIndicatorColor(color: Color): WheelMonthPickerModel
 
@@ -1843,7 +1841,7 @@ public class WheelMonthPickerModel {
      * 设置选中幕布颜色，默认 Color.WHITE
      * 
      * 参数 color - 选中幕布颜色
-     * 返回 WheelAreaPickerModel - 月选择器数据对象
+     * 返回 WheelMonthPickerModel - 月选择器数据对象
      */
     public func setCurtainColor(color: Color): WheelMonthPickerModel
 
@@ -1858,7 +1856,7 @@ public class WheelMonthPickerModel {
      * 设置文本数据对齐方式，默认 HorizontalAlign.Center
      * 
      * 参数 align - 文本数据对齐方式，默认居中对齐
-     * 返回 WheelAreaPickerModel - 月选择器数据对象
+     * 返回 WheelMonthPickerModel - 月选择器数据对象
      */
     public func setItemAlign(align: HorizontalAlign): WheelMonthPickerModel
 
@@ -1873,7 +1871,7 @@ public class WheelMonthPickerModel {
      * 设置文本数据字体样式
      * 
      * 参数 fontFamily - 仓颉字体样式
-     * 返回 WheelDatePickerModel - 月选择器数据对象
+     * 返回 WheelMonthPickerModel - 月选择器数据对象
      */
     public func setFontFamily(fontFamily: String): WheelMonthPickerModel
 
@@ -1889,15 +1887,15 @@ public class WheelMonthPickerModel {
      * 设置选项的初始位置，默认 0
      * 
      * 参数 SelectPosition - 选项的初始位置
-     * 返回 WheelAreaPickerModel - 月选择器数据对象
+     * 返回 WheelMonthPickerModel - 月选择器数据对象
      */
-    public func setSelectedItemPosition(SelectPosition: Int64) 
+    public func setSelectedItemPosition(SelectPosition: Int64) :WheelMonthPickerModel
 
     /**
      * 设置月选择器监听事件
      * 
      * 参数 listener - 监听事件
-     * 返回 WheelDatePickerModel - 月选择器数据对象
+     * 返回 WheelMonthPickerModel - 月选择器数据对象
      */
     public func setOnItemSelectedListener(listener: ?OnItemSelectedListener): WheelMonthPickerModel
 }
@@ -1982,7 +1980,7 @@ public class WheelDayPickerModel {
      * 
      * 参数 year - 年份
      * 参数 month - 月份
-     * 返回 WheelDatePickerModel - 日选择器数据对象
+     * 返回 WheelDayPickerModel - 日选择器数据对象
      */
     public func setYearAndMonth(year: Int64, month: Int64): WheelDayPickerModel
     
@@ -1990,17 +1988,9 @@ public class WheelDayPickerModel {
      * 设置滚动选择器背景颜色，默认 Color.WHITE
      * 
      * 参数 scrollBgColor - 滚动选择器背景颜色
-     * 返回 WheelDatePickerModel - 日选择器数据对象
+     * 返回 WheelDayPickerModel - 日选择器数据对象
      */
     public func setScrollBgColor(scrollBgColor: Color): WheelDayPickerModel
-
-    /**
-     * 首次显示数据项索引
-     * 
-     * 参数 FirstSelectPosition - 首次显示数据项索引
-     * 返回 WheelPickerModel - 日选择器数据对象
-     */
-    public func setFirstSelectedItemPosition(FirstSelectPosition: Int64): WheelDayPickerModel
 
     /**
      * 获取当前选择的位置索引
@@ -2020,7 +2010,7 @@ public class WheelDayPickerModel {
      * 设置文本数据高度，默认 30.0
      * 
      * 参数 mTextHeight - 文本数据高度
-     * 返回 WheelDatePickerModel - 日选择器数据对象
+     * 返回 WheelDayPickerModel - 日选择器数据对象
      */
     public func setTextHeight(mTextHeight: Float64): WheelDayPickerModel
 
@@ -2035,7 +2025,7 @@ public class WheelDayPickerModel {
      * 设置滚动选择器可见个数，默认 9，若设置的个数 > 总数据 / 2 ,count 默认为 总数据 /2
      * 
      * 参数 count - 滚动选择器可见个数
-     * 返回 WheelAreaPickerModel - 日选择器数据对象
+     * 返回 WheelDayPickerModel - 日选择器数据对象
      */
     public func setVisibleItemCount(count: Int64): WheelDayPickerModel
 
@@ -2057,7 +2047,7 @@ public class WheelDayPickerModel {
      * 设置是否循环展示，默认 false
      * 
      * 参数 isCyslic - 是否循环展示
-     * 返回 WheelDatePickerModel - 日选择器数据对象
+     * 返回 WheelDayPickerModel - 日选择器数据对象
      */
     public func setCyclic(isCyslic: Bool): WheelDayPickerModel 
     
@@ -2065,22 +2055,22 @@ public class WheelDayPickerModel {
      * 设置滚轮选择器是否有空气感
      * 
      * 参数 hasAtmospheric - true(是空气感)/false(不是空气感)
-     * 返回 WheelAreaPickerModel - 日选择器数据对象
+     * 返回 WheelDayPickerModel - 日选择器数据对象
      */
-    public func setAtmospheric(hasAtmospheric: Bool): WheelYearPickerModel
+    public func setAtmospheric(hasAtmospheric: Bool): WheelDayPickerModel
     
     /**
      * 设置空气感渐变颜色
      * 
      * 参数 atmosphericColor - 渐变颜色数组
-     * 返回 WheelAreaPickerModel - 日选择器数据对象
+     * 返回 WheelDayPickerModel - 日选择器数据对象
      */
-    public func setAtmosphericColor(atmosphericColor: Array<(Color, Float64)>): WheelYearPickerModel
+    public func setAtmosphericColor(atmosphericColor: Array<(Color, Float64)>): WheelDayPickerModel
     
     /**
      * 是否设置了空气感
      *
-     * 返回 WheelAreaPickerModel - true/false
+     * 返回 Bool - true/false
      */
     public func hasAtmosphericShow(): Bool
     
@@ -2094,8 +2084,8 @@ public class WheelDayPickerModel {
     /**
      * 设置选中数据的颜色，默认 Color(0x00ff0000)
      * 
-     * 参数 setSelectedItemTextColor - 选中数据的颜色
-     * 返回 WheelDatePickerModel - 日选择器数据对象
+     * 参数 color - 选中数据的颜色
+     * 返回 WheelDayPickerModel - 日选择器数据对象
      */
     public func setSelectedItemTextColor(color: Color): WheelDayPickerModel
 
@@ -2109,8 +2099,8 @@ public class WheelDayPickerModel {
     /**
      * 设置文本数据的颜色，默认 Color(0x536D8A)
      * 
-     * 参数 setItemTextColor - 文本数据的颜色
-     * 返回 WheelAreaPickerModel - 日选择器数据对象
+     * 参数 color - 文本数据的颜色
+     * 返回 WheelDayPickerModel - 日选择器数据对象
      */
     public func setItemTextColor(color: Color): WheelDayPickerModel 
 
@@ -2125,14 +2115,14 @@ public class WheelDayPickerModel {
      * 设置文本数据的大小，默认 16
      * 
      * 参数 size - 文本数据的大小
-     * 返回 WheelAreaPickerModel - 日选择器数据对象
+     * 返回 WheelDayPickerModel - 日选择器数据对象
      */
     public func setItemTextSize(size: Float64): WheelDayPickerModel 
 
     /**
      * 获取文本字体大小。
      * 
-     * 返回 Int64 - 文本字体大小
+     * 返回 Float64 - 文本字体大小
      */
     public func getItemTextSize(): Float64
     
@@ -2140,7 +2130,7 @@ public class WheelDayPickerModel {
      * 设置列表数据上下间隔，默认 8.0
      * 
      * 参数 space - 列表数据上下间隔
-     * 返回 WheelDatePickerModel - 日选择器数据对象
+     * 返回 WheelDayPickerModel - 日选择器数据对象
      */
     public func setItemSpace(space: Float64): WheelDayPickerModel
 
@@ -2155,7 +2145,7 @@ public class WheelDayPickerModel {
      * 是否设置选中指示器，默认 true
      * 
      * 参数 hasIndicator - true:设置，flase:不设置
-     * 返回 WheelDatePickerModel - 日选择器数据对象
+     * 返回 WheelDayPickerModel - 日选择器数据对象
      */
     public func setIndicator(hasIndicator: Bool): WheelDayPickerModel
 
@@ -2170,14 +2160,14 @@ public class WheelDayPickerModel {
      * 设置选中指示器上下边框的大小，默认 2
      * 
      * 参数 size - 选中指示器上下边框的大小
-     * 返回 WheelAreaPickerModel - 日选择器数据对象
+     * 返回 WheelDayPickerModel - 日选择器数据对象
      */
     public func setIndicatorSize(size: Float64): WheelDayPickerModel
 
     /**
      * 获取指示器上下边框大小。
      * 
-     * 返回 Int64 - 指示器上下边框大小
+     * 返回 Float64 - 指示器上下边框大小
      */
     public func getIndicatorSize(): Float64
 
@@ -2185,7 +2175,7 @@ public class WheelDayPickerModel {
      * 设置选中指示器上下边框的颜色，默认 Color.RED
      * 
      * 参数 color - 选中指示器上下边框的颜色
-     * 返回 WheelDatePickerModel - 日选择器数据对象
+     * 返回 WheelDayPickerModel - 日选择器数据对象
      */
     public func setIndicatorColor(color: Color): WheelDayPickerModel
 
@@ -2200,7 +2190,7 @@ public class WheelDayPickerModel {
      * 设置选中幕布颜色，默认 Color.WHITE
      * 
      * 参数 color - 选中幕布颜色
-     * 返回 WheelAreaPickerModel - 日选择器数据对象
+     * 返回 WheelDayPickerModel - 日选择器数据对象
      */
     public func setCurtainColor(color: Color): WheelDayPickerModel 
 
@@ -2215,7 +2205,7 @@ public class WheelDayPickerModel {
      * 设置文本数据对齐方式，默认 HorizontalAlign.Center
      * 
      * 参数 align - 文本数据对齐方式，默认居中对齐
-     * 返回 WheelAreaPickerModel - 日选择器数据对象
+     * 返回 WheelDayPickerModel - 日选择器数据对象
      */
     public func setItemAlign(align: HorizontalAlign): WheelDayPickerModel 
 
@@ -2230,7 +2220,7 @@ public class WheelDayPickerModel {
      * 设置文本数据字体样式
      * 
      * 参数 fontFamily - 仓颉字体样式
-     * 返回 WheelDatePickerModel - 日选择器数据对象
+     * 返回 WheelDayPickerModel - 日选择器数据对象
      */
     public func setFontFamily(fontFamily: String): WheelDayPickerModel
 
@@ -2245,15 +2235,15 @@ public class WheelDayPickerModel {
      * 设置选项的初始位置，默认 0,若 < 0 ,默认 为 0
      * 
      * 参数 SelectPosition - 选项的初始位置
-     * 返回 WheelAreaPickerModel - 日选择器数据对象
+     * 返回 WheelDayPickerModel - 日选择器数据对象
      */    
-    public func setSelectedItemPosition(SelectPosition: Int64)
+    public func setSelectedItemPosition(SelectPosition: Int64): WheelDayPickerModel
 
     /**
      * 设置日选择器监听事件
      * 
      * 参数 listener - 监听事件
-     * 返回 WheelDatePickerModel - 日选择器数据对象
+     * 返回 WheelDayPickerModel - 日选择器数据对象
      */
     public func setOnItemSelectedListener(listener: ?OnItemSelectedListener): WheelDayPickerModel
 }
@@ -2320,6 +2310,25 @@ class MyWheelDayPicker {
 }
 ```
 
+## 7 滚轮选择器数据项时回调监听
+
+### 7.1 OnItemSelectedListener Class API Description
+
+滚轮选择器数据项时回调监听
+
+```cangjie
+public class OnItemSelectedListener {
+    
+    /**
+     * 选择器监听事件
+     * 
+     * 参数 position - 选择器索引
+     * 参数 data - 选中的数据
+     * 返回 Unit
+     */
+    public func onItemSelected(position: Int64, data: Int64): Unit
+}
+```
 
 
 

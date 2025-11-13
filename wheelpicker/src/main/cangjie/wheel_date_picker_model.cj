@@ -44,7 +44,8 @@ public class WheelDatePickerModel {
     var atmosphericColor: Array<(Color, Float64)> = []
 
     public func setData(mData: Array<String>): WheelDatePickerModel {
-        throw Exception("You can not invoke public func setData in WheelDatePicker")
+        Hilog.info(0,"setData","setData mData:${mData.size}")
+        return this
     }
 
     public func setScrollBgColor(scrollBgColor: Color): WheelDatePickerModel {
@@ -55,7 +56,6 @@ public class WheelDatePickerModel {
     public func setTextHeight(mTextHeight: Float64): WheelDatePickerModel {
         if(mTextHeight > 30.0) {
             this.mTextHeight = 30.0
-            Hilog.error(0,"WheelPicker4cj","The maximum text height is 30")
         } else {
             this.mTextHeight = mTextHeight
         }
@@ -66,7 +66,6 @@ public class WheelDatePickerModel {
     public func setVisibleItemCount(count: Int64): WheelDatePickerModel {
         if(count < 7) {
             this.mVisibleItem = 7
-            Hilog.error(0, "WheelPicker4cj","The minimum count is 7")
             return this
         }
         let size: Int64 = (this.yearRangeEnd - this.yearRangeStart) / 2
@@ -236,6 +235,7 @@ public class WheelDatePickerModel {
         return this.mVisibleItem
     }
     public func getTextHeight(mTextHeight: Float64): Float64 {
+        Hilog.info(0,"WheelDatePickerModel getTextHeight","getTextHeight mTextHeight:${mTextHeight}")
         return this.mTextHeight
     }
     public func getItemTextColor(): Color {
@@ -318,7 +318,7 @@ public class WheelDatePickerModel {
         return this.mDate
     }
 
-    public func updateVisibleItemCount() {
+    public func updateVisibleItemCount(): Unit {
         this.solarLatestYearIndex = this.mFirstSelectYearPosition
         this.solarLatestMonthIndex = this.mFirstSelectMonthPosition
         this.solarLatestDayIndex = this.mFirstSelectDayPosition

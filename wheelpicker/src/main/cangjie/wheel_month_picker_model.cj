@@ -3,34 +3,31 @@
  */
 package wheelpicker
 
-import ohos.state_manage.*
-import ohos.state_macro_manage.*
-
 public class WheelMonthPickerModel {
     var mDuration: Float64 = 30.0
     var SelectPosition0: Int64 = 0
     var computeEnd: Bool = false
-    var mTextHeight: Float64 = 30.0
     var mSpace: Float64 = 8.0
-    var mItemHeight: Float64 = this.mTextHeight + 2.0 * this.mSpace
+    var mTextHeight: Float64 = 30.0
     var mVisibleItem: Int64 = 9
+    var mItemHeight: Float64 = this.mTextHeight + 2.0 * this.mSpace
     var mWheelHeight: Float64 = this.mItemHeight * Float64(this.mVisibleItem)
     var mCenterY: Float64 = this.mWheelHeight / 2.0
     var mItemTextSize: Float64 = 16.0
-    var mItemTextColor: Color = Color(0X536D8A)
     var mTextMaxHeight: Float64 = 30.0
-    var mSelectedItemTextColor: Color = Color(0XFAFAaa)
+    var mItemTextColor: Color = Color(0X536D8A)
     var mIndicatorSize: Float64 = 2.0
-    var mIndicatorColor: Color = Color.RED
+    var mSelectedItemTextColor: Color = Color(0XFAFAaa)
     var mCurtainColor: Color = Color.WHITE
+    var mIndicatorColor: Color = Color.RED
     var mHalfItemCount: Int64 = (this.mVisibleItem - 1) / 2
     var mFontFamily: String = ""
-    var isCyslic: Bool = false
     var hasIndicator: Bool = true
-    var hasAtmospheric: Bool = false
+    var isCyslic: Bool = false
     var hasCurtain: Bool = true
-    var mFirstSelectPosition: Int64 = 0
+    var hasAtmospheric: Bool = false
     var mSelectedItemPosition: Int64 = 0
+    var mFirstSelectPosition: Int64 = 0
     var mAlign: HorizontalAlign = HorizontalAlign.Center
     var mSelectedData: String = ""
     var mData: Array<Int64> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
@@ -43,7 +40,8 @@ public class WheelMonthPickerModel {
     public init() {}
 
     public func setData(mData: Array<String>): WheelMonthPickerModel {
-        throw Exception("You can not invoke public func setData in WheelDatePicker")
+        Hilog.info(0,"setData","setData mData:${mData.size}")
+        return this
     }
 
     public func setScrollBgColor(scrollBgColor: Color): WheelMonthPickerModel {
@@ -70,11 +68,16 @@ public class WheelMonthPickerModel {
     }
 
     public func setTextHeight(mTextHeight: Float64): WheelMonthPickerModel {
-        this.mTextHeight = mTextHeight
+        if(mTextHeight > 30.0) {
+            this.mTextHeight = 30.0
+        } else {
+            this.mTextHeight = mTextHeight
+        }
         return this
     }
 
     public func getTextHeight(mTextHeight: Float64): Float64 {
+        Hilog.info(0,"getTextHeight","getTextHeight mTextHeight:${mTextHeight}")
         return this.mTextHeight
     }
 
@@ -134,6 +137,7 @@ public class WheelMonthPickerModel {
 
     public func setItemSpace(space: Float64): WheelMonthPickerModel {
         this.mSpace = space
+        this.mItemHeight = this.mTextHeight + 2.0 * this.mSpace
         return this
     }
 
@@ -218,7 +222,7 @@ public class WheelMonthPickerModel {
         return this.mFontFamily
     }
 
-    public func updateVisibleItemCount() {
+    public func updateVisibleItemCount():Unit {
         if (this.mVisibleItem < 2) {
             return
         }
@@ -228,9 +232,10 @@ public class WheelMonthPickerModel {
 
         this.mWheelHeight = Float64(this.mVisibleItem) * this.mItemHeight
         this.mCenterY = this.mWheelHeight / 2.0
+        this.mHalfItemCount = (this.mVisibleItem - 1) / 2
     }
 
-    public func scrollInit(scroller: Scroller) {
+    public func scrollInit(scroller: Scroller):Unit {
         if (!this.computeEnd && this.isCyslic) {
             scroller.scrollTo(
                 xOffset: 0.0,
@@ -252,7 +257,7 @@ public class WheelMonthPickerModel {
         }
     }
 
-    public func setSelectedItemPosition(SelectPosition: Int64) {
+    public func setSelectedItemPosition(SelectPosition: Int64):WheelMonthPickerModel {
         if (this.isCyslic) {
             this.scroller.scrollTo(
                 xOffset: 0.0,
@@ -268,6 +273,8 @@ public class WheelMonthPickerModel {
                 curve: Curve.Ease
             )
         }
+        this.mSelectedItemPosition = SelectPosition
+        return this
     }
 
     public func setOnItemSelectedListener(listener: ?OnItemSelectedListener): WheelMonthPickerModel {
