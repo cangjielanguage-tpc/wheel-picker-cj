@@ -105,13 +105,15 @@ class MyWheelPicker {
                     justifyContent: FlexAlign.Start
                 )
             ) {
-                Button("go to:${this.randomSelect}")
+                Button("go to:Wheel Picker").id("MyWheelPicker")
                 .height(70)
                 .padding(10)
                 .fontSize(24)
                 .margin(bottom: 10)
                 .onClick({
                         =>
+                        this.showWheelPickerLeft.setSelectedItemPosition(this.randomNumber)
+                        this.showWheelPickerRight.setSelectedItemPosition(this.randomNumber)
                         this.showWheelPickerMiddle.setSelectedItemPosition(this.randomNumber)
                         this.randomNumber = Int64(floor(Random().nextFloat64() * Float64(this.arr.size - 1)))
                         this.randomSelect = this.arr[this.randomNumber]

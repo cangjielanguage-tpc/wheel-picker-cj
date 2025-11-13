@@ -3,10 +3,10 @@
 </div>
 
 <p align="center">
-<img alt="" src="https://img.shields.io/badge/release-v0.0.1-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/release-1.0.0-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/build-pass-brightgreen" style="display: inline-block;" />
-<img alt="" src="https://img.shields.io/badge/cjc-v0.53.20-brightgreen" style="display: inline-block;" />
-<img alt="" src="https://img.shields.io/badge/cjcov-NA-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjc-v1.0.3-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjcov-95.0-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/project-open-brightgreen" style="display: inline-block;" />
 </p>
 
@@ -39,8 +39,7 @@ wheel-picker-cj 可以实现滚轮选择，可以设置多种 UI 效果，实现
 ├─wheelpicker # wheelpicker 库源目录                  
 │  └─src
 │      └─main
-│          ├─cangjie
-│          │  └─src                                     
+│          ├────cangjie                                     
 │          │      ├─constant                           # 省份、城市、地区汇总
 │          │      ├─listener                           # 选择器监听事件
 │          │      ├─province                           # 地区选择器数据
@@ -84,17 +83,11 @@ wheel-picker-cj 可以实现滚轮选择，可以设置多种 UI 效果，实现
         }
       }
       ```
-    4. 修改自身应用 entry/src/main/cangjie 下的 cjpm.toml 文件，在 [dependencies] 字段下添加 wheelpicker = {path = "../../../../wheelpicker/src/main/cangjie", version = "1.0.0"}
-       ```toml
-       [dependencies]
-           wheelpicker = {path = "../../../../wheelpicker/src/main/cangjie", version = "1.0.0"}
-       ```
-       或
+    4. 修改自身应用 entry下的 cjpm.toml 文件，在此文件中添加vap_cj依赖，如下：
         ```toml
        [dependencies]
-            [dependencies.wheelpicker]
-               path = "../../../../wheelpicker/src/main/cangjie"
-               version = "1.0.0"
+         [dependencies.wheelpicker]
+            path = "${wheelpicker}"
        ```
     5. 在项目中使用 import wheelpicker.* 引用 wheelpicker 项目
        ```cangjie
@@ -109,18 +102,12 @@ wheel-picker-cj 可以实现滚轮选择，可以设置多种 UI 效果，实现
     > cd third-party
     > git submodule add "https://gitcode.com/Cangjie-TPC/wheel-picker-cj.git"
     ```
-    2. 修改自身应用 entry/src/main/cangjie 下的 cjpm.toml 文件，添加依赖
+    2. 修改自身应用 entry下的 cjpm.toml 文件，添加依赖
     ```toml
     [dependencies]
-        wheelpicker = {path = "../../../../third-party/wheel-picker-cj/wheelpicker/src/main/cangjie", version = "1.0.0"}
+       [dependencies.wheelpicker]
+         path = "${wheelpicker}"
      ```
-   或
-    ```toml
-   [dependencies]
-        [dependencies.wheelpicker]
-           path = "../../../../third-party/wheel-picker-cj/wheelpicker/src/main/cangjie"
-           version = "1.0.0"
-   ```
     3. 在项目中使用 wheelpicker 组件
        ```cangjie
        import wheelpicker.*
@@ -366,8 +353,7 @@ class MyWheelPicker {
 
 在下述版本验证通过：
 
-    DevEco Studio 5.0.13.200
-    Cangjie Support Plugin 5.0.13.200
+    DevEco Studio 5.1.1 Release(5.1.1.840)
 
 1. 由于 `cangjieUI` 标准库未提供通用属性 `hitTestBehavior`,所以设置空气感效果后滚动选择器滚动效果失效；
 

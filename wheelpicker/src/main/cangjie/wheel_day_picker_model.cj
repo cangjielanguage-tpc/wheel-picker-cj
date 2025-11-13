@@ -3,27 +3,22 @@
  */
 package wheelpicker
 
-import ohos.state_manage.*
-import ohos.state_macro_manage.*
-
 public class WheelDayPickerModel {
-    var mDuration: Float64 = 30.0
-    var mTextHeight: Float64 = 30.0
     var mSpace: Float64 = 8.0
+    var mTextHeight: Float64 = 30.0
     var mItemHeight: Float64 = this.mTextHeight + 2.0 * this.mSpace
     var mVisibleItem: Int64 = 9
     var mWheelHeight: Float64 = this.mItemHeight * Float64(this.mVisibleItem)
-    var mCenterY: Float64 = this.mWheelHeight / 2.0
+    var mTextMaxHeight: Float64 = 30.0
+    var mIndicatorColor: Color = Color.RED
     var mItemTextSize: Float64 = 16.0
     var mItemTextColor: Color = Color(0X536D8A)
-    var mTextMaxHeight: Float64 = 30.0
-    var mSelectedItemTextColor: Color = Color(0XFAFAaa)
-    var mIndicatorSize: Float64 = 2.0
-    var mIndicatorColor: Color = Color.RED
     var mCurtainColor: Color = Color.WHITE
     var mHalfItemCount: Int64 = (this.mVisibleItem - 1) / 2
     var mFontFamily: String = ""
     var isCyslic: Bool = false
+    var mSelectedItemTextColor: Color = Color(0XFAFAaa)
+    var mIndicatorSize: Float64 = 2.0
     var hasIndicator: Bool = true
     var hasAtmospheric: Bool = false
     var hasCurtain: Bool = true
@@ -37,7 +32,9 @@ public class WheelDayPickerModel {
     var mOnItemSelectedListener: ?OnItemSelectedListener = None
     var atmosphericColor: Array<(Color, Float64)> = []
     var year: Int64 = 1049
+    var mDuration: Float64 = 30.0
     var month: Int64 = 1
+    var mCenterY: Float64 = this.mWheelHeight / 2.0
 
     public init() {
         let res: Int64 = monthDays(this.year, this.month)
@@ -45,7 +42,8 @@ public class WheelDayPickerModel {
     }
 
     public func setData(mData: Array<String>): WheelDayPickerModel {
-        throw Exception("You can not invoke public func setData in WheelDatePicker")
+        Hilog.info(0,"setData","setData mData:${mData.size}")
+        return this
     }
 
     public func setYearAndMonth(year: Int64, month: Int64): WheelDayPickerModel {
@@ -55,18 +53,17 @@ public class WheelDayPickerModel {
         if(month <= 0) {
             this.month = 1
         }
+        this.year = year
+        this.month = month
         let res: Int64 = monthDays(this.year, this.month)
-        this.mData = Array<Int64>(res, { item => item + 1})
+        if(res != -1){
+            this.mData = Array<Int64>(res, { item => item + 1})
+        }
         return this
     }
 
     public func setScrollBgColor(scrollBgColor: Color): WheelDayPickerModel {
         this.scrollBgColor = scrollBgColor
-        return this
-    }
-
-    public func setFirstSelectedItemPosition(FirstSelectPosition: Int64): WheelDayPickerModel {
-        this.mSelectedItemPosition = FirstSelectPosition
         return this
     }
 
@@ -79,22 +76,25 @@ public class WheelDayPickerModel {
     }
 
     public func setTextHeight(mTextHeight: Float64): WheelDayPickerModel {
+        if(mTextHeight <= 0.0){
+            return this
+        }
         this.mTextHeight = mTextHeight
         return this
     }
 
     public func getTextHeight(mTextHeight: Float64): Float64 {
+        Hilog.info(0,"WheelDayPickerModel getTextHeight","getTextHeight mTextHeight:${mTextHeight}")
         return this.mTextHeight
     }
 
-    public func setVisibleItemCount(count: Int64): WheelDayPickerModel {
-        let size: Int64 = monthDays(this.year, this.month) / 2
-        if(count > size) {
-            this.mVisibleItem = size
+    public func setVisibleItemCount(count2: Int64): WheelDayPickerModel {
+        let size2: Int64 = monthDays(this.year, this.month) / 2
+        if(count2 > size2) {
+            this.mVisibleItem = size2
         } else {
-            this.mVisibleItem = count
+            this.mVisibleItem = count2
         }
-
         return this
     }
 
@@ -103,7 +103,7 @@ public class WheelDayPickerModel {
     }
 
     public func getItemHeight(): Float64 {
-        return this.mItemHeight
+        return 2.0 * this.mSpace + this.mTextHeight
     }
 
     public func setCyclic(isCyslic: Bool): WheelDayPickerModel {
@@ -144,6 +144,7 @@ public class WheelDayPickerModel {
 
     public func setItemSpace(space: Float64): WheelDayPickerModel {
         this.mSpace = space
+        this.mItemHeight = this.mTextHeight + 2.0 * this.mSpace
         return this
     }
 
@@ -219,53 +220,43 @@ public class WheelDayPickerModel {
         return this.mFontFamily
     }
 
-    public func updateVisibleItemCount() {
+    public func updateVisibleItemCount1(): Unit {
         if (this.mVisibleItem < 2) {
             return
         }
         if (this.mVisibleItem % 2 == 0) {
             this.mVisibleItem += 1
+            var mHalfItemCount = this.mVisibleItem / 2
+            this.mHalfItemCount = mHalfItemCount
+        }else{
+            var mHalfItemCount = (this.mVisibleItem - 1)/2
+            this.mHalfItemCount = mHalfItemCount
         }
-
         this.mWheelHeight = Float64(this.mVisibleItem) * this.mItemHeight
         this.mCenterY = this.mWheelHeight / 2.0
     }
 
-    public func scrollInit(scroller: Scroller) {
+    public func scrollInit(scroller: Scroller): Unit {
         if (this.isCyslic) {
             scroller.scrollTo(
                 xOffset: 0.0,
                 yOffset: this.mItemHeight * Float64(this.mSelectedItemPosition + this.mData.size - this.mHalfItemCount),
-                duration: 0.0,
+                duration: 1.0,
                 curve: Curve.Ease
             )
-
         } else {
             scroller.scrollTo(
                 xOffset: 0.0,
                 yOffset: this.mItemHeight * Float64(this.mSelectedItemPosition),
-                duration: 0.0,
+                duration: 1.0,
                 curve: Curve.Ease
             )
         }
     }
 
-    public func setSelectedItemPosition(SelectPosition: Int64) {
-        if (this.isCyslic) {
-            this.scroller.scrollTo(
-                xOffset: 0.0,
-                yOffset: Float64(SelectPosition - this.mHalfItemCount + this.mData.size) * this.mItemHeight,
-                duration: Float64(this.mDuration),
-                curve: Curve.Ease
-            )
-        } else {
-            this.scroller.scrollTo(
-                xOffset: 0.0,
-                yOffset: Float64(SelectPosition) * this.mItemHeight,
-                duration: Float64(this.mDuration),
-                curve: Curve.Ease
-            )
-        }
+    public func setSelectedItemPosition(SelectPosition: Int64): WheelDayPickerModel {
+        this.mSelectedItemPosition = SelectPosition
+        return this
     }
 
     public func setOnItemSelectedListener(listener: ?OnItemSelectedListener): WheelDayPickerModel {

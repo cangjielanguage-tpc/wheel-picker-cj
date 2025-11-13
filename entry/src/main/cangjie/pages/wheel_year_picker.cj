@@ -3,6 +3,7 @@
  */
 package ohos_app_cangjie_entry.pages
 
+
 import wheelpicker.*
 
 internal import ohos.base.*
@@ -44,7 +45,7 @@ class MyWheelYearPicker {
                 )) {
                 WheelYearPicker(model: this.showWheelYearPicker)
             }.width(100.percent)
-        }
+        }.id("wheelYearPicker")
     }
 }
 
