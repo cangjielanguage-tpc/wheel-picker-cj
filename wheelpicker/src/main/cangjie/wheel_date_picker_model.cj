@@ -135,13 +135,13 @@ public class WheelDatePickerModel {
         return this
     }
 
-    public func setAtmospheric(hasAtmospheric1: Bool): WheelDatePickerModel {
-        this.hasAtmospheric = hasAtmospheric1
+    public func setAtmospheric(hasAtmospheric: Bool): WheelDatePickerModel {
+        this.hasAtmospheric = hasAtmospheric
         return this
     }
 
-    public func setAtmosphericColor(atmosphericColor1: Array<(Color, Float64)>): WheelDatePickerModel {
-        this.atmosphericColor = atmosphericColor1
+    public func setAtmosphericColor(atmosphericColor: Array<(Color, Float64)>): WheelDatePickerModel {
+        this.atmosphericColor = atmosphericColor
         return this
     }
 
@@ -149,81 +149,82 @@ public class WheelDatePickerModel {
         return this.hasAtmospheric
     }
 
-    public func setFontFamily(fontFamily1: String): WheelDatePickerModel {
-        this.mFontFamily = fontFamily1
+    public func setFontFamily(fontFamily: String): WheelDatePickerModel {
+        this.mFontFamily = fontFamily
         return this
     }
 
-    public func setItemAlignYear(align1: HorizontalAlign): WheelDatePickerModel {
-        this.mAlignYear = align1
+    public func setItemAlignYear(align: HorizontalAlign): WheelDatePickerModel {
+        this.mAlignYear = align
         return this
     }
 
-    public func setItemAlignMonth(align1: HorizontalAlign): WheelDatePickerModel {
-        this.mAlignMonth = align1
+    public func setItemAlignMonth(align: HorizontalAlign): WheelDatePickerModel {
+        this.mAlignMonth = align
         return this
     }
 
-    public func setItemAlignDay(align1: HorizontalAlign): WheelDatePickerModel {
-        this.mAlignDay = align1
+    public func setItemAlignDay(align: HorizontalAlign): WheelDatePickerModel {
+        this.mAlignDay = align
         return this
     }
 
-    public func setYearStart(yearStart1: Int64): WheelDatePickerModel {
-        if(yearStart1 > this.yearRangeEnd) {
+    public func setYearStart(yearStart: Int64): WheelDatePickerModel {
+        if(yearStart > this.yearRangeEnd) {
             this.yearRangeStart = this.yearRangeEnd - 1
         } else {
-            this.yearRangeStart = yearStart1
+            this.yearRangeStart = yearStart
         }
-        this.yearRangeStart = yearStart1
+        this.yearRangeStart = yearStart
         return this
     }
 
-    public func setYearEnd(yearEnd1: Int64): WheelDatePickerModel {
-        if(yearEnd1 <= this.yearRangeStart) {
+    public func setYearEnd(yearEnd: Int64): WheelDatePickerModel {
+        if(yearEnd <= this.yearRangeStart) {
             this.yearRangeEnd = this.yearRangeStart + 1
         } else {
-            this.yearRangeEnd = yearEnd1 + 1
+            this.yearRangeEnd = yearEnd + 1
         }
+
         return this
     }
 
-    public func setSelectedYear(mFirstSelectYearPosition1: Int64): WheelDatePickerModel {
-        if(mFirstSelectYearPosition1 < 0) {
+    public func setSelectedYear(mFirstSelectYearPosition: Int64): WheelDatePickerModel {
+        if(mFirstSelectYearPosition < 0) {
             this.mFirstSelectYearPosition = 0
-        } else if(mFirstSelectYearPosition1 > (this.yearRangeEnd - this.yearRangeStart)) {
+        } else if(mFirstSelectYearPosition > (this.yearRangeEnd - this.yearRangeStart)) {
             this.mFirstSelectYearPosition = (this.yearRangeEnd - this.yearRangeStart)
         } else {
-            this.mFirstSelectYearPosition = mFirstSelectYearPosition1
+            this.mFirstSelectYearPosition = mFirstSelectYearPosition
         }
+
         return this
     }
 
-    public func setSelectedMonth(mFirstSelectMonthPosition1: Int64): WheelDatePickerModel {
-        if(mFirstSelectMonthPosition1 < 0) {
+    public func setSelectedMonth(mFirstSelectMonthPosition: Int64): WheelDatePickerModel {
+        if(mFirstSelectMonthPosition < 0) {
             this.mFirstSelectMonthPosition = 0
-        } else if(mFirstSelectMonthPosition1 >= 11) {
+        } else if(mFirstSelectMonthPosition >= 11) {
             this.mFirstSelectMonthPosition = 11
         } else {
-            this.mFirstSelectMonthPosition = mFirstSelectMonthPosition1
+            this.mFirstSelectMonthPosition = mFirstSelectMonthPosition
         }
         return this
     }
 
-    public func setSelectedDay(mFirstSelectDayPosition1: Int64): WheelDatePickerModel {
-        let yearRange1: Array<Int64> = Array<Int64>((this.yearRangeEnd - yearRangeStart), {i => yearRangeStart + i})
-        let monthRange1: Array<Int64> = Array<Int64>(12, {i => 1 + i})
-        let day1: Int64 = monthDays(yearRange1[this.mFirstSelectYearPosition], monthRange1[this.mFirstSelectMonthPosition])
-        if(mFirstSelectDayPosition1 < 0) {
+    public func setSelectedDay(mFirstSelectDayPosition: Int64): WheelDatePickerModel {
+        let yearRange: Array<Int64> = Array<Int64>((this.yearRangeEnd - yearRangeStart), {i => yearRangeStart + i})
+        let monthRange: Array<Int64> = Array<Int64>(12, {i => 1 + i})
+        let day: Int64 = monthDays(yearRange[this.mFirstSelectYearPosition], monthRange[this.mFirstSelectMonthPosition])
+        if(mFirstSelectDayPosition < 0) {
             this.mFirstSelectDayPosition = 0
-        } else if(mFirstSelectDayPosition >= day1) {
-            this.mFirstSelectDayPosition = day1 - 1
+        } else if(mFirstSelectDayPosition >= day) {
+            this.mFirstSelectDayPosition = day - 1
         } else {
-            this.mFirstSelectDayPosition = mFirstSelectDayPosition1
+            this.mFirstSelectDayPosition = mFirstSelectDayPosition
         }
         return this
     }
-
     public func getSelectedItemTextColor(): Color {
         return this.mSelectedItemTextColor
     }
@@ -233,24 +234,32 @@ public class WheelDatePickerModel {
     public func getVisibleItemCount(): Int64 {
         return this.mVisibleItem
     }
-
-    public func getIndicatorColor(): Color {
-        return this.mIndicatorColor
-    }
-
-    public func getTextHeight(mTextHeight1: Float64): Float64 {
-        Hilog.info(0,"WheelDatePickerModel getTextHeight","getTextHeight mTextHeight:${mTextHeight1}")
+    public func getTextHeight(mTextHeight: Float64): Float64 {
+        Hilog.info(0,"WheelDatePickerModel getTextHeight","getTextHeight mTextHeight:${mTextHeight}")
         return this.mTextHeight
     }
     public func getItemTextColor(): Color {
         return this.mItemTextColor
     }
-
     public func getItemTextSize(): Float64 {
         return this.mItemTextSize
     }
     public func getItemSpace(): Float64 {
         return this.mSpace
+    }
+    public func getIndicatorSize(): Float64 {
+        return this.mIndicatorSize
+    }
+    public func getIndicatorColor(): Color {
+        return this.mIndicatorColor
+    }
+
+    public func getCurtainColor(): Color {
+        return this.mCurtainColor
+    }
+
+    public func getFontFamily(): String {
+        return this.mFontFamily
     }
 
     public func getItemAlignYear(): HorizontalAlign {
@@ -259,10 +268,6 @@ public class WheelDatePickerModel {
 
     public func getItemAlignMonth(): HorizontalAlign {
         return this.mAlignMonth
-    }
-
-    public func getIndicatorSize(): Float64 {
-        return this.mIndicatorSize
     }
 
     public func getItemAlignDay(): HorizontalAlign {
@@ -283,14 +288,6 @@ public class WheelDatePickerModel {
 
     public func getCurrentYear(): Int64 {
         return this.solarLatestYearIndex
-    }
-
-    public func getCurtainColor(): Color {
-        return this.mCurtainColor
-    }
-
-    public func getFontFamily(): String {
-        return this.mFontFamily
     }
 
     public func getSelectedMonth(): Int64 {
