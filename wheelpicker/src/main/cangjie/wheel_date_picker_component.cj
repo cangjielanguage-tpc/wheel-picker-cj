@@ -510,6 +510,42 @@ public class WheelDatePicker {
 
     func onScrollEndYear(){
         let scrollOffset: Float64 = this.scrollerYear.currentOffset().yOffset % this.model.mItemHeight
+        onScrollEndYear1(scrollOffset)
+        let lastDaySize: Int64 = this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days.size
+        if(this.model.solarLatestMonthIndex == 1 && (Float64(lastDaySize) * (this.model.mTextHeight + 2.0 * this.model.mSpace)) == this.lastDayPosition) {
+            this.model.solarLatestDayIndex = lastDaySize - 1
+        }
+        var year: Int64 = 0
+        if (this.model.isCyslic) {
+            this.yearChange = (this.model.solarLatestYearIndex + this.model.mHalfItemCount) % this.YearsArray.size
+            this.monthChange = (this.model.solarLatestMonthIndex + this.model.mHalfItemCount)%12
+            this.dayChange = (this.model.solarLatestDayIndex + this.model.mHalfItemCount) % this.YearsArray[this.yearChange].monthAndDay[this.monthChange].days.size
+            this.model.mDate = "${this.YearsArray[this.yearChange].year}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[this.monthChange].month}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[this.monthChange].days[this.dayChange]}"
+            this.yearChangeIndex = this.yearChange
+            this.monthChangeIndex = this.monthChange
+            year = this.YearsArray[this.yearChange].year
+         } else {
+            this.yearChangeIndex = this.model.solarLatestYearIndex
+            this.monthChangeIndex = this.model.solarLatestMonthIndex
+            //场景：闰2月29天，日期滑到最后一天，滑动年组件，solarLatestDayIndex28,实际普通年份2月28天，索引最大27，下标越界，增加保护
+            let tepmsolarLatestDayIndex = this.model.solarLatestDayIndex
+            let tempDays = this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days.size
+            if(tepmsolarLatestDayIndex < 0 || tepmsolarLatestDayIndex >=  tempDays){
+                this.model.solarLatestDayIndex = tempDays - 1
+            }
+            this.model.mDate = "${this.YearsArray[this.model.solarLatestYearIndex].year}" +
+                "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].month}" +
+                "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days[this.model.solarLatestDayIndex]}"
+            year = this.YearsArray[this.model.solarLatestYearIndex].year
+        }
+        // 添加年份监听
+        if(let Some(mOnDateSelectedListener) <- this.model.mOnDateSelectedListener) {
+            mOnDateSelectedListener.onYearSelected(this.yearChangeIndex, year)
+        }
+        this.model.mOnDateSelectedListener
+    }
+
+    func onScrollEndYear1(scrollOffset: Float64){
         if (scrollOffset > (this.model.mItemHeight / 2.0)) {
             this.model.solarLatestYearIndex = Int64(((
             this.scrollerYear.currentOffset()
@@ -534,36 +570,43 @@ public class WheelDatePicker {
                 curve: Curve.Linear
             )
         }
-        let lastDaySize: Int64 = this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days.size
-
-        if(this.model.solarLatestMonthIndex == 1 && (Float64(lastDaySize) * (this.model.mTextHeight + 2.0 * this.model.mSpace)) == this.lastDayPosition) {
-            this.model.solarLatestDayIndex = lastDaySize - 1
-        }
-
-        if (this.model.isCyslic) {
-            this.yearChange = (this.model.solarLatestYearIndex + this.model.mHalfItemCount) % this.YearsArray.size
-            this.monthChange = (this.model.solarLatestMonthIndex + this.model.mHalfItemCount)%12
-            this.dayChange = (this.model.solarLatestDayIndex + this.model.mHalfItemCount) % this.YearsArray[this.yearChange].monthAndDay[this.monthChange].days.size
-            this.model.mDate = "${this.YearsArray[this.yearChange].year}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[this.monthChange].month}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[this.monthChange].days[this.dayChange]}"
-            this.yearChangeIndex = this.yearChange
-            this.monthChangeIndex = this.monthChange
-         } else {
-            this.yearChangeIndex = this.model.solarLatestYearIndex
-            this.monthChangeIndex = this.model.solarLatestMonthIndex
-            //场景：闰2月29天，日期滑到最后一天，滑动年组件，solarLatestDayIndex28,实际普通年份2月28天，索引最大27，下标越界，增加保护
-            let tepmsolarLatestDayIndex = this.model.solarLatestDayIndex
-            let tempDays = this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days.size
-            if(tepmsolarLatestDayIndex < 0 || tepmsolarLatestDayIndex >=  tempDays){
-                this.model.solarLatestDayIndex = tempDays - 1
-            }
-            this.model.mDate = "${this.YearsArray[this.model.solarLatestYearIndex].year}" +
-                "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].month}" +
-                "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days[this.model.solarLatestDayIndex]}"
-        }
     }
 
     func onScrollEndMonth(){
         let scrollOffset: Float64 = this.scrollerMonth.currentOffset().yOffset % this.model.mItemHeight
+        onScrollEndMonth1(scrollOffset)
+        var monthNum: String = ""
+        if (this.model.isCyslic) {
+            // 处理 所选月份的天数小于之前INDEX
+            this.yearChange = (this.model.solarLatestYearIndex + this.model.mHalfItemCount) % this.YearsArray.size
+            this.monthChange = (this.model.solarLatestMonthIndex + this.model.mHalfItemCount)%12
+            let dayLength: Int64 = this.YearsArray[this.yearChange].monthAndDay[this.monthChange].days.size - 1
+            if (this.model.solarLatestDayIndex > dayLength) {
+                this.model.solarLatestDayIndex = dayLength;
+            }
+            this.model.mDate = "${this.YearsArray[this.yearChange].year}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[this.monthChange].month}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[this.monthChange].days[this.dayChange]}"
+            this.yearChangeIndex = this.yearChange
+            this.monthChangeIndex = this.monthChange
+            monthNum = this.YearsArray[this.yearChange].monthAndDay[this.monthChange].month
+       } else {
+            // 处理 所选月份的天数小于之前INDEX
+            let dayLength: Int64 = this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[(this.model.solarLatestMonthIndex)].days.size - 1
+            if (this.model.solarLatestDayIndex > dayLength) {
+                this.model.solarLatestDayIndex = dayLength
+            }
+            this.yearChangeIndex = this.model.solarLatestYearIndex
+            this.monthChangeIndex = this.model.solarLatestMonthIndex
+            this.model.mDate = "${this.YearsArray[this.model.solarLatestYearIndex].year}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].month}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days[this.model.solarLatestDayIndex]}"
+            monthNum = this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].month
+        }
+        // 添加月份监听
+        if(let Some(mOnDateSelectedListener) <- this.model.mOnDateSelectedListener) {
+            mOnDateSelectedListener.onMonthSelected(this.monthChangeIndex, monthNum)
+        }
+        this.model.mOnDateSelectedListener
+    }
+
+    func onScrollEndMonth1(scrollOffset: Float64){
         if (scrollOffset > (this.model.mItemHeight / 2.0)) {
             this.model.solarLatestMonthIndex = Int64(((
             this.scrollerMonth.currentOffset()
@@ -586,32 +629,30 @@ public class WheelDatePicker {
                 curve: Curve.Linear
             )
         }
-
-        if (this.model.isCyslic) {
-            // 处理 所选月份的天数小于之前INDEX
-            this.yearChange = (this.model.solarLatestYearIndex + this.model.mHalfItemCount) % this.YearsArray.size
-            this.monthChange = (this.model.solarLatestMonthIndex + this.model.mHalfItemCount)%12
-            let dayLength: Int64 = this.YearsArray[this.yearChange].monthAndDay[this.monthChange].days.size - 1
-            if (this.model.solarLatestDayIndex > dayLength) {
-                this.model.solarLatestDayIndex = dayLength;
-            }
-            this.model.mDate = "${this.YearsArray[this.yearChange].year}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[this.monthChange].month}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[this.monthChange].days[this.dayChange]}"
-            this.yearChangeIndex = this.yearChange
-            this.monthChangeIndex = this.monthChange
-       } else {
-            // 处理 所选月份的天数小于之前INDEX
-            let dayLength: Int64 = this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[(this.model.solarLatestMonthIndex)].days.size - 1
-            if (this.model.solarLatestDayIndex > dayLength) {
-                this.model.solarLatestDayIndex = dayLength
-            }
-            this.yearChangeIndex = this.model.solarLatestYearIndex
-            this.monthChangeIndex = this.model.solarLatestMonthIndex
-            this.model.mDate = "${this.YearsArray[this.model.solarLatestYearIndex].year}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].month}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days[this.model.solarLatestDayIndex]}"
-       }
     }
 
     func onScrollEndDay(){
         let scrollOffset: Float64 = this.scrollerDay.currentOffset().yOffset % this.model.mItemHeight
+        onScrollEndDay1(scrollOffset)
+        var day: String = ""
+        if (this.model.isCyslic) {
+            this.yearChange = (this.model.solarLatestYearIndex + this.model.mHalfItemCount) % this.YearsArray.size
+            this.dayChange = (this.model.solarLatestDayIndex + this.model.mHalfItemCount) % this.YearsArray[this.yearChange].monthAndDay[(this.model.solarLatestMonthIndex + this.model.mHalfItemCount)%12].days.size
+            this.model.mDate = "${this.YearsArray[this.yearChange].year}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[(this.model.solarLatestMonthIndex + this.model.mHalfItemCount)%12].month}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[this.model.solarLatestMonthIndex].days[this.dayChange]}"
+            day = this.YearsArray[this.yearChange].monthAndDay[this.model.solarLatestMonthIndex].days[this.dayChange]
+      } else {
+            this.model.mDate = "${this.YearsArray[this.model.solarLatestYearIndex].year}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].month}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days[this.model.solarLatestDayIndex]}"
+            day = this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days[this.model.solarLatestDayIndex]
+      }
+      // 添加天监听
+      if(let Some(mOnDateSelectedListener) <- this.model.mOnDateSelectedListener) {
+            var monthNumber = (this.model.solarLatestMonthIndex + this.model.mHalfItemCount)%12
+            mOnDateSelectedListener.onDaySelected(this.model.solarLatestDayIndex, day)
+        }
+        this.model.mOnDateSelectedListener
+    }
+
+    func onScrollEndDay1(scrollOffset: Float64){
         if (scrollOffset > (this.model.mItemHeight / 2.0)) {
             this.model.solarLatestDayIndex = Int64(((
             this.scrollerDay.currentOffset()
@@ -636,14 +677,6 @@ public class WheelDatePicker {
                 curve: Curve.Linear
             )
         }
-
-        if (this.model.isCyslic) {
-            this.yearChange = (this.model.solarLatestYearIndex + this.model.mHalfItemCount) % this.YearsArray.size
-            this.dayChange = (this.model.solarLatestDayIndex + this.model.mHalfItemCount) % this.YearsArray[this.yearChange].monthAndDay[(this.model.solarLatestMonthIndex + this.model.mHalfItemCount)%12].days.size
-            this.model.mDate = "${this.YearsArray[this.yearChange].year}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[(this.model.solarLatestMonthIndex + this.model.mHalfItemCount)%12].month}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[this.model.solarLatestMonthIndex].days[this.dayChange]}"
-      } else {
-            this.model.mDate = "${this.YearsArray[this.model.solarLatestYearIndex].year}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].month}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days[this.model.solarLatestDayIndex]}"
-      }
     }
 
     func onScrollYear(offset: OffsetResult){

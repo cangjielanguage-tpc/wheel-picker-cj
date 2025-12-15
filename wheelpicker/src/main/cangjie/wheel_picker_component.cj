@@ -203,6 +203,10 @@ public class WheelPicker {
                 this.model.mSelectDataShow(this.model.mSelectedData)
             }
         }
+        if(let Some(mOnItemSelectedListener) <- this.model.mOnItemSelectedListener) {
+            mOnItemSelectedListener.onItemSelected(this.model.mSelectedItemPosition, this.model.mData[this.model.mSelectedItemPosition])
+        }
+        this.model.setOnItemSelectedListener
     }
 
     func onScrollEdge(edge: Edge) {

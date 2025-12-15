@@ -63,6 +63,8 @@ public class WheelPickerModel {
     @Publish
     var mSelectDataShow: (text: String) -> Unit = {text: String =>}
 
+    var mOnItemSelectedListener: ?OnSelectedListener = None
+
     //--------------------------set---------------------------------
 
     public func setScrollBgColor(scrollBgColor: Color): WheelPickerModel {
@@ -291,5 +293,10 @@ public class WheelPickerModel {
 
     public func getFontFamily(): String {
         return this.mFontFamily
+    }
+
+    public func setOnItemSelectedListener(listener: ?OnSelectedListener): WheelPickerModel {
+        this.mOnItemSelectedListener = listener
+        return this
     }
 }

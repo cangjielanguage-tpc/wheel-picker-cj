@@ -42,6 +42,7 @@ public class WheelDatePickerModel {
     @Publish var solarLatestDayIndex: Int64 = 0
     @Publish var mDate: String = ""
     var atmosphericColor: Array<(Color, Float64)> = []
+    var mOnDateSelectedListener: ?OnDateSelectedListener = None
 
     public func setData(mData: Array<String>): WheelDatePickerModel {
         Hilog.info(0,"setData","setData mData:${mData.size}")
@@ -338,4 +339,8 @@ public class WheelDatePickerModel {
         "${this.mFirstSelectDayPosition + this.mHalfItemCount + 1}"
     }
 
+    public func setOnDateSelectedListener(listener: ?OnDateSelectedListener): WheelDatePickerModel {
+        this.mOnDateSelectedListener = listener;
+        return this
+    }
 }

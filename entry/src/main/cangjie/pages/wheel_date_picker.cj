@@ -56,3 +56,15 @@ class MyWheelDatePicker {
         }
     }
 }
+
+public class MyOnDateSelectedListener <: OnDateSelectedListener {
+     public func onYearSelected(yearPos: Int64, yearNumber: Int64): Unit {
+         PromptAction.showToast(message: "选中年份：${yearPos} - ${yearNumber}")
+     }
+    public func onMonthSelected(monthPos: Int64, monthNumber: String): Unit {
+         PromptAction.showToast(message: "选中月份：${monthPos} - ${monthNumber}")
+     }
+    public func onDaySelected(dayPos: Int64, dayNumber: String): Unit {
+         PromptAction.showToast(message: "选中天：${dayPos} - ${dayNumber}")
+     }
+}

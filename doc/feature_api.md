@@ -737,6 +737,14 @@ public class WheelDatePickerModel {
      * 返回 Bool - true/false
      */
     public func isCyslicShow(): Bool
+	
+	/**
+     * 设置日期选择器监听事件
+     * 
+     * 参数 listener - 监听事件
+     * 返回 WheelDatePickerModel - 日期选择器数据对象
+     */
+	public func setOnDateSelectedListener(listener: ?OnDateSelectedListener): WheelDatePickerModel 
 
 }
 
@@ -1097,6 +1105,14 @@ public class WheelPickerModel {
      * 返回 WheelPickerModel - 选择器数据对象
      */
     public func setSelectedItemPosition(SelectPosition: Int64): WheelPickerModel
+	
+	/**
+     * 设置自定义选择器监听事件
+     * 
+     * 参数 listener - 监听事件
+     * 返回 WheelPickerModel - 自定义选择器数据对象
+     */
+	public func setOnItemSelectedListener(listener: ?OnSelectedListener): WheelPickerModel 
 }
 
 ```
