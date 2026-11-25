@@ -77,9 +77,9 @@ public func initializeProvinceOnStartup(): ArrayList<Province> {
     for (item in provinceJson) {
         var cityAndAreaArray: ArrayList<CityAndArea> = ArrayList<CityAndArea>()
         for (cityParam in item.getCity()) {
-            cityAndAreaArray.append(CityAndArea(cityParam.getName(), cityParam.getArea()))
+            cityAndAreaArray.add(CityAndArea(cityParam.getName(), cityParam.getArea()))
         }
-        PickerArray.append(Province(item.getName(), cityAndAreaArray))
+        PickerArray.add(Province(item.getName(), cityAndAreaArray))
     }
 
     return PickerArray

@@ -1,3 +1,11 @@
+## 1.0.1
+
+- 适配 DevEco Studio 6.1.1 Release(6.1.1.280)
+
+## 1.0.0
+
+- 适配 cangjie support plugin 5.1.1.840
+
 ## v0.0.1
 
 - 已实现功能

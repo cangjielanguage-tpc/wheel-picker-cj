@@ -6,7 +6,6 @@ package wheelpicker
 import ohos.state_manage.*
 import ohos.state_macro_manage.*
 
-
 @Component
 public class WheelDatePicker {
     @Link
@@ -41,7 +40,7 @@ public class WheelDatePicker {
     @Builder
     func occupyText() {
         ForEach(
-            Array(this.model.mHalfItemCount, item: 0),
+            Array(this.model.mHalfItemCount, repeat: 0),
             itemGeneratorFunc: {
                 _: Int64, _: Int64 => Text("").fontSize(this.model.mItemTextSize).height(this.model.mItemHeight).padding(
                     this.model.mSpace)
@@ -63,21 +62,23 @@ public class WheelDatePicker {
                 )
             } else if (this.model.mVisibleItem < this.YearsArray.size) {
                 ForEach(
-                    Array(3, item: 0),
+                    Array(3, repeat: 0),
                     itemGeneratorFunc: {
                         _: Int64, _: Int64 => ForEach(
                             this.YearsArray,
                             itemGeneratorFunc: {
-                                solarYearItem: SolarCalendar, _: Int64 => Text("${solarYearItem.year}").fontSize(this.model.mItemTextSize).height(
-                                    this.model.mItemHeight).fontColor(textColor).fontFamily(this.model.mFontFamily).
-                                    padding(this.model.mSpace)
+                                solarYearItem: SolarCalendar, _: Int64 =>
+                                    Text("${solarYearItem.year}").padding(this.model.mSpace)
+                                    .fontSize(this.model.mItemTextSize)
+                                    .height(this.model.mItemHeight).fontColor(textColor)
+                                    .fontFamily(this.model.mFontFamily)
                             }
                         )
                     }
                 )
             } else {
                 ForEach(
-                    Array(Int64(ceil(Float64(this.model.mVisibleItem / this.YearsArray.size)) * 3.0), item: 0),
+                    Array(Int64(ceil(Float64(this.model.mVisibleItem / this.YearsArray.size)) * 3.0), repeat: 0),
                     itemGeneratorFunc: {
                         _: Int64, _: Int64 => ForEach(
                             this.YearsArray,
@@ -100,41 +101,43 @@ public class WheelDatePicker {
                 ForEach(
                     this.YearsArray[yearChangeIndex].monthAndDay,
                     itemGeneratorFunc: {
-                        monthAndDay: MonthAndDay, _: Int64 => Text("${monthAndDay.month}").fontSize(this.model.mItemTextSize).height(
-                            this.model.mItemHeight).fontColor(textColor).fontFamily(this.model.mFontFamily).padding(
-                            this.model.mSpace)
+                        monthAndDay: MonthAndDay, _: Int64 =>
+                            Text("${monthAndDay.month}").fontSize(this.model.mItemTextSize)
+                            .height(this.model.mItemHeight).fontColor(textColor).fontFamily(this.model.mFontFamily)
+                            .padding(this.model.mSpace)
                     }
                 )
             } else if (this.model.mVisibleItem < this.YearsArray[yearChangeIndex].monthAndDay.size) {
                 ForEach(
-                    Array(3, item: 0),
+                    Array(3, repeat: 0),
                     itemGeneratorFunc: {
                         _: Int64, _: Int64 => ForEach(
                             this.YearsArray[yearChangeIndex].monthAndDay,
                             itemGeneratorFunc: {
-                                monthAndDay: MonthAndDay, _: Int64 => Text("${monthAndDay.month}").fontSize(this.model.mItemTextSize).height(
-                                    this.model.mItemHeight).fontColor(textColor).fontFamily(this.model.mFontFamily).
-                                    padding(this.model.mSpace)
+                                monthAndDay: MonthAndDay, _: Int64 => Text("${monthAndDay.month}").fontColor(textColor)
+                                    .fontSize(this.model.mItemTextSize).height(this.model.mItemHeight)
+                                    .fontFamily(this.model.mFontFamily).padding(this.model.mSpace)
                             }
                         )
                     }
                 )
             } else {
                 ForEach(
-                    Array(Int64(ceil(Float64(this.model.mVisibleItem / this.YearsArray[yearChangeIndex].monthAndDay.size)) * 3.0), item: 0),
+                    Array(Int64(ceil(Float64(this.model.mVisibleItem / this.YearsArray[yearChangeIndex].monthAndDay.size)) * 3.0), repeat: 0),
                     itemGeneratorFunc: {
                         _: Int64, _: Int64 => ForEach(
                             this.YearsArray[yearChangeIndex].monthAndDay,
                             itemGeneratorFunc: {
-                                monthAndDay: MonthAndDay, _: Int64 => Text("${monthAndDay.month}").fontSize(this.model.mItemTextSize).height(
-                                    this.model.mItemHeight).fontColor(textColor).fontFamily(this.model.mFontFamily).
-                                    padding(this.model.mSpace)
+                                monthAndDay: MonthAndDay, _: Int64 =>
+                                    Text("${monthAndDay.month}").padding(this.model.mSpace)
+                                    .fontSize(this.model.mItemTextSize).height(this.model.mItemHeight)
+                                    .fontColor(textColor).fontFamily(this.model.mFontFamily)
                             }
                         )
                     }
                 )
             }
-        }.width(30.percent).alignItems(this.model.mAlignYear)
+        }.width(30.percent).alignItems(this.model.mAlignMonth)
     }
 
     @Builder
@@ -144,41 +147,41 @@ public class WheelDatePicker {
                 ForEach(
                     this.YearsArray[yearChangeIndex].monthAndDay[monthChangeIndex].days,
                     itemGeneratorFunc: {
-                        day: String, _: Int64 => Text(day).fontSize(this.model.mItemTextSize).height(
-                            this.model.mItemHeight).fontColor(textColor).fontFamily(this.model.mFontFamily).padding(
-                            this.model.mSpace)
+                        day: String, _: Int64 => Text(day).fontFamily(this.model.mFontFamily)
+                            .fontSize(this.model.mItemTextSize).height(this.model.mItemHeight)
+                            .fontColor(textColor).padding(this.model.mSpace)
                     }
                 )
             } else if (this.model.mVisibleItem < this.YearsArray[yearChangeIndex].monthAndDay[monthChangeIndex].days.size) {
                 ForEach(
-                    Array(3, item: 0),
+                    Array(3, repeat: 0),
                     itemGeneratorFunc: {
                         _: Int64, _: Int64 => ForEach(
                             this.YearsArray[yearChangeIndex].monthAndDay[monthChangeIndex].days,
                             itemGeneratorFunc: {
-                                day: String, _: Int64 => Text(day).fontSize(this.model.mItemTextSize).height(
-                                    this.model.mItemHeight).fontColor(textColor).fontFamily(this.model.mFontFamily).
-                                    padding(this.model.mSpace)
+                                day: String, _: Int64 => Text(day).fontColor(textColor)
+                                    .fontSize(this.model.mItemTextSize).height(this.model.mItemHeight)
+                                    .fontFamily(this.model.mFontFamily).padding(this.model.mSpace)
                             }
                         )
                     }
                 )
             } else {
                 ForEach(
-                    Array(Int64(ceil(Float64(this.model.mVisibleItem / this.YearsArray[yearChangeIndex].monthAndDay[monthChangeIndex].days.size)) * 3.0), item: 0),
+                    Array(Int64(ceil(Float64(this.model.mVisibleItem / this.YearsArray[yearChangeIndex].monthAndDay[monthChangeIndex].days.size)) * 3.0), repeat: 0),
                     itemGeneratorFunc: {
                         _: Int64, _: Int64 => ForEach(
                             this.YearsArray[yearChangeIndex].monthAndDay[monthChangeIndex].days,
                             itemGeneratorFunc: {
-                                day: String, _: Int64 => Text(day).fontSize(this.model.mItemTextSize).height(
-                                    this.model.mItemHeight).fontColor(textColor).fontFamily(this.model.mFontFamily).
-                                    padding(this.model.mSpace)
+                                day: String, _: Int64 => Text(day).padding(this.model.mSpace)
+                                .fontSize(this.model.mItemTextSize).height(this.model.mItemHeight)
+                                .fontColor(textColor).fontFamily(this.model.mFontFamily)
                             }
                         )
                     }
                 )
             }
-        }.width(30.percent).alignItems(this.model.mAlignYear)
+        }.alignItems(this.model.mAlignDay).width(30.percent)
     }
 
     protected override func aboutToAppear() {
@@ -188,80 +191,75 @@ public class WheelDatePicker {
         this.dayChangeIndex = this.model.mFirstSelectDayPosition
 
         this.model.updateVisibleItemCount()
+    }
 
-        Timer.once(
-            Duration.millisecond * 100,
-            {
-                =>
-                this.model.updateVisibleItemCount()
-                if (this.model.isCyslic) {
-                    this.scrollerYear.scrollTo(
-                        xOffset: 0.0,
-                        yOffset: this.model.mItemHeight * Float64(this.model.mFirstSelectYearPosition)
-                    )
+    protected func OnAppearFunc1() {
+        if (this.model.isCyslic) {
+            this.scrollerYear.scrollTo(
+                xOffset: 0.0,
+                yOffset: this.model.mItemHeight * Float64(this.model.mFirstSelectYearPosition)
+            )
 
-                    this.scrollerMonth.scrollTo(
-                        xOffset: 0.0,
-                        yOffset: this.model.mItemHeight * Float64(this.model.mFirstSelectMonthPosition)
-                    )
+            this.scrollerDay.scrollTo(
+                xOffset: 0.0,
+                yOffset: this.model.mItemHeight * Float64(this.model.mFirstSelectDayPosition)
+            )
 
-                    this.scrollerDay.scrollTo(
-                        xOffset: 0.0,
-                        yOffset: this.model.mItemHeight * Float64(this.model.mFirstSelectDayPosition)
-                    )
-                } else {
-                    this.scrollerYear.scrollTo(
-                        xOffset: 0.0,
-                        yOffset: this.model.mItemHeight * Float64(this.model.mFirstSelectYearPosition)
-                    )
+            this.scrollerMonth.scrollTo(
+                xOffset: 0.0,
+                yOffset: this.model.mItemHeight * Float64(this.model.mFirstSelectMonthPosition)
+            )
+        } else {
+            this.scrollerYear.scrollTo(
+                xOffset: 0.0,
+                yOffset: Float64(this.model.mFirstSelectYearPosition) * this.model.mItemHeight
+            )
 
-                    this.scrollerMonth.scrollTo(
-                        xOffset: 0.0,
-                        yOffset: this.model.mItemHeight * Float64(this.model.mFirstSelectMonthPosition)
-                    )
+            this.scrollerMonth.scrollTo(
+                xOffset: 0.0,
+                yOffset: Float64(this.model.mFirstSelectMonthPosition) * this.model.mItemHeight
+            )
 
-                    this.scrollerDay.scrollTo(
-                        xOffset: 0.0,
-                        yOffset: this.model.mItemHeight * Float64(this.model.mFirstSelectDayPosition)
-                    )
-                }
+            this.scrollerDay.scrollTo(
+                xOffset: 0.0,
+                yOffset: Float64(this.model.mFirstSelectDayPosition) * this.model.mItemHeight
+            )
+        }
+    }
 
-
-                let mOffsetYear: Float64 = this.scrollerYear.currentOffset().yOffset
-                let mOffsetMonth: Float64 = this.scrollerMonth.currentOffset().yOffset
-                let mOffsetDay: Float64 = this.scrollerDay.currentOffset().yOffset
-                if (this.model.isCyslic) {
-                    this.scrollerYearColor.scrollTo(
-                        xOffset: 0.0,
-                        yOffset: mOffsetYear + Float64(this.model.mHalfItemCount) * this.model.mItemHeight,
-                    )
-                    this.scrollerMonthColor.scrollTo(
-                        xOffset: 0.0,
-                        yOffset: mOffsetMonth + Float64(this.model.mHalfItemCount) * this.model.mItemHeight,
-                    )
-                    this.scrollerDayColor.scrollTo(
-                        xOffset: 0.0,
-                        yOffset: mOffsetDay + Float64(this.model.mHalfItemCount) * this.model.mItemHeight,
-                    )
-                 } else {
-                    this.scrollerYearColor.scrollTo(
-                        xOffset: 0.0,
-                        yOffset: mOffsetYear,
-                    )
-                    this.scrollerMonthColor.scrollTo(
-                        xOffset: 0.0,
-                        yOffset: mOffsetMonth,
-                    )
-                    this.scrollerDayColor.scrollTo(
-                        xOffset: 0.0,
-                        yOffset: mOffsetDay,
-                    )
-                }
-
+    protected func OnAppearFunc() {
+            this.model.updateVisibleItemCount()
+            OnAppearFunc1()
+            let mOffsetYear: Float64 = this.scrollerYear.currentOffset().yOffset
+            let mOffsetMonth: Float64 = this.scrollerMonth.currentOffset().yOffset
+            let mOffsetDay: Float64 = this.scrollerDay.currentOffset().yOffset
+            if (this.model.isCyslic) {
+                this.scrollerYearColor.scrollTo(
+                    xOffset: 0.0,
+                    yOffset: mOffsetYear + Float64(this.model.mHalfItemCount) * this.model.mItemHeight,
+                )
+                this.scrollerMonthColor.scrollTo(
+                    xOffset: 0.0,
+                    yOffset: mOffsetMonth + Float64(this.model.mHalfItemCount) * this.model.mItemHeight,
+                )
+                this.scrollerDayColor.scrollTo(
+                    xOffset: 0.0,
+                    yOffset: mOffsetDay + Float64(this.model.mHalfItemCount) * this.model.mItemHeight,
+                )
+             } else {
+                this.scrollerYearColor.scrollTo(
+                    xOffset: 0.0,
+                    yOffset: mOffsetYear,
+                )
+                this.scrollerMonthColor.scrollTo(
+                    xOffset: 0.0,
+                    yOffset: mOffsetMonth,
+                )
+                this.scrollerDayColor.scrollTo(
+                    xOffset: 0.0,
+                    yOffset: mOffsetDay,
+                )
             }
-        )
-
-        return
     }
 
     protected override func aboutToDisappear() {
@@ -290,134 +288,23 @@ public class WheelDatePicker {
                         }
                     }
                 }.height(this.model.mWheelHeight).backgroundColor(this.model.scrollBgColor).scrollBar(BarState.Off)
+                .zIndex(1)
                 .onScroll({
-                    offset =>
-                    let mOffset: Float64 = this.scrollerYear.currentOffset().yOffset
-                    this.model.mHalfItemCount = (this.model.mVisibleItem - 1) / 2
-                    this.lastYearPosition = if(offset.yOffset == 0.0) { this.lastYearPosition } else { offset.yOffset }
-                    if (this.model.isCyslic) {
-                        this.scrollerYearColor.scrollTo(
-                            xOffset: 0.0,
-                            yOffset: mOffset + Float64(this.model.mHalfItemCount) * this.model.mItemHeight,
-                        )
-                    } else {
-                        this.scrollerYearColor.scrollTo(
-                            xOffset: 0.0,
-                            yOffset: mOffset,
-                        )
-                    }
+                    offset => onScrollYear(offset)
                 })
                 .onScrollEnd({
-                    =>
-                    let scrollOffset: Float64 = this.scrollerYear.currentOffset().yOffset % this.model.mItemHeight
-                    if (scrollOffset > (this.model.mItemHeight / 2.0)) {
-                        this.model.solarLatestYearIndex = Int64(((
-                        this.scrollerYear.currentOffset()
-                        .yOffset - scrollOffset) / this.model.mItemHeight + 1.0) % Float64(this.YearsArray.size))
-
-                        this.scrollerYear.scrollTo(
-                            xOffset: 0.0,
-                            yOffset: this.scrollerYear.currentOffset().yOffset - scrollOffset + this.model.
-                                        mItemHeight,
-                            duration: 100.0,
-                            curve: Curve.Linear
-                        )
-                    } else if(scrollOffset > 0.0 && scrollOffset < (this.model.mItemHeight / 2.0)) {
-                        this.model.solarLatestYearIndex = Int64(((
-                        this.scrollerYear.currentOffset()
-                        .yOffset - scrollOffset) / this.model.mItemHeight) % Float64(this.YearsArray.size))
-
-                        this.scrollerYear.scrollTo(
-                            xOffset: 0.0,
-                            yOffset: this.scrollerYear.currentOffset().yOffset - scrollOffset,
-                            duration: 100.0,
-                            curve: Curve.Linear
-                        )
-                    }
-                    let lastDaySize: Int64 = this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days.size
-
-                    if(this.model.solarLatestMonthIndex == 1 && (Float64(lastDaySize) * (this.model.mTextHeight + 2.0 * this.model.mSpace)) == this.lastDayPosition) {
-                        this.model.solarLatestDayIndex = lastDaySize - 1
-                    }
-                        
-                    if (this.model.isCyslic) {
-                        this.yearChange = (this.model.solarLatestYearIndex + this.model.mHalfItemCount) % this.YearsArray.size
-                        this.monthChange = (this.model.solarLatestMonthIndex + this.model.mHalfItemCount)%12
-                        this.dayChange = (this.model.solarLatestDayIndex + this.model.mHalfItemCount) % this.YearsArray[this.yearChange].monthAndDay[this.monthChange].days.size
-                        this.model.mDate = "${this.YearsArray[this.yearChange].year}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[this.monthChange].month}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[this.monthChange].days[this.dayChange]}"
-                        this.yearChangeIndex = this.yearChange
-                        this.monthChangeIndex = this.monthChange
-                     } else {
-                        this.yearChangeIndex = this.model.solarLatestYearIndex
-                        this.monthChangeIndex = this.model.solarLatestMonthIndex
-                        this.model.mDate = "${this.YearsArray[this.model.solarLatestYearIndex].year}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].month}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days[this.model.solarLatestDayIndex]}"
-
-                    }
-
+                    => onScrollEndYear()
                 })
                 .onScrollEdge({
-                    edge =>
-                    if (this.model.isCyslic) {
-                        let scollerBack: Float64 = ceil(
-                            (floor(Float64(this.model.mVisibleItem / this.YearsArray.size)) * 3.0) / 2.0 + 1.0) *
-                            Float64(this.YearsArray.size) * this.model.mItemHeight
-                        match (edge) {
-                            case Edge.Top => this.scrollerYear.scrollTo(
-                                xOffset: 0.0,
-                                yOffset: scollerBack,
-                                duration: 0.0,
-                                curve: Curve.Linear
-                            )
-                            case Edge.Bottom => this.scrollerYear.scrollTo(
-                                xOffset: 0.0,
-                                yOffset: scollerBack - Float64(2 * this.model.mHalfItemCount + 1) * this.model.
-                                    mItemHeight,
-                                duration: 0.0,
-                                curve: Curve.Linear
-                            )
-                            case _ => ()
-                        }
-                    }
+                    edge => onScrollEdgeYear(edge)
                 })
-
-                if (this.model.hasIndicator) {
-                    Divider()
-                    .offset( x: 0.0, y: -this.model.mItemHeight / 2.0 )
-                    .color(this.model.mIndicatorColor)
-                    .width(30.percent)
-                    .strokeWidth(this.model.mIndicatorSize)
-                    .zIndex(2)
-                    Divider()
-                    .offset( x: 0.0, y: this.model.mItemHeight / 2.0 )
-                    .color(this.model.mIndicatorColor)
-                    .width(30.percent)
-                    .strokeWidth(this.model.mIndicatorSize)
-                    .zIndex(2)
-                }
-
-                Column(){
-                    Scroll(this.scrollerYearColor) {
-                        Column() {
-                            this.scrollYearIndex(this.model.mSelectedItemTextColor)
-                        }
-                    }.height(this.model.mItemHeight).enabled(false).backgroundColor(this.model.mCurtainColor).scrollBar(BarState.Off)
-                }
-
-                if (this.model.hasAtmospheric) {
-                    Flex(FlexParams())
-                    .width(30.percent)
-                    .height(this.model.mWheelHeight)
-                    .linearGradient(
-                        angle: 0.0,
-                        direction: GradientDirection.Top,
-                        colors: this.model.atmosphericColor
-                    )
-                }
-
-            }
-
+                isHasIndicatorYearMonthDay()
+                scrollModelYear()
+                isHasAtmosphericYearMonthDay()
+            }.onAppear({
+             => OnAppearFunc()
+        })
             //--------------------------------month--------------------------------------
-
             Stack() {
                 Scroll(this.scrollerMonth) {
                     Column() {
@@ -430,129 +317,23 @@ public class WheelDatePicker {
                         }
                     }
                 }.height(this.model.mWheelHeight).backgroundColor(this.model.scrollBgColor).scrollBar(BarState.Off)
+                .zIndex(1)
                 .onScroll({
-                    offset =>
-                    let mOffset: Float64 = this.scrollerMonth.currentOffset().yOffset
-                    this.model.mHalfItemCount = (this.model.mVisibleItem - 1) / 2
-                    this.lastMonthPosition = if(offset.yOffset == 0.0) { this.lastMonthPosition } else { offset.yOffset }
-                    if (this.model.isCyslic) {
-                        this.scrollerMonthColor.scrollTo(
-                            xOffset: 0.0,
-                            yOffset: mOffset + Float64(this.model.mHalfItemCount) * this.model.mItemHeight,
-                        )
-                    } else {
-                        this.scrollerMonthColor.scrollTo(
-                            xOffset: 0.0,
-                            yOffset: mOffset,
-                        )
-                    }
+                    offset => onScrollMonth(offset)
                 })
                 .onScrollEnd({
-                    =>
-                    let scrollOffset: Float64 = this.scrollerMonth.currentOffset().yOffset % this.model.mItemHeight
-                    if (scrollOffset > (this.model.mItemHeight / 2.0)) {
-                        this.model.solarLatestMonthIndex = Int64(((
-                        this.scrollerMonth.currentOffset()
-                        .yOffset - scrollOffset) / this.model.mItemHeight + 1.0) % Float64(this.YearsArray[this.model.solarLatestYearIndex].monthAndDay.size))
-
-                        this.scrollerMonth.scrollTo(
-                            xOffset: 0.0,
-                            yOffset: this.scrollerMonth.currentOffset().yOffset - scrollOffset + this.model.
-                                        mItemHeight,
-                            duration: 100.0,
-                            curve: Curve.Linear
-                        )
-                    } else if(scrollOffset > 0.0 && scrollOffset < (this.model.mItemHeight / 2.0)) {
-                        this.model.solarLatestMonthIndex = Int64(((
-                        this.scrollerMonth.currentOffset()
-                        .yOffset - scrollOffset) / this.model.mItemHeight) % Float64(this.YearsArray[this.model.solarLatestYearIndex].monthAndDay.size))
-
-                        this.scrollerMonth.scrollTo(
-                            xOffset: 0.0,
-                            yOffset: this.scrollerMonth.currentOffset().yOffset - scrollOffset,
-                            duration: 100.0,
-                            curve: Curve.Linear
-                        )
-                    }
-
-                    if (this.model.isCyslic) {
-                        // 处理 所选月份的天数小于之前INDEX
-                        this.yearChange = (this.model.solarLatestYearIndex + this.model.mHalfItemCount) % this.YearsArray.size
-                        this.monthChange = (this.model.solarLatestMonthIndex + this.model.mHalfItemCount)%12
-                        let dayLength: Int64 = this.YearsArray[this.yearChange].monthAndDay[this.monthChange].days.size - 1
-                        if (this.model.solarLatestDayIndex > dayLength) {
-                            this.model.solarLatestDayIndex = dayLength;
-                        }
-                        this.model.mDate = "${this.YearsArray[this.yearChange].year}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[this.monthChange].month}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[this.monthChange].days[this.dayChange]}"
-                        this.yearChangeIndex = this.yearChange
-                        this.monthChangeIndex = this.monthChange
-                   } else {
-                        // 处理 所选月份的天数小于之前INDEX
-                        let dayLength: Int64 = this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[(this.model.solarLatestMonthIndex)].days.size - 1
-                        if (this.model.solarLatestDayIndex > dayLength) {
-                            this.model.solarLatestDayIndex = dayLength
-                        }
-                        this.yearChangeIndex = this.model.solarLatestYearIndex
-                        this.monthChangeIndex = this.model.solarLatestMonthIndex
-                        this.model.mDate = "${this.YearsArray[this.model.solarLatestYearIndex].year}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].month}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days[this.model.solarLatestDayIndex]}"
-                   }
-
-
+                    => onScrollEndMonth()
                 })
                 .onScrollEdge({
-                    edge =>
-                    if (this.model.isCyslic) {
-                        let scollerBack: Float64 = ceil(
-                            (floor(Float64(this.model.mVisibleItem / this.YearsArray[this.model.solarLatestYearIndex].monthAndDay.size)) * 3.0) / 2.0 + 1.0) *
-                            Float64(this.YearsArray[this.model.solarLatestYearIndex].monthAndDay.size) * this.model.mItemHeight
-                        match (edge) {
-                            case Edge.Top => this.scrollerMonth.scrollTo(
-                                xOffset: 0.0,
-                                yOffset: scollerBack,
-                                duration: 0.0,
-                                curve: Curve.Linear
-                            )
-                            case Edge.Bottom => this.scrollerMonth.scrollTo(
-                                xOffset: 0.0,
-                                yOffset: scollerBack - Float64(2 * this.model.mHalfItemCount + 1) * this.model.
-                                    mItemHeight,
-                                duration: 0.0,
-                                curve: Curve.Linear
-                            )
-                            case _ => ()
-                        }
-                    }
+                    edge => onScrollEdgeMonth(edge)
                 })
-
-                if (this.model.hasIndicator) {
-                    Divider().offset(x: 0.0, y: -this.model.mItemHeight / 2.0).color(this.model.mIndicatorColor).width(
-                        30.percent).strokeWidth(this.model.mIndicatorSize).zIndex(2)
-                    Divider().offset(x: 0.0, y: this.model.mItemHeight / 2.0).color(this.model.mIndicatorColor).width(
-                        30.percent).strokeWidth(this.model.mIndicatorSize).zIndex(2)
-                }
-                Column() {
-                    Scroll(this.scrollerMonthColor) {
-                        Column() {
-                            this.scrollMonthIndex(this.model.mSelectedItemTextColor)
-                        }
-                    }.height(this.model.mItemHeight).enabled(false).backgroundColor(this.model.mCurtainColor).scrollBar(
-                        BarState.Off)
-                }
-
-                if (this.model.hasAtmospheric) {
-                    Flex(FlexParams())
-                    .width(30.percent)
-                    .height(this.model.mWheelHeight)
-                    .linearGradient(
-                        angle: 0.0,
-                        direction: GradientDirection.Top,
-                        colors: this.model.atmosphericColor
-                    )
-                }
-            }
-
+                isHasIndicatorYearMonthDay()
+                scrollModelMonth()
+                isHasAtmosphericYearMonthDay()
+            }.onAppear({
+             => OnAppearFunc()
+        })
             //------------------------------------------------------day-------------------------------------------------------
-
             Stack() {
                 Scroll(this.scrollerDay) {
                     Column() {
@@ -565,118 +346,387 @@ public class WheelDatePicker {
                         }
                     }
                 }.height(this.model.mWheelHeight).backgroundColor(this.model.scrollBgColor).scrollBar(BarState.Off)
+                .zIndex(1)
                 .onScroll({
-                    offset =>
-                    let mOffset: Float64 = this.scrollerDay.currentOffset().yOffset
-                    this.model.mHalfItemCount = (this.model.mVisibleItem - 1) / 2
-                    this.lastDayPosition = if(offset.yOffset == 0.0) { this.lastDayPosition } else { offset.yOffset }
-                    if (this.model.isCyslic) {
-                        this.scrollerDayColor.scrollTo(
-                            xOffset: 0.0,
-                            yOffset: mOffset + Float64(this.model.mHalfItemCount) * this.model.mItemHeight,
-                        )
-                    } else {
-                        this.scrollerDayColor.scrollTo(
-                            xOffset: 0.0,
-                            yOffset: mOffset,
-                        )
-                    }
+                    offset => onScrollDay(offset)
                 })
                  .onScrollEnd({
-                    =>
-                    let scrollOffset: Float64 = this.scrollerDay.currentOffset().yOffset % this.model.mItemHeight
-                    if (scrollOffset > (this.model.mItemHeight / 2.0)) {
-                        this.model.solarLatestDayIndex = Int64(((
-                        this.scrollerDay.currentOffset()
-                        .yOffset - scrollOffset) / this.model.mItemHeight + 1.0) % Float64(this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days.size))
-
-                        this.scrollerDay.scrollTo(
-                            xOffset: 0.0,
-                            yOffset: this.scrollerDay.currentOffset().yOffset - scrollOffset + this.model.
-                                        mItemHeight,
-                            duration: 100.0,
-                            curve: Curve.Linear
-                        )
-                    } else if(scrollOffset > 0.0 && scrollOffset < (this.model.mItemHeight / 2.0)) {
-                        this.model.solarLatestDayIndex = Int64(((
-                        this.scrollerDay.currentOffset()
-                        .yOffset - scrollOffset) / this.model.mItemHeight) % Float64(this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days.size))
-
-                        this.scrollerDay.scrollTo(
-                            xOffset: 0.0,
-                            yOffset: this.scrollerDay.currentOffset().yOffset - scrollOffset,
-                            duration: 100.0,
-                            curve: Curve.Linear
-                        )
-                    }
-
-                    if (this.model.isCyslic) {
-                        this.yearChange = (this.model.solarLatestYearIndex + this.model.mHalfItemCount) % this.YearsArray.size
-                        this.dayChange = (this.model.solarLatestDayIndex + this.model.mHalfItemCount) % this.YearsArray[this.yearChange].monthAndDay[(this.model.solarLatestMonthIndex + this.model.mHalfItemCount)%12].days.size
-                        this.model.mDate = "${this.YearsArray[this.yearChange].year}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[(this.model.solarLatestMonthIndex + this.model.mHalfItemCount)%12].month}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[this.model.solarLatestMonthIndex].days[this.dayChange]}"
-                  } else {
-                        this.model.mDate = "${this.YearsArray[this.model.solarLatestYearIndex].year}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].month}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days[this.model.solarLatestDayIndex]}"
-                  }
-
+                    => onScrollEndDay()
                 })
                 .onScrollEdge({
-                    edge =>
-                    if (this.model.isCyslic) {
-                        let scollerBack: Float64 = ceil(
-                            (floor(Float64(this.model.mVisibleItem / this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days.size)) * 3.0) / 2.0 + 1.0) *
-                            Float64(this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days.size) * this.model.mItemHeight
-                        match (edge) {
-                            case Edge.Top => this.scrollerDay.scrollTo(
-                                xOffset: 0.0,
-                                yOffset: scollerBack,
-                                duration: 0.0,
-                                curve: Curve.Linear
-                            )
-                            case Edge.Bottom => this.scrollerDay.scrollTo(
-                                xOffset: 0.0,
-                                yOffset: scollerBack - Float64(2 * this.model.mHalfItemCount + 1) * this.model.
-                                    mItemHeight,
-                                duration: 0.0,
-                                curve: Curve.Linear
-                            )
-                            case _ => ()
-                        }
-                    }
+                    edge => onScrollEdgeDay(edge)
                 })
-                if (this.model.hasIndicator) {
-                    Divider()
-                        .offset( x: 0.0, y: -this.model.mItemHeight / 2.0 )
-                        .color(this.model.mIndicatorColor)
-                        .width(30.percent)
-                        .strokeWidth(this.model.mIndicatorSize)
-                        .zIndex(2)
-                        Divider()
-                        .offset( x: 0.0, y: this.model.mItemHeight / 2.0 )
-                        .color(this.model.mIndicatorColor)
-                        .width(30.percent)
-                        .strokeWidth(this.model.mIndicatorSize)
-                        .zIndex(2)
-                    }
+                isHasIndicatorYearMonthDay()
+                scrollModelDay()
+                isHasAtmosphericYearMonthDay()
+            }.onAppear({
+             => OnAppearFunc()
+        })
 
-                Column(){
-                    Scroll(this.scrollerDayColor) {
-                        Column() {
-                            this.scrollDayIndex(this.model.mSelectedItemTextColor)
-                        }
-                    }.height(this.model.mItemHeight).enabled(false).backgroundColor(this.model.mCurtainColor).scrollBar(BarState.Off)
-                }
+        }
+    }
 
-                if (this.model.hasAtmospheric) {
-                    Flex(FlexParams())
-                    .width(30.percent)
-                    .height(this.model.mWheelHeight)
-                    .linearGradient(
-                        angle: 0.0,
-                        direction: GradientDirection.Top,
-                        colors: this.model.atmosphericColor
-                    )
+    @Builder
+    func scrollModelYear(){
+        Column(){
+            Scroll(this.scrollerYearColor) {
+                Column() {
+                    this.scrollYearIndex(this.model.mSelectedItemTextColor)
                 }
+            }.height(this.model.mItemHeight).enabled(false).backgroundColor(this.model.mCurtainColor).scrollBar(BarState.Off)
+        }.zIndex(2)
+        .backgroundColor(Color.RED)
+    }
+
+    @Builder
+    func scrollModelMonth(){
+        Column() {
+            Scroll(this.scrollerMonthColor) {
+                Column() {
+                    this.scrollMonthIndex(this.model.mSelectedItemTextColor)
+                }
+            }.height(this.model.mItemHeight).enabled(false).backgroundColor(this.model.mCurtainColor).scrollBar(
+                BarState.Off)
+        }.zIndex(2)
+        .backgroundColor(Color.RED)
+    }
+
+    @Builder
+    func scrollModelDay(){
+        Column(){
+            Scroll(this.scrollerDayColor) {
+                Column() {
+                    this.scrollDayIndex(this.model.mSelectedItemTextColor)
+                }
+            }.height(this.model.mItemHeight).enabled(false).backgroundColor(this.model.mCurtainColor).scrollBar(BarState.Off)
+        }.zIndex(2)
+        .backgroundColor(Color.RED)
+    }
+
+    @Builder
+    func isHasAtmosphericYearMonthDay() {
+        if (this.model.hasAtmospheric) {
+            Flex(FlexParams()).zIndex(3)
+                .width(30.percent)
+                .height(this.model.mWheelHeight)
+                .linearGradient(
+                    direction: GradientDirection.Top,
+                    colors: this.model.atmosphericColor,
+                    repeating: false
+                )
+            .height(this.model.mItemHeight)
+            .opacity(0.1)
+        }
+    }
+
+    @Builder
+    func isHasIndicatorYearMonthDay() {
+        if (this.model.hasIndicator) {
+            Divider()
+            .offset( x: 0.0, y: -this.model.mItemHeight / 2.0 )
+            .color(this.model.mIndicatorColor)
+            .width(30.percent)
+            .strokeWidth(this.model.mIndicatorSize)
+            .zIndex(2)
+            Divider()
+            .offset( x: 0.0, y: this.model.mItemHeight / 2.0 )
+            .color(this.model.mIndicatorColor)
+            .width(30.percent)
+            .strokeWidth(this.model.mIndicatorSize)
+            .zIndex(2)
+        }
+    }
+
+    func onScrollEdgeYear(edge: Edge){
+        if (this.model.isCyslic) {
+            let scollerBack: Float64 = ceil(
+                (floor(Float64(this.model.mVisibleItem / this.YearsArray.size)) * 3.0) / 2.0 + 1.0) *
+                Float64(this.YearsArray.size) * this.model.mItemHeight
+            match (edge) {
+                case Edge.Top => this.scrollerYear.scrollTo(
+                    xOffset: 0.0,
+                    yOffset: scollerBack,
+                    duration: 0.0,
+                    curve: Curve.Linear
+                )
+                case Edge.Bottom => this.scrollerYear.scrollTo(
+                    xOffset: 0.0,
+                    yOffset: scollerBack - Float64(2 * this.model.mHalfItemCount + 1) * this.model.
+                        mItemHeight,
+                    duration: 0.0,
+                    curve: Curve.Linear
+                )
+                case _ => ()
             }
+        }
+    }
+
+    func onScrollEdgeMonth(edge: Edge){
+        if (this.model.isCyslic) {
+            let scollerBack: Float64 = ceil(
+                (floor(Float64(this.model.mVisibleItem / this.YearsArray[this.model.solarLatestYearIndex].monthAndDay.size)) * 3.0) / 2.0 + 1.0) *
+                Float64(this.YearsArray[this.model.solarLatestYearIndex].monthAndDay.size) * this.model.mItemHeight
+            match (edge) {
+                case Edge.Bottom => this.scrollerMonth.scrollTo(
+                    xOffset: 0.0,
+                    yOffset: scollerBack - Float64(2 * this.model.mHalfItemCount + 1) * this.model.
+                        mItemHeight,
+                    duration: 0.0,
+                    curve: Curve.Linear
+                )
+                case Edge.Top => this.scrollerMonth.scrollTo(
+                    xOffset: 0.0,
+                    yOffset: scollerBack,
+                    duration: 0.0,
+                    curve: Curve.Linear
+                )
+                case _ => ()
+            }
+        }
+    }
+
+    func onScrollEdgeDay(edge: Edge){
+        if (this.model.isCyslic) {
+            let scollerBack: Float64 = ceil(
+                (floor(Float64(this.model.mVisibleItem / this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days.size)) * 3.0) / 2.0 + 1.0) *
+                Float64(this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days.size) * this.model.mItemHeight
+            match (edge) {
+                case Edge.Top => this.scrollerDay.scrollTo(
+                    xOffset: 0.0,
+                    yOffset: scollerBack,
+                    duration: 0.0,
+                    curve: Curve.Linear
+                )
+                case Edge.Bottom => this.scrollerDay.scrollTo(
+                    xOffset: 0.0,
+                    yOffset: scollerBack - this.model.mItemHeight * Float64(1 + 2 * this.model.mHalfItemCount),
+                    duration: 0.0,
+                    curve: Curve.Linear
+                )
+                case _ => ()
+            }
+        }
+    }
+
+    func onScrollEndYear(){
+        let scrollOffset: Float64 = this.scrollerYear.currentOffset().yOffset % this.model.mItemHeight
+        onScrollEndYear1(scrollOffset)
+        let lastDaySize: Int64 = this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days.size
+        if(this.model.solarLatestMonthIndex == 1 && (Float64(lastDaySize) * (this.model.mTextHeight + 2.0 * this.model.mSpace)) == this.lastDayPosition) {
+            this.model.solarLatestDayIndex = lastDaySize - 1
+        }
+        var year: Int64 = 0
+        if (this.model.isCyslic) {
+            this.yearChange = (this.model.solarLatestYearIndex + this.model.mHalfItemCount) % this.YearsArray.size
+            this.monthChange = (this.model.solarLatestMonthIndex + this.model.mHalfItemCount)%12
+            this.dayChange = (this.model.solarLatestDayIndex + this.model.mHalfItemCount) % this.YearsArray[this.yearChange].monthAndDay[this.monthChange].days.size
+            this.model.mDate = "${this.YearsArray[this.yearChange].year}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[this.monthChange].month}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[this.monthChange].days[this.dayChange]}"
+            this.yearChangeIndex = this.yearChange
+            this.monthChangeIndex = this.monthChange
+            year = this.YearsArray[this.yearChange].year
+         } else {
+            this.yearChangeIndex = this.model.solarLatestYearIndex
+            this.monthChangeIndex = this.model.solarLatestMonthIndex
+            //场景：闰2月29天，日期滑到最后一天，滑动年组件，solarLatestDayIndex28,实际普通年份2月28天，索引最大27，下标越界，增加保护
+            let tepmsolarLatestDayIndex = this.model.solarLatestDayIndex
+            let tempDays = this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days.size
+            if(tepmsolarLatestDayIndex < 0 || tepmsolarLatestDayIndex >=  tempDays){
+                this.model.solarLatestDayIndex = tempDays - 1
+            }
+            this.model.mDate = "${this.YearsArray[this.model.solarLatestYearIndex].year}" +
+                "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].month}" +
+                "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days[this.model.solarLatestDayIndex]}"
+            year = this.YearsArray[this.model.solarLatestYearIndex].year
+        }
+        // 添加年份监听
+        if(let Some(mOnDateSelectedListener) <- this.model.mOnDateSelectedListener) {
+            mOnDateSelectedListener.onYearSelected(this.yearChangeIndex, year)
+        }
+        this.model.mOnDateSelectedListener
+    }
+
+    func onScrollEndYear1(scrollOffset: Float64){
+        if (scrollOffset > (this.model.mItemHeight / 2.0)) {
+            this.model.solarLatestYearIndex = Int64(((
+            this.scrollerYear.currentOffset()
+            .yOffset - scrollOffset) / this.model.mItemHeight + 1.0) % Float64(this.YearsArray.size))
+
+            this.scrollerYear.scrollTo(
+                xOffset: 0.0,
+                yOffset: this.scrollerYear.currentOffset().yOffset - scrollOffset + this.model.
+                            mItemHeight,
+                duration: 100.0,
+                curve: Curve.Linear
+            )
+        } else if(scrollOffset > 0.0 && scrollOffset < (this.model.mItemHeight / 2.0)) {
+            this.model.solarLatestYearIndex = Int64(((
+            this.scrollerYear.currentOffset()
+            .yOffset - scrollOffset) / this.model.mItemHeight) % Float64(this.YearsArray.size))
+
+            this.scrollerYear.scrollTo(
+                xOffset: 0.0,
+                yOffset: this.scrollerYear.currentOffset().yOffset - scrollOffset,
+                duration: 100.0,
+                curve: Curve.Linear
+            )
+        }
+    }
+
+    func onScrollEndMonth(){
+        let scrollOffset: Float64 = this.scrollerMonth.currentOffset().yOffset % this.model.mItemHeight
+        onScrollEndMonth1(scrollOffset)
+        var monthNum: String = ""
+        if (this.model.isCyslic) {
+            // 处理 所选月份的天数小于之前INDEX
+            this.yearChange = (this.model.solarLatestYearIndex + this.model.mHalfItemCount) % this.YearsArray.size
+            this.monthChange = (this.model.solarLatestMonthIndex + this.model.mHalfItemCount)%12
+            let dayLength: Int64 = this.YearsArray[this.yearChange].monthAndDay[this.monthChange].days.size - 1
+            if (this.model.solarLatestDayIndex > dayLength) {
+                this.model.solarLatestDayIndex = dayLength;
+            }
+            this.model.mDate = "${this.YearsArray[this.yearChange].year}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[this.monthChange].month}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[this.monthChange].days[this.dayChange]}"
+            this.yearChangeIndex = this.yearChange
+            this.monthChangeIndex = this.monthChange
+            monthNum = this.YearsArray[this.yearChange].monthAndDay[this.monthChange].month
+       } else {
+            // 处理 所选月份的天数小于之前INDEX
+            let dayLength: Int64 = this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[(this.model.solarLatestMonthIndex)].days.size - 1
+            if (this.model.solarLatestDayIndex > dayLength) {
+                this.model.solarLatestDayIndex = dayLength
+            }
+            this.yearChangeIndex = this.model.solarLatestYearIndex
+            this.monthChangeIndex = this.model.solarLatestMonthIndex
+            this.model.mDate = "${this.YearsArray[this.model.solarLatestYearIndex].year}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].month}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days[this.model.solarLatestDayIndex]}"
+            monthNum = this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].month
+        }
+        // 添加月份监听
+        if(let Some(mOnDateSelectedListener) <- this.model.mOnDateSelectedListener) {
+            mOnDateSelectedListener.onMonthSelected(this.monthChangeIndex, monthNum)
+        }
+        this.model.mOnDateSelectedListener
+    }
+
+    func onScrollEndMonth1(scrollOffset: Float64){
+        if (scrollOffset > (this.model.mItemHeight / 2.0)) {
+            this.model.solarLatestMonthIndex = Int64(((
+            this.scrollerMonth.currentOffset()
+            .yOffset - scrollOffset) / this.model.mItemHeight + 1.0) % Float64(this.YearsArray[this.model.solarLatestYearIndex].monthAndDay.size))
+            this.scrollerMonth.scrollTo(
+                xOffset: 0.0,
+                yOffset: this.scrollerMonth.currentOffset().yOffset - scrollOffset + this.model.
+                            mItemHeight,
+                duration: 100.0,
+                curve: Curve.Linear
+            )
+        } else if(scrollOffset >= 0.0 && scrollOffset < (this.model.mItemHeight / 2.0)) {
+            this.model.solarLatestMonthIndex = Int64(((
+            this.scrollerMonth.currentOffset()
+            .yOffset - scrollOffset) / this.model.mItemHeight) % Float64(this.YearsArray[this.model.solarLatestYearIndex].monthAndDay.size))
+            this.scrollerMonth.scrollTo(
+                xOffset: 0.0,
+                yOffset: this.scrollerMonth.currentOffset().yOffset - scrollOffset,
+                duration: 100.0,
+                curve: Curve.Linear
+            )
+        }
+    }
+
+    func onScrollEndDay(){
+        let scrollOffset: Float64 = this.scrollerDay.currentOffset().yOffset % this.model.mItemHeight
+        onScrollEndDay1(scrollOffset)
+        var day: String = ""
+        if (this.model.isCyslic) {
+            this.yearChange = (this.model.solarLatestYearIndex + this.model.mHalfItemCount) % this.YearsArray.size
+            this.dayChange = (this.model.solarLatestDayIndex + this.model.mHalfItemCount) % this.YearsArray[this.yearChange].monthAndDay[(this.model.solarLatestMonthIndex + this.model.mHalfItemCount)%12].days.size
+            this.model.mDate = "${this.YearsArray[this.yearChange].year}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[(this.model.solarLatestMonthIndex + this.model.mHalfItemCount)%12].month}" + "-" + "${this.YearsArray[this.yearChange].monthAndDay[this.model.solarLatestMonthIndex].days[this.dayChange]}"
+            day = this.YearsArray[this.yearChange].monthAndDay[this.model.solarLatestMonthIndex].days[this.dayChange]
+      } else {
+            this.model.mDate = "${this.YearsArray[this.model.solarLatestYearIndex].year}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].month}" + "-" + "${this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days[this.model.solarLatestDayIndex]}"
+            day = this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days[this.model.solarLatestDayIndex]
+      }
+      // 添加天监听
+      if(let Some(mOnDateSelectedListener) <- this.model.mOnDateSelectedListener) {
+            var monthNumber = (this.model.solarLatestMonthIndex + this.model.mHalfItemCount)%12
+            mOnDateSelectedListener.onDaySelected(this.model.solarLatestDayIndex, day)
+        }
+        this.model.mOnDateSelectedListener
+    }
+
+    func onScrollEndDay1(scrollOffset: Float64){
+        if (scrollOffset > (this.model.mItemHeight / 2.0)) {
+            this.model.solarLatestDayIndex = Int64(((
+            this.scrollerDay.currentOffset()
+            .yOffset - scrollOffset) / this.model.mItemHeight + 1.0) % Float64(this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days.size))
+
+            this.scrollerDay.scrollTo(
+                xOffset: 0.0,
+                yOffset: this.scrollerDay.currentOffset().yOffset - scrollOffset + this.model.
+                            mItemHeight,
+                duration: 100.0,
+                curve: Curve.Linear
+            )
+        } else if(scrollOffset > 0.0 && scrollOffset < (this.model.mItemHeight / 2.0)) {
+            this.model.solarLatestDayIndex = Int64(((
+            this.scrollerDay.currentOffset()
+            .yOffset - scrollOffset) / this.model.mItemHeight) % Float64(this.YearsArray[this.model.solarLatestYearIndex].monthAndDay[this.model.solarLatestMonthIndex].days.size))
+
+            this.scrollerDay.scrollTo(
+                xOffset: 0.0,
+                yOffset: this.scrollerDay.currentOffset().yOffset - scrollOffset,
+                duration: 100.0,
+                curve: Curve.Linear
+            )
+        }
+    }
+
+    func onScrollYear(offset: OffsetResult){
+        let mOffset: Float64 = this.scrollerYear.currentOffset().yOffset
+        this.model.mHalfItemCount = (this.model.mVisibleItem - 1) / 2
+        this.lastYearPosition = if(offset.yOffset == 0.0) { this.lastYearPosition } else { offset.yOffset }
+        if (this.model.isCyslic) {
+            this.scrollerYearColor.scrollTo(
+                xOffset: 0.0,
+                yOffset: mOffset + Float64(this.model.mHalfItemCount) * this.model.mItemHeight,
+            )
+        } else {
+            this.scrollerYearColor.scrollTo(
+                xOffset: 0.0,
+                yOffset: mOffset,
+            )
+        }
+    }
+
+    func onScrollMonth(offset: OffsetResult){
+        let mOffset: Float64 = this.scrollerMonth.currentOffset().yOffset
+        this.model.mHalfItemCount = (this.model.mVisibleItem - 1) / 2
+        this.lastMonthPosition = if(offset.yOffset == 0.0) { this.lastMonthPosition } else { offset.yOffset }
+        if (this.model.isCyslic) {
+            this.scrollerMonthColor.scrollTo(
+                xOffset: 0.0,
+                yOffset: mOffset + Float64(this.model.mHalfItemCount) * this.model.mItemHeight,
+            )
+        } else {
+            this.scrollerMonthColor.scrollTo(
+                xOffset: 0.0,
+                yOffset: mOffset,
+            )
+        }
+    }
+
+    func onScrollDay(offset: OffsetResult){
+        let mOffset: Float64 = this.scrollerDay.currentOffset().yOffset
+        this.model.mHalfItemCount = (this.model.mVisibleItem - 1) / 2
+        this.lastDayPosition = if(offset.yOffset == 0.0) { this.lastDayPosition } else { offset.yOffset }
+        if (this.model.isCyslic) {
+            this.scrollerDayColor.scrollTo(
+                xOffset: 0.0,
+                yOffset: mOffset + Float64(this.model.mHalfItemCount) * this.model.mItemHeight,
+            )
+        } else {
+            this.scrollerDayColor.scrollTo(
+                xOffset: 0.0,
+                yOffset: mOffset,
+            )
         }
     }
 }
