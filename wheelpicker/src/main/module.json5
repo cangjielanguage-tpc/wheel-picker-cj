@@ -3,7 +3,8 @@
     "name": "wheelpicker",
     "type": "har",
     "deviceTypes": [
-      "default"
+      "default",
+      "tablet"
     ]
   }
 }

@@ -71,7 +71,8 @@ public class WheelAreaPickerModel {
     }
 
     public func setData(mData: Array<String>): WheelAreaPickerModel {
-        throw Exception("You can not invoke setData in WheelAreaPicker")
+        Hilog.info(0,"setData","setData mData:${mData.size}")
+        return this
     }
 
     public func setScrollBgColor(scrollBgColor: Color): WheelAreaPickerModel {
@@ -114,14 +115,13 @@ public class WheelAreaPickerModel {
         return this.mTextHeight
     }
 
-    public func setVisibleItemCount(count: Int64): WheelAreaPickerModel {
-        let size: Int64 = provinceArrayModel.size / 2
-        if(count > size) {
-            this.mVisibleItem = size
+    public func setVisibleItemCount(count1: Int64): WheelAreaPickerModel {
+        let size1: Int64 = provinceArrayModel.size / 2
+        if(count1 > size1) {
+            this.mVisibleItem = size1
         } else {
-            this.mVisibleItem = count
+            this.mVisibleItem = count1
         }
-
         return this
     }
 
@@ -242,8 +242,8 @@ public class WheelAreaPickerModel {
         return this.mAlign
     }
 
-    public func setFontFamily(fontFamily: String): WheelAreaPickerModel {
-        this.mFontFamily = fontFamily
+    public func setFontFamily(fontFamily1: String): WheelAreaPickerModel {
+        this.mFontFamily = fontFamily1
         return this
     }
 
@@ -251,15 +251,15 @@ public class WheelAreaPickerModel {
         return this.mFontFamily
     }
 
-    public func updateVisibleItemCount(): Unit {
+    public func updateVisibleItemCount1(): Unit {
         if (this.mVisibleItem < 2) {
             return
         }
         if (this.mVisibleItem % 2 == 0) {
             this.mVisibleItem += 1
         }
-        this.mItemHeight = this.mTextHeight + 2.0 * this.mSpace
         this.mHalfItemCount = (this.mVisibleItem - 1) / 2
+        this.mItemHeight = this.mTextHeight + 2.0 * this.mSpace
         this.mWheelHeight = Float64(this.mVisibleItem) * this.mItemHeight
     }
 

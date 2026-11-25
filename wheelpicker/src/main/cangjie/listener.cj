@@ -19,3 +19,14 @@ public interface OnAreaSelectedListener {
         public func onCitySelected(cityPos: Int64, cityName: String): Unit
         public func onAreaSelected(areaPos: Int64, areaName: String): Unit
 }
+// 日期监听
+public interface OnDateSelectedListener {
+        public func onYearSelected(yearPos: Int64, yearNumber: Int64): Unit
+        public func onMonthSelected(monthPos: Int64, monthNumber: String): Unit
+        public func onDaySelected(dayPos: Int64, dayNumber: String): Unit
+}
+
+// 自定义监听
+public interface OnSelectedListener {
+        public func onItemSelected(position: Int64, data: String): Unit
+}

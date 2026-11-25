@@ -16,49 +16,51 @@ public class WheelPicker {
     @Builder
     func occupyText() {
         ForEach(
-            Array(this.model.mHalfItemCount, item: 0),
+            Array(this.model.mHalfItemCount, repeat: 0),
             itemGeneratorFunc: {
-                _: Int64, _: Int64 => Text("").fontSize(this.model.mItemTextSize).height(this.model.mItemHeight).padding(
-                    this.model.mSpace)
+                _: Int64, _: Int64 => Text("").height(this.model.mItemHeight).padding(this.model.mSpace)
+                    .fontSize(this.model.mItemTextSize)
             }
         )
     }
     @Builder
-    func scrollIndex(textColor: Color) {
+    func scrollIndex5(textColor: Color) {
         Column() {
             if (!this.model.isCyslic) {
                 ForEach(
                     this.model.mData,
                     itemGeneratorFunc: {
-                        item: String, _: Int64 => Text("${item}").fontSize(this.model.mItemTextSize).height(
-                            this.model.mItemHeight).fontColor(textColor).fontFamily(this.model.mFontFamily).padding(
-                            this.model.mSpace)
+                        item: String, _: Int64 => Text("${item}").fontSize(this.model.mItemTextSize)
+                        .padding(this.model.mSpace).height(this.model.mItemHeight)
+                        .fontColor(textColor).fontFamily(this.model.mFontFamily)
                     }
                 )
             } else if (this.model.mVisibleItem < this.model.mData.size) {
                 ForEach(
-                    Array(3, item: 0),
+                    Array(3, repeat: 0),
                     itemGeneratorFunc: {
                         _: Int64, _: Int64 => ForEach(
                             this.model.mData,
                             itemGeneratorFunc: {
-                                item: String, _: Int64 => Text("${item}").fontSize(this.model.mItemTextSize).height(
-                                    this.model.mItemHeight).fontColor(textColor).fontFamily(this.model.mFontFamily).
-                                    padding(this.model.mSpace)
+                                item: String, _: Int64 =>
+                                    Text("${item}").fontFamily(this.model.mFontFamily)
+                                    .fontSize(this.model.mItemTextSize).height(this.model.mItemHeight)
+                                    .fontColor(textColor).padding(this.model.mSpace)
                             }
                         )
                     }
                 )
             } else {
                 ForEach(
-                    Array(Int64(ceil(Float64(this.model.mVisibleItem / this.model.mData.size)) * 3.0), item: 0),
+                    Array(Int64(ceil(Float64(this.model.mVisibleItem / this.model.mData.size)) * 3.0), repeat: 0),
                     itemGeneratorFunc: {
                         _: Int64, _: Int64 => ForEach(
                             this.model.mData,
                             itemGeneratorFunc: {
-                                item: String, _: Int64 => Text("${item}").fontSize(this.model.mItemTextSize).height(
-                                    this.model.mItemHeight).fontColor(textColor).fontFamily(this.model.mFontFamily).
-                                    padding(this.model.mSpace)
+                                item: String, _: Int64 =>
+                                    Text("${item}").height(this.model.mItemHeight)
+                                    .fontColor(textColor).fontFamily(this.model.mFontFamily)
+                                    .padding(this.model.mSpace).fontSize(this.model.mItemTextSize)
                             }
                         )
                     }
@@ -68,7 +70,7 @@ public class WheelPicker {
     }
 
     protected override func aboutToAppear() {
-        this.model.updateVisibleItemCount()
+        this.model.updateVisibleItemCount5()
         Timer.once(
             Duration.millisecond * 100,
             {
@@ -90,8 +92,6 @@ public class WheelPicker {
                       yOffset: mOffset,
                     )
                 }
-
-
             }
         )
         return
@@ -104,12 +104,13 @@ public class WheelPicker {
                         if (!this.model.isCyslic) {
                             this.occupyText()
                         }
-                        this.scrollIndex(this.model.mItemTextColor)
+                        this.scrollIndex5(this.model.mItemTextColor)
                         if (!this.model.isCyslic) {
                             this.occupyText()
                         }
                     }
                  }
+                .zIndex(1)
                 .height(this.model.mWheelHeight)
                 .backgroundColor(this.model.scrollBgColor)
                 .scrollBar(BarState.Off)
@@ -119,132 +120,164 @@ public class WheelPicker {
                         case _ =>()
                     }
                 })
-                .onScroll({ offset =>
-                    let mOffset: Float64 = this.model.scroller.currentOffset().yOffset
-                    if (this.model.isCyslic) {
-                        this.model.scroller1.scrollTo(
-                          xOffset: 0.0,
-                          yOffset: mOffset + Float64(this.model.mHalfItemCount) * this.model.mItemHeight,
-                        )
-                    } else {
-                        this.model.scroller1.scrollTo(
-                          xOffset: 0.0,
-                          yOffset: mOffset,
-                        )
-                    }
+                .onScroll({ offset => onScroll(offset)
                 })
-                .onScrollEnd({ =>
-                    if (this.scrollSwitch) {
-                        this.scrollSwitch = false
-                        this.scrollOffset = this.model.scroller.currentOffset().yOffset % this.model.mItemHeight
-                        if (this.scrollOffset >= (this.model.mItemHeight - 1.0) && this.scrollOffset <= 1.0) {
-                            return
-                        }
-                        if (this.scrollOffset >= (this.model.mItemHeight / 2.0) && this.scrollOffset < (this.model.mItemHeight - 1.0)) {
-                            this.model.scroller.scrollTo(
-                                xOffset: 0.0,
-                                yOffset: this.model.scroller.currentOffset().yOffset - this.scrollOffset + this.model.mItemHeight,
-                                duration: this.model.mDuration,
-                                curve: Curve.Ease
-                            )
-                            if (this.model.isCyslic) {
-                                this.model.mSelectedItemPosition = Int64(((this.model.scroller.currentOffset()
-                                  .yOffset - this.scrollOffset) / this.model.mItemHeight + 1.0) % Float64(this.model.mData.size) + Float64(this.model.mHalfItemCount)) % this.model.mData.size
-                                this.model.mSelectedData = this.model.mData[this.model.mSelectedItemPosition]
-                            } else {
-                                this.model.mSelectedItemPosition = Int64((
-                                  this.model.scroller.currentOffset()
-                                    .yOffset - this.scrollOffset) / this.model.mItemHeight + 1.0) % this.model.mData.size
-                                this.model.mSelectedData = this.model.mData[(this.model.mSelectedItemPosition)%this.model.mData.size]
-                            }
-
-                            this.model.mSelectDataShow(this.model.mSelectedData)
-
-                        } else if (this.scrollOffset > 1.0 && this.scrollOffset < (this.model.mItemHeight / 2.0)) {
-                            this.model.scroller.scrollTo(
-                                xOffset: 0.0,
-                                yOffset: this.model.scroller.currentOffset().yOffset - this.scrollOffset,
-                                duration: this.model.mDuration,
-                                curve: Curve.Ease
-                            )
-                            this.model.mSelectedItemPosition = Int64((
-                            this.model.scroller.currentOffset()
-                              .yOffset - this.scrollOffset) / this.model.mItemHeight) % this.model.mData.size
-                            if (this.model.isCyslic) {
-                                this.model.mSelectedItemPosition = (this.model.mSelectedItemPosition + this.model.mHalfItemCount) % this.model.mData.size
-                                this.model.mSelectedData = this.model.mData[this.model.mSelectedItemPosition]
-                            } else {
-                                this.model.mSelectedData = this.model.mData[this.model.mSelectedItemPosition]
-                            }
-
-                            this.model.mSelectDataShow(this.model.mSelectedData)
-
-                        }
-                    }
+                .onScrollEnd({ => onScrollEnd()
                     })
                 .onScrollEdge({edge =>
-                    if (this.model.isCyslic) {
-                        let scollerBack = ceil((floor(Float64(this.model.mVisibleItem / this.model.mData.size)) * 3.0) / 2.0 + 1.0) * Float64(this.model.mData.size) * this.model.mItemHeight
-                        match (edge) {
-                            case Edge.Top => this.model.scroller.scrollTo(
-                                xOffset: 0.0,
-                                yOffset: scollerBack,
-                                duration: 0.0,
-                                curve: Curve.Linear
-                            )
-                            case Edge.Bottom => this.model.scroller.scrollTo(
-                                xOffset: 0.0,
-                                yOffset: scollerBack - Float64(2 * this.model.mHalfItemCount + 1) * this.model.
-                                    mItemHeight,
-                                duration: 0.0,
-                                curve: Curve.Linear
-                            )
-                            case _ => ()
-                        }
-                    }
+                    onScrollEdge(edge)
                 })
-
                 //------------------------选中边框线------------------
-                if (this.model.hasIndicator) {
-                    Divider()
-                    .offset( x: 0.0, y: -this.model.mItemHeight / 2.0 )
-                    .color(this.model.mIndicatorColor)
-                    .width(30.percent)
-                    .strokeWidth(this.model.mIndicatorSize)
-                    .zIndex(2)
-                    Divider()
-                    .offset( x: 0.0, y: this.model.mItemHeight / 2.0 )
-                    .color(this.model.mIndicatorColor)
-                    .width(30.percent)
-                    .strokeWidth(this.model.mIndicatorSize)
-                    .zIndex(2)
-                }
-
+                isHasIndicator()
                 //--------------------选中项------------------
-                Column() {
-                    Scroll(this.model.scroller1) {
-                        Column() {
-                          this.scrollIndex(this.model.mSelectedItemTextColor)
-                        }
-                    }
-                    .height(this.model.mItemHeight)
-                    .enabled(false)
-                    .backgroundColor(this.model.mCurtainColor)
-                    .scrollBar(BarState.Off)
-                }
-
-                if (this.model.hasAtmospheric) {
-                    Flex(FlexParams())
-                    .width(30.percent)
-                    .height(this.model.mWheelHeight)
-                    .linearGradient(
-                        angle: 0.0,
-                        direction: GradientDirection.Top,
-                        colors: this.model.atmosphericColor
-                    )
-                }
-
+                scrollerModel5()
+                isHasAtmospheric5()
             }
+        }
+    }
+
+    func onScroll(offset11: OffsetResult){
+        let mOffset11: Float64 = this.model.scroller.currentOffset().yOffset
+        if (this.model.isCyslic) {
+            this.model.scroller1.scrollTo(
+              xOffset: 0.0,
+              yOffset: mOffset11 + Float64(this.model.mHalfItemCount) * this.model.mItemHeight,
+            )
+        } else {
+            this.model.scroller1.scrollTo(
+              xOffset: 0.0,
+              yOffset: mOffset11,
+            )
+        }
+    }
+
+    func onScrollEnd1(){
+        if (this.model.isCyslic) {
+            this.model.mSelectedItemPosition = Int64(((this.model.scroller.currentOffset()
+              .yOffset - this.scrollOffset) / this.model.mItemHeight + 1.0) % Float64(this.model.mData.size) + Float64(this.model.mHalfItemCount)) % this.model.mData.size
+            this.model.mSelectedData = this.model.mData[this.model.mSelectedItemPosition]
+        } else {
+            this.model.mSelectedItemPosition = Int64((
+              this.model.scroller.currentOffset()
+                .yOffset - this.scrollOffset) / this.model.mItemHeight + 1.0) % this.model.mData.size
+            this.model.mSelectedData = this.model.mData[(this.model.mSelectedItemPosition)%this.model.mData.size]
+        }
+    }
+
+    func onScrollEnd2(){
+        if (this.model.isCyslic) {
+            this.model.mSelectedItemPosition = (this.model.mSelectedItemPosition + this.model.mHalfItemCount) % this.model.mData.size
+            this.model.mSelectedData = this.model.mData[this.model.mSelectedItemPosition]
+        } else {
+            this.model.mSelectedData = this.model.mData[this.model.mSelectedItemPosition]
+        }
+    }
+
+    func onScrollEnd(){
+        if (this.scrollSwitch) {
+            this.scrollSwitch = false
+            this.scrollOffset = this.model.scroller.currentOffset().yOffset % this.model.mItemHeight
+            if (this.scrollOffset >= (this.model.mItemHeight - 1.0) && this.scrollOffset <= 1.0) {
+                return
+            }
+            if (this.scrollOffset >= (this.model.mItemHeight / 2.0) && this.scrollOffset < (this.model.mItemHeight - 1.0)) {
+                this.model.scroller.scrollTo(
+                    xOffset: 0.0,
+                    yOffset: this.model.scroller.currentOffset().yOffset - this.scrollOffset + this.model.mItemHeight,
+                    duration: this.model.mDuration,
+                    curve: Curve.Ease
+                )
+                onScrollEnd1()
+                this.model.mSelectDataShow(this.model.mSelectedData)
+            } else if (this.scrollOffset > 1.0 && this.scrollOffset < (this.model.mItemHeight / 2.0)) {
+                this.model.scroller.scrollTo(
+                    xOffset: 0.0,
+                    yOffset: this.model.scroller.currentOffset().yOffset - this.scrollOffset,
+                    duration: this.model.mDuration,
+                    curve: Curve.Ease
+                )
+                this.model.mSelectedItemPosition = Int64((
+                this.model.scroller.currentOffset()
+                  .yOffset - this.scrollOffset) / this.model.mItemHeight) % this.model.mData.size
+                onScrollEnd2()
+                this.model.mSelectDataShow(this.model.mSelectedData)
+            }
+        }
+        if(let Some(mOnItemSelectedListener) <- this.model.mOnItemSelectedListener) {
+            mOnItemSelectedListener.onItemSelected(this.model.mSelectedItemPosition, this.model.mData[this.model.mSelectedItemPosition])
+        }
+        this.model.setOnItemSelectedListener
+    }
+
+    func onScrollEdge(edge: Edge) {
+        if (this.model.isCyslic) {
+            let scollerBack = ceil((floor(Float64(this.model.mVisibleItem / this.model.mData.size)) * 3.0) / 2.0 + 1.0)
+                    * Float64(this.model.mData.size) * this.model.mItemHeight
+            match (edge) {
+                case Edge.Top => this.model.scroller.scrollTo(
+                    xOffset: 0.0,
+                    yOffset: scollerBack,
+                    duration: 0.0,
+                    curve: Curve.Linear
+                )
+                case Edge.Bottom => this.model.scroller.scrollTo(
+                    xOffset: 0.0,
+                    yOffset: scollerBack - this.model.mItemHeight * Float64(2 * this.model.mHalfItemCount + 1),
+                    duration: 0.0,
+                    curve: Curve.Linear
+                )
+                case _ => ()
+            }
+        }
+    }
+
+    @Builder
+    func isHasIndicator() {
+        if (this.model.hasIndicator) {
+            Divider()
+            .offset( x: 0.0, y: -this.model.mItemHeight / 2.0 )
+            .width(30.percent)
+            .strokeWidth(this.model.mIndicatorSize)
+            .zIndex(2)
+            .color(this.model.mIndicatorColor)
+            Divider()
+            .color(this.model.mIndicatorColor)
+            .width(30.percent)
+            .strokeWidth(this.model.mIndicatorSize)
+            .zIndex(2)
+            .offset( x: 0.0, y: this.model.mItemHeight / 2.0 )
+        }
+    }
+
+    @Builder
+    func scrollerModel5() {
+        Column() {
+            Scroll(this.model.scroller1) {
+                Column() {
+                  this.scrollIndex5(this.model.mSelectedItemTextColor)
+                }
+            }
+            .height(this.model.mItemHeight)
+            .backgroundColor(this.model.mCurtainColor)
+            .scrollBar(BarState.Off)
+            .enabled(false)
+        }.backgroundColor(Color.RED).zIndex(2)
+    }
+
+    @Builder
+    func isHasAtmospheric5() {
+        if (this.model.hasAtmospheric) {
+            Flex(FlexParams())
+                .linearGradient(
+                    direction: GradientDirection.Top,
+                    colors: this.model.atmosphericColor,
+                    repeating: false
+                )
+                .width(30.percent)
+                .height(this.model.mWheelHeight)
+                .zIndex(3)
+                .opacity(0.1)
+                .height(this.model.mItemHeight)
         }
     }
 }

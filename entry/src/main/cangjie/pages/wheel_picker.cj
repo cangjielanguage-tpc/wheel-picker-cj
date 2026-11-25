@@ -58,21 +58,19 @@ class MyWheelPicker {
 
     protected override func aboutToAppear() {
         this.randomSelect = this.arr[randomNumber]
-
         this.showWheelPickerLeft = this.showWheelPickerLeft
-        .setItemAlign(HorizontalAlign.End)
         .setData(this.arr)
-        .setCurtainColor(Color.WHITE)
-        .setCyclic(true)
-        .setFontFamily("")
-        .setIndicatorColor(Color.RED)
-        .setIndicatorSize(1.0)
-        .setItemSpace(8.0)
-        .setItemTextColor(Color(0x536D8A))
         .setItemTextSize(15.0)
+        .setTextHeight(30.0)
+        .setVisibleItemCount(9)
+        .setItemAlign(HorizontalAlign.End)
+        .setIndicatorColor(Color.RED)
+        .setCurtainColor(Color.WHITE)
+        .setItemTextColor(Color.GRAY) // 设置数据的颜色
         .setSelectedItemTextColor(Color.GREEN)
-        .setTextHeight(20.0)
-        .setVisibleItemCount(7)
+        .setScrollBgColor(Color.WHITE) // 设置滚动组件的颜色
+        .setOnItemSelectedListener(MyOnItemSelectedListener1())
+        .setCyclic(false)
         .setSelectDataShow({
             text: String => PromptAction.showToast(message: "Left:" + text)
         })
@@ -105,13 +103,15 @@ class MyWheelPicker {
                     justifyContent: FlexAlign.Start
                 )
             ) {
-                Button("go to:${this.randomSelect}")
+                Button("go to:Wheel Picker").id("MyWheelPicker")
                 .height(70)
                 .padding(10)
                 .fontSize(24)
                 .margin(bottom: 10)
                 .onClick({
                         =>
+                        this.showWheelPickerLeft.setSelectedItemPosition(this.randomNumber)
+                        this.showWheelPickerRight.setSelectedItemPosition(this.randomNumber)
                         this.showWheelPickerMiddle.setSelectedItemPosition(this.randomNumber)
                         this.randomNumber = Int64(floor(Random().nextFloat64() * Float64(this.arr.size - 1)))
                         this.randomSelect = this.arr[this.randomNumber]
@@ -127,4 +127,22 @@ class MyWheelPicker {
             }.width(100.percent)
         }
     }
+}
+
+public class MyOnItemSelectedListener1 <: OnSelectedListener {
+     public func onItemSelected(position: Int64, data: String): Unit {
+         PromptAction.showToast(message: "选中索引：${position}，选中值：${data}")
+     }
+}
+
+public class MyOnItemSelectedListener2 <: OnSelectedListener {
+     public func onItemSelected(position: Int64, data: String): Unit {
+         PromptAction.showToast(message: "选中索引：${position}，选中值：${data}")
+     }
+}
+
+public class MyOnItemSelectedListener3 <: OnSelectedListener {
+     public func onItemSelected(position: Int64, data: String): Unit {
+         PromptAction.showToast(message: "选中索引：${position}，选中值：${data}")
+     }
 }

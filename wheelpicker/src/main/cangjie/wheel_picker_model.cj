@@ -63,6 +63,8 @@ public class WheelPickerModel {
     @Publish
     var mSelectDataShow: (text: String) -> Unit = {text: String =>}
 
+    var mOnItemSelectedListener: ?OnSelectedListener = None
+
     //--------------------------set---------------------------------
 
     public func setScrollBgColor(scrollBgColor: Color): WheelPickerModel {
@@ -88,7 +90,6 @@ public class WheelPickerModel {
     public func setTextHeight(mTextHeight: Float64): WheelPickerModel {
         if (mTextHeight > 30.0) {
             this.mTextHeight = 30.0
-            Hilog.error(0, "WheelPicker4cj", "The maximum text height is 30")
         }
         this.mTextHeight = mTextHeight
         return this
@@ -97,7 +98,6 @@ public class WheelPickerModel {
     public func setVisibleItemCount(count: Int64): WheelPickerModel {
         if (count < 7) {
             this.mVisibleItem = 7
-            Hilog.error(0, "WheelPicker4cj", "The minimum count is 7")
         }
         let size: Int64 = this.mData.size / 2
         if(count > size) {
@@ -187,6 +187,7 @@ public class WheelPickerModel {
     }
 
     public func getTextHeight(mTextHeight: Float64): Float64 {
+        Hilog.info(0,"getTextHeight","getTextHeight mTextHeight:${mTextHeight}")
         return this.mTextHeight
     }
 
@@ -234,28 +235,19 @@ public class WheelPickerModel {
         return this.mCurtainColor
     }
 
-    public func getItemAlign(): HorizontalAlign {
-        return this.mAlign
-    }
-
-    public func getFontFamily(): String {
-        return this.mFontFamily
-    }
-
-    public func updateVisibleItemCount() {
+    public func updateVisibleItemCount5(): Unit {
         if (this.mVisibleItem < 2) {
             return
         }
-
         if (this.mVisibleItem % 2 == 0) {
             this.mVisibleItem += 1
         }
-        this.mItemHeight = this.mTextHeight + 2.0 * this.mSpace
-        this.mWheelHeight = Float64(this.mVisibleItem) * this.mItemHeight
+        this.mItemHeight = 2.0 * this.mSpace + this.mTextHeight
         this.mHalfItemCount = (this.mVisibleItem - 1) / 2
+        this.mWheelHeight = this.mItemHeight * Float64(this.mVisibleItem)
     }
 
-    public func scrollInit(scroller: Scroller) {
+    public func scrollInit(scroller: Scroller): Unit {
         if (this.isCyslic) {
             scroller.scrollTo(
                 xOffset: 0.0,
@@ -275,7 +267,11 @@ public class WheelPickerModel {
         }
     }
 
-    public func setSelectedItemPosition(SelectPosition: Int64) {
+    public func getItemAlign(): HorizontalAlign {
+        return this.mAlign
+    }
+
+    public func setSelectedItemPosition(SelectPosition: Int64): WheelPickerModel {
         if (this.isCyslic) {
             this.scroller.scrollTo(
                 xOffset: 0.0,
@@ -291,5 +287,16 @@ public class WheelPickerModel {
                 curve: Curve.Ease
             )
         }
+        this.mSelectedItemPosition = SelectPosition
+        return this
+    }
+
+    public func getFontFamily(): String {
+        return this.mFontFamily
+    }
+
+    public func setOnItemSelectedListener(listener: ?OnSelectedListener): WheelPickerModel {
+        this.mOnItemSelectedListener = listener
+        return this
     }
 }

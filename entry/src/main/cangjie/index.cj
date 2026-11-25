@@ -9,7 +9,6 @@ internal import ohos.component.*
 internal import ohos.state_manage.*
 import ohos.state_macro_manage.*
 import ohos.router.*
-import ohos.hilog.Hilog
 import wheelpicker.*
 
 struct RouterType {
@@ -25,9 +24,9 @@ struct RouterType {
 @Component
 class EntryView {
      var sample: Array<RouterType> = [
-         RouterType("WheelPicker Test", "MyWheelPicker") ,
+         RouterType("WheelPicker Test", "WheelPickerTest") ,
          RouterType("WheelAreaPicker Test", "MyWheelAreaPicker" ),
-         RouterType("WheelDatePicker Test", "MyWheelDatePicker") ,
+         RouterType("WheelDatePicker Test", "MyWheelDatePicker"),
          RouterType("WheelDayPicker Test", "MyWheelDayPicker") ,
          RouterType("WheelMonthPicker Test", "MyWheelMonthPicker") ,
          RouterType("WheelYearPicker Test", "MyWheelYearPicker" )
@@ -45,7 +44,7 @@ class EntryView {
                 .backgroundColor(Color(0x666060)).margin(bottom: 10)
 
                 List( space: 20, initialIndex: 0 ) {
-                    ForEach(this.sample, itemGeneratorFunc: {item: RouterType, _:Int64 =>
+                    ForEach(this.sample, itemGeneratorFunc: {item: RouterType, count:Int64 =>
                         ListItem() {
                             Text("${item.title}")
                             .width(100.percent).height(50).fontSize(16)
@@ -53,7 +52,7 @@ class EntryView {
                              .onClick({ _ =>
                                 Router.push(url: item.page)
                             })
-                         }
+                         }.id("${count}")
                     })
                 }.id("list")
                 .listDirection(Axis.Vertical)
@@ -65,6 +64,7 @@ class EntryView {
                         BaseLog.info("last" + lastIndex.toString())
                       })
                 .width(90.percent)
+
                 }
             .width(100.percent)
             .height(100.percent)

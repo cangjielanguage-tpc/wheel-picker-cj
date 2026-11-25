@@ -74,23 +74,23 @@ public func initializeSolarCalendar(rangeStart: Int64, rangeEnd: Int64): ArrayLi
                 for (monthItem in monthJson) {
                     let days: ArrayList<Int64> = ArrayList<Int64>()
                     for (index in 0..monthDays(yearIndex, monthItem)) {
-                        days.append(index)
+                        days.add(index)
                     }
                     let formatDays: ArrayList<String> = ArrayList<String>()
                     for (dayItem in days) {
                         if ((dayItem + 1) < 10) {
-                            formatDays.append("0${(dayItem + 1)}")
+                            formatDays.add("0${(dayItem + 1)}")
                         } else {
-                            formatDays.append((dayItem + 1).toString())
+                            formatDays.add((dayItem + 1).toString())
                         }
                     }
                     var newMonthItem = ""
                     if (Int64.parse(monthItem) < 10) {
                         newMonthItem = "0" + monthItem
                     }
-                    MonthAndDayArray.append(MonthAndDay(monthItem, formatDays))
+                    MonthAndDayArray.add(MonthAndDay(monthItem, formatDays))
                 }
-                YearsDataArray.append(SolarCalendar(index, yearIndex, MonthAndDayArray));
+                YearsDataArray.add(SolarCalendar(index, yearIndex, MonthAndDayArray));
                 yearIndex = yearIndex + 1
             }
         }
